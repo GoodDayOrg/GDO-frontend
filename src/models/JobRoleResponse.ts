@@ -5,5 +5,4 @@ export type JobRoleResponse = {
     capabilityId: number,
     bandId: number,
     closingDate: Date
-
 }
