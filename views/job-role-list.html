@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Role list</title>
+</head>
+<body>
+    <h1>Job Role list</h1>
+
+    {% if errormessage %}
+    <h3>{{ errormessage }}</h3>
+    {% endif %}
+
+    <table>
+        <tr>
+            <th>jobRoleId</th>
+            <th>roleName</th>
+            <th>location</th>
+            <th>capabilityId</th>
+            <th>bandId</th>
+            <th>closingDate</th>
+
+        </tr>
+        {% for jobRole in jobRoles %}
+        <tr>
+                <td><a href="#" target="_blank">{{ jobRole.jobRoleId }}</a></td>
+                <td>{{ jobRole.roleName }}</td>
+                <td>{{ jobRole.location }}</td>
+                <td>{{ jobRole.capabilityId }}</td>
+                <td>{{ jobRole.bandId }}</td>
+                <td>{{ jobRole.closingDate }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+</body>
+</html>
