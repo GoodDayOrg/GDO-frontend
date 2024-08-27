@@ -1,9 +1,10 @@
 FROM node:20
-WORKDIR /home/node/app
+WORKDIR /app
 COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 ARG API_URL
 ENV API_URL=${API_URL}
-RUN npm ci --omit=dev
-COPY . .
 EXPOSE 3000
-CMD [ "npm", "start" ]
+CMD [ "node", "dist/app.js" ]
