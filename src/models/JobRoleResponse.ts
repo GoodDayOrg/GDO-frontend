@@ -1,8 +1,8 @@
 export type JobRoleResponse = {
     jobRoleId: number,
     roleName: string,
-    location: string,
-    capabilityId: number,
-    bandId: number,
+    jobRoleLocation: string,
+    capabilityName: string,
+    bandName: string,
     closingDate: Date
 }
