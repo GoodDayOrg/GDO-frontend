@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import { JobRoleResponse } from "../../../src/models/JobRoleResponse";
 import sinon from 'sinon';
 import { afterEach, describe, it } from "node:test";
+import express from "express";
 
 const jobRoleResponse: JobRoleResponse = {
     jobRoleId: 1,
@@ -12,6 +13,13 @@ const jobRoleResponse: JobRoleResponse = {
     capabilityName: "delivery",
     bandName: "Architect",
     closingDate: new Date("10/10/2024")
+}
+
+interface MockResponse extends express.Response {
+    render: sinon.SinonSpy;
+    locals: {
+        errormessage: string;
+    };
 }
 
 describe('JobRoleContoller', function () {
@@ -26,9 +34,9 @@ describe('JobRoleContoller', function () {
         sinon.stub(JobRoleService, 'getAllJobRoles').resolves(jobRolesList);
 
         const req = { };
-        const res = { render: sinon.spy() };
+        const res = { render: sinon.spy() } as MockResponse;
 
-        await JobRoleController.getJobRoles(req as any, res as any);
+        await JobRoleController.getJobRoles(req as express.Request, res);
 
         expect(res.render.calledOnce).to.be.true;
         expect(res.render.calledWith('job-role-list', { jobRoles: jobRolesList })).to.be.true;
@@ -39,9 +47,9 @@ describe('JobRoleContoller', function () {
         sinon.stub(JobRoleService, 'getAllJobRoles').rejects(new Error(errorMessage));
 
         const req = { };
-        const res = { render: sinon.spy(), locals: { errormessage: '' } };
+        const res = { render: sinon.spy(), locals: { errormessage: '' } } as MockResponse;
 
-        await JobRoleController.getJobRoles(req as any, res as any);
+        await JobRoleController.getJobRoles(req as express.Request, res);
 
         expect(res.render.calledOnce).to.be.true;
         expect(res.render.calledWith('job-role-list')).to.be.true;
