@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Job Role list</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %} Job roles list {% endblock %}
+
+
+{% block content %}
+<div>
     <h1>Job Role list</h1>
 
     {% if errormessage %}
@@ -33,7 +32,5 @@
             </tr>
         {% endfor %}
     </table>
-
-
-</body>
-</html>
+</div>
+{% endblock %}
