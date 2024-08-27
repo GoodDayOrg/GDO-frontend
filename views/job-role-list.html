@@ -10,24 +10,27 @@
     <h3>Job Role List</h3>
     {% if errormessage %}
         <h5>{{ errormessage }}</h5>
-    {% endif %}
+    {% else %}
 
-        {% for jobRole in jobRoles %}
-            <div class="card mb-4 col-12">
-                <div class="card-body">
-                    <h5 class="card-title d-flex justify-content-between">
-                        <div class="card-role-name">{{ jobRole.roleName }}</div>
-                        <div class="card-closing-date">Valid until: {{ jobRole.closingDate }}</div>
-                    </h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        {{ jobRole.jobRoleLocation }} {{ jobRole.capabilityName }}
-                    </h6>
-                    <p class="card-text">
-                        <strong>Band Name:</strong> {{ jobRole.bandName }}<br>
-                    </p>
-                </div>
+    {% for jobRole in jobRoles %}
+        <div class="card mb-4 col-12">
+            <div class="card-body">
+                <h5 class="card-title d-flex justify-content-between">
+                    <div class="card-role-name">{{ jobRole.roleName }}</div>
+                    <div class="card-closing-date h6">Valid: {{ jobRole.closingDate | formatDate }}</div>
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted d-flex flex-row gap-3">
+                    <div><i class="fa-solid fa-location-dot"></i> {{ jobRole.jobRoleLocation }}</div>
+                    <div><i class="fa-solid fa-briefcase"></i> {{ jobRole.capabilityName }}</div>                    
+                </h6>
+                <p class="card-text">
+                    <strong>Experience:</strong> {{ jobRole.bandName }}<br>
+                </p>
             </div>
-        {% endfor %}
+        </div>
+    {% endfor %}
+
+    {% endif %}
     </div>
     
 </div>

@@ -4,15 +4,19 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import { getJobRoles } from "./controllers/JobRoleController";
 import dotenv from "dotenv";
+import { formatDate } from "./services/JobRoleUtil";
 
 dotenv.config();
 
 const app = express();
 
-nunjucks.configure('views', {
+const env = nunjucks.configure('views', {
     autoescape: true,
     express: app
 });
+
+env.addFilter('formatDate', formatDate);
+
 
 app.use(express.static('public'));
 
@@ -28,6 +32,7 @@ declare module "express-session" {
     token: string;
   }
 }
+
 
 app.get('/job-roles', getJobRoles);
 
