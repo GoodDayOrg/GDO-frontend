@@ -3,6 +3,7 @@ import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import session from "express-session";
 import { getLoginForm, getRegisterForm, postLoginForm } from "./controllers/AuthController";
+import { allowRoles } from "./middleware/AuthMiddleware";
 
 const app = express();
 
@@ -30,7 +31,7 @@ declare module "express-session" {
 
 app.get('/login', getLoginForm);
 app.post('/login', postLoginForm);
-app.get('/register', getRegisterForm);
+app.get('/register', allowRoles(), getRegisterForm);
 
 
 app.listen(3000, () => {
