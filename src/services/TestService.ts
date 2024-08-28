@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { API_URL } from "../config";
+import { API_URL, httpsAgent } from "../config";
 
 const axiosInstance = axios.create({
     baseURL: API_URL
@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 
 export const getDatabases = async (): Promise<string[]> => {
     try {
-        const response: AxiosResponse = await axiosInstance.get("/api/test");
+        const response: AxiosResponse = await axiosInstance.get("/api/test", { httpsAgent });
 
         return response.data;
     } catch (e) {
