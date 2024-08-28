@@ -1,8 +1,8 @@
-import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { expect } from 'chai';
 import { JobRoleResponse } from "../../../src/models/JobRoleResponse";
 import { getAllJobRoles } from "../../../src/services/JobRoleService";
+import { axiosInstance } from "../../../src/config";
 
 const URL: string = "/api/job-roles";
 
@@ -15,7 +15,7 @@ const jobRoleResponse: JobRoleResponse = {
     closingDate: new Date("10/10/2024")
 }
 
-const mock = new MockAdapter(axios);
+const mock = new MockAdapter(axiosInstance);
 
 describe('JobRoleService', function () {
 
