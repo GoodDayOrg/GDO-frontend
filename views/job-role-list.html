@@ -7,30 +7,30 @@
 <div>
     <div class="container">
 
-    <h3>Job Role List</h3>
-    {% if errormessage %}
-        <h5>{{ errormessage }}</h5>
-    {% else %}
+        <h3>Job Role List</h3>
+        {% if errormessage %}
+            <h5>{{ errormessage }}</h5>
+        {% else %}
 
-    {% for jobRole in jobRoles %}
-        <div class="card mb-4 col-12">
-            <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between">
-                    <div class="card-role-name">{{ jobRole.roleName }}</div>
-                    <div class="card-closing-date h6">Valid: {{ jobRole.closingDate | formatDate }}</div>
-                </h5>
-                <h6 class="card-subtitle mb-2 text-muted d-flex flex-row gap-3">
-                    <div><i class="fa-solid fa-location-dot"></i> {{ jobRole.jobRoleLocation }}</div>
-                    <div><i class="fa-solid fa-briefcase"></i> {{ jobRole.capabilityName }}</div>                    
-                </h6>
-                <p class="card-text">
-                    <strong>Experience:</strong> {{ jobRole.bandName }}<br>
-                </p>
+        {% for jobRole in jobRoles %}
+            <div class="card mb-4 col-12">
+                <div class="card-body">
+                    <h5 class="card-title d-flex justify-content-between">
+                        <div class="card-role-name">{{ jobRole.roleName }}</div>
+                        <div class="card-closing-date h6">Valid: {{ jobRole.closingDate | formatDate }}</div>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted d-flex flex-row gap-3">
+                        <div><i class="fa-solid fa-location-dot"></i> {{ jobRole.jobRoleLocation }}</div>
+                        <div><i class="fa-solid fa-briefcase"></i> {{ jobRole.capabilityName }}</div>                    
+                    </h6>
+                    <p class="card-text">
+                        <strong>Experience:</strong> {{ jobRole.bandName }}<br>
+                    </p>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
 
-    {% endif %}
+        {% endif %}
     </div>
     
 </div>

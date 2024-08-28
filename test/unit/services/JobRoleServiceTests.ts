@@ -35,6 +35,7 @@ describe('JobRoleService', function () {
 
         try {
           await getAllJobRoles();
+          expect(true).equal(false);
         } catch (e) {
           expect(e.message).to.equal("Failed to get job-roles");
           return;
@@ -46,6 +47,7 @@ describe('JobRoleService', function () {
 
         try {
           await getAllJobRoles();
+          expect(true).equal(false);
         } catch (e) {
           expect(e.message).to.equal("Failed to get job-roles");
           return;
