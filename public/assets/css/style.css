@@ -26,22 +26,47 @@
     font-style: normal;
 }
 
-#body-custom-font {
+:root {
+    --main-blue: #283583;
+    --main-green: #61a83f;
+    --main-white: #ffffff;
+    --main-mid-blue: #41679f;
+    --main-mid-green: #004631;
+    --main-grey: #575756;
+    --second-orange: #ec6608;
+    --second-green: #cfd600;
+    --second-blue: #009fe3;
+}
+  
+
+body {
     font-family: 'KainosFont', 'KainosSecondary', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* HEADER */
-header {
+body {
     display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-header nav {
-    flex-direction: row;
     margin: 15px 0px;
 }
 
-header nav a img {
+body header {
+    margin: 30px 0px;
+}
+
+body header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10%;
+}
+
+body header nav a img {
     height: 40px;
 }
+
+/* MAIN */
+
+/* FOOTER */
