@@ -7,7 +7,7 @@ const axiosInstance = axios.create({
 
 export const getDatabases = async (): Promise<string[]> => {
     try {
-        const response: AxiosResponse = await axiosInstance.get("/api/test", { httpsAgent });
+        const response: AxiosResponse = await axiosInstance.get('/api/test', { httpsAgent });
 
         return response.data;
     } catch (e) {
