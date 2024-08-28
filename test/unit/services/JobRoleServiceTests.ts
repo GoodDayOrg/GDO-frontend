@@ -2,8 +2,9 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { expect } from 'chai';
 import { JobRoleResponse } from "../../../src/models/JobRoleResponse";
-import { getAllJobRoles, URL } from "../../../src/services/JobRoleService";
+import { getAllJobRoles } from "../../../src/services/JobRoleService";
 
+const URL: string = "/job-roles";
 
 const jobRoleResponse: JobRoleResponse = {
     jobRoleId: 1,
