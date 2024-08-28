@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { JobRoleResponse } from "../../../src/models/JobRoleResponse";
 import { getAllJobRoles } from "../../../src/services/JobRoleService";
 
-const URL: string = "/job-roles";
+const URL: string = "/api/job-roles";
 
 const jobRoleResponse: JobRoleResponse = {
     jobRoleId: 1,
