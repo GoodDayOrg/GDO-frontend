@@ -3,10 +3,7 @@ import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import session from "express-session";
 import { getJobRoles } from "./controllers/JobRoleController";
-import dotenv from "dotenv";
 import { formatDate } from "./utils/JobRoleUtil";
-
-dotenv.config();
 
 const app = express();
 
@@ -33,7 +30,6 @@ declare module "express-session" {
     token: string;
   }
 }
-
 
 app.get('/job-roles', getJobRoles);
 
