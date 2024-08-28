@@ -2,6 +2,7 @@ import express from "express";
 import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import session from "express-session";
+import { getLoginForm, getRegisterForm, postLoginForm } from "./controllers/AuthController";
 
 const app = express();
 
@@ -26,6 +27,11 @@ declare module "express-session" {
     token: string;
   }
 }
+
+app.get('/login', getLoginForm);
+app.post('/login', postLoginForm);
+app.get('/register', getRegisterForm);
+
 
 app.listen(3000, () => {
     console.log('Server started on port 3000');
