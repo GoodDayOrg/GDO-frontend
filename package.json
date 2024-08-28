@@ -6,6 +6,7 @@
   "scripts": {
     "start": "tsc && node dist/app.js",
     "dev": "nodemon src/app.ts",
+    "build": "tsc",
     "linter": "npx eslint .",
     "test": "mocha --require ts-node/register 'test/unit/**/*.ts'"
   },
