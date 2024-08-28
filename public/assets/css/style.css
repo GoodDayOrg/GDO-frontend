@@ -1,0 +1,47 @@
+@font-face {
+    font-family: 'KainosFont';
+    src: url('../fonts/GOTHICB.TTF') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KainosFont';
+    src: url('../fonts/GOTHICI.TTF') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'KainosFont';
+    src: url('../fonts/GOTHICBI.TTF') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'KainosSecondary';
+    src: url('../fonts/FoundryGridnik\ Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#body-custom-font {
+    font-family: 'KainosFont', 'KainosSecondary', sans-serif;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header nav {
+    flex-direction: row;
+    margin: 15px 0px;
+}
+
+header nav a img {
+    height: 40px;
+}
