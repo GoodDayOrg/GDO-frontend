@@ -7,6 +7,6 @@ export const getAllJobRoles = async (): Promise<JobRoleResponse[]> => {
         const response: AxiosResponse = await axiosInstance.get("/api/job-roles");
         return response.data;
     } catch (e) {
-        throw new Error('Failed to get job-roles');
+      throw new Error('Currently no job-roles available');
     }
 }
