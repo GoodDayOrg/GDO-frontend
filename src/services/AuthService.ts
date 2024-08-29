@@ -10,12 +10,3 @@ export const getToken = async (loginRequest: LoginRequest): Promise<string> => {
         throw new Error(e.response.data);
     }
 }
-
-export const registerUser = async (registerRequest: LoginRequest): Promise<string> => {
-    try {
-        const response: AxiosResponse = await axiosInstance.post("/api/auth/register", registerRequest);
-        return response.data;
-    } catch (e) {
-        throw new Error(e.response.data);
-    }
-}
