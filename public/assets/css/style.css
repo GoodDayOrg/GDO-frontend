@@ -54,6 +54,7 @@ body {
 h3 {
     padding: 15px 0;
     color: var(--font-black);
+    font-size: 2.5rem;
 }
 /* HEADER */
 body {
@@ -161,6 +162,7 @@ main .hero-section h2 {
 
 .job-list-container .job-list .card-container .card {
     width: 48%;
+    height: 10rem;
     box-shadow: 3px 1px 7px var(--break-line);
     transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
     border: none;
@@ -174,6 +176,24 @@ main .hero-section h2 {
     box-shadow: 5px 5px 10px var(--break-line-hover);
     z-index: 1;
 }
+
+.job-list-container .job-list .card-container .card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body .card-title {
+    font-size: 1.6rem;
+}
+
+.card-body .card-closing-date {
+    bottom: 0;
+    margin: 0;
+}
+
+
+
+
 
 
 
