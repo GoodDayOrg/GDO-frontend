@@ -36,6 +36,7 @@
     --second-orange: #ec6608;
     --second-green: #cfd600;
     --second-blue: #009fe3;
+    --font-black: #2e2e2e;
 }
   
 
@@ -47,6 +48,11 @@ body {
     min-height: 100vh;
 }
 
+/* GENERAL CSS */
+h3 {
+    padding: 15px 0;
+    color: var(--font-black);
+}
 /* HEADER */
 body {
     display: flex;
@@ -123,6 +129,21 @@ main .hero-section h2 {
 
 /* MAIN - JOB ROLE LIST SECTION */
 
+.job-list-container {
+    display: flex;
+    flex-direction: row;
+    padding: 3% 0;
+}
+
+.job-list-container .side-bar {
+    width: 15%;
+    background-color: red;
+    
+}
+
+.job-list-container .job-list {
+    width: 70%;
+}
 
 
 /* FOOTER */
