@@ -56,6 +56,12 @@ h3 {
     color: var(--font-black);
     font-size: 2.5rem;
 }
+
+h5 {
+    padding: 15px 0;
+    color: var(--font-black);
+    font-size: 1.5rem;
+}
 /* HEADER */
 body {
     display: flex;
@@ -140,11 +146,48 @@ main .hero-section h2 {
 }
 
 .job-list-container .side-bar {
+    margin: 15px 0;
     width: 15%;
-    background-color: red;
-    
 }
 
+.job-list-container .side-bar h5 {
+    border-bottom: 1px solid var(--break-line);
+}
+
+.job-list-container .side-bar .filter-container {
+    margin: 20px 0;
+}
+
+.filter-container .filter-title {
+    margin: 20px 0;
+}
+
+.job-list-container .side-bar .filter-container .filter-list-container {
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset  0 1px 5px var(--break-line);
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #fbfbfb;
+    list-style-type: none;
+}
+
+.filter-list-container .filter-text-element {
+    font-size: 0.8rem;
+    padding: 5px 0;
+    color: var(--main-grey);
+    transition: 0.3s;
+}
+
+.filter-list-container .filter-text-element:hover {
+    font-size: 0.8rem;
+    color: var(--main-blue);
+    background-color: var(--main-white);
+}
+
+
+/* CARDS */
 .job-list-container .job-list {
     width: 70%;
 }
@@ -153,8 +196,6 @@ main .hero-section h2 {
     border-bottom: 1px solid var(--break-line);
 }
 
-
-/* CARDS */
 .job-list-container .job-list .card-container {
     display: flex;
     gap: 10px 20px;
@@ -186,6 +227,7 @@ main .hero-section h2 {
 }
 
 .card-body .card-title {
+    padding: 0;
     font-size: 1.6rem;
 }
 
