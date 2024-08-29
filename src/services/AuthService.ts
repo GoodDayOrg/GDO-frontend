@@ -7,6 +7,6 @@ export const getToken = async (loginRequest: LoginRequest): Promise<string> => {
         const response: AxiosResponse = await axiosInstance.post("/api/auth/login", loginRequest);
         return response.data;
     } catch (e) {
-        throw new Error(e.response.data);
+        throw new Error('Failed to sign in');
     }
 }

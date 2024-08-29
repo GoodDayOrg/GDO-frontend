@@ -1,5 +1,6 @@
 import express from "express";
 import { getToken } from "../services/AuthService";
+import '../types/express-session-argumentation'; 
 
 export const getLoginForm = async (req: express.Request, res: express.Response): Promise<void> => {
     res.render('loginForm.html');
