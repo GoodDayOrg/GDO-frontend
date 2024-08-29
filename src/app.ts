@@ -2,8 +2,8 @@ import express from "express";
 import nunjucks from "nunjucks";
 import bodyParser from "body-parser";
 import session from "express-session";
-import { getLoginForm, getRegisterForm, postLoginForm } from "./controllers/AuthController";
-import { allowRoles } from "./middleware/AuthMiddleware";
+import { getLoginForm, getRegisterForm, logOutUser, postLoginForm } from "./controllers/AuthController";
+//import { allowRoles } from "./middleware/AuthMiddleware";
 
 const app = express();
 
@@ -31,8 +31,8 @@ declare module "express-session" {
 
 app.get('/login', getLoginForm);
 app.post('/login', postLoginForm);
-app.get('/register', allowRoles(), getRegisterForm);
-
+app.get('/register', getRegisterForm);
+app.get('/logout', logOutUser);
 
 app.listen(3000, () => {
     console.log('Server started on port 3000');

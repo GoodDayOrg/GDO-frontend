@@ -28,3 +28,17 @@ export const postRegisterForm = async (req: express.Request, res: express.Respon
         res.render('registerForm.html', req.body);
     }
 }
+
+export const logOutUser = async (req: express.Request, res: express.Response): Promise<void> => {
+    if(req.session){
+        req.session.destroy(err => {
+            if (err) {
+                res.redirect(req.get('referer'));
+            } else {
+                res.redirect('/');
+            }
+        });
+    } else {
+        res.redirect('/login');
+    }
+}
