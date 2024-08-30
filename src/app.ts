@@ -9,7 +9,7 @@ const app = express();
 
 const env = nunjucks.configure('views', {
     autoescape: true,
-    express: app
+    express: app,
 });
 
 env.addFilter('formatDate', formatDate);
@@ -20,12 +20,12 @@ app.use(express.static('public'));
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
-  extended: true
-}))
+  extended: true,
+}));
 
 app.use(session({ secret: 'SUPER_SECRET', cookie: { maxAge: 28800000 }}));
 
-declare module "express-session" {
+declare module 'express-session' {
   interface SessionData {
     token: string;
   }
