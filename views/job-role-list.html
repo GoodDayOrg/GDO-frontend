@@ -10,7 +10,7 @@
 		<!-- here will START nunjack loop -->
 		<div class="filter-container">
 			<h6 class="filter-title">First type</h6>
-			
+
                 <ul class="filter-list-container">
                     <li class="filter-text-element">Examples</li>
                     <li class="filter-text-element">To</li>
@@ -25,7 +25,7 @@
                     <li class="filter-text-element">Scroll</li>
                     <li class="filter-text-element">It</li>
                 </ul>
-			
+
 		</div>
 		<!-- here will STOP nunjack loop -->
 		<div class="filter-container">
@@ -36,7 +36,7 @@
                 <li class="filter-text-element">But</li>
                 <li class="filter-text-element">Less</li>
             </ul>
-            
+
 		</div>
 		<!-- Above just for presentation purpose. To be deleted after loop added -->
 	</aside>
@@ -53,11 +53,11 @@
 						<div class="card-role-name">{{ jobRole.roleName }}</div>
 						<div class="card-closing-date">Valid: {{ jobRole.closingDate | formatDate }}</div>
 					</h5>
-					<p class="card-text card-content"><strong>Experience:</strong> {{ jobRole.bandName }}<br /></p>
-					<h6 class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
-						<div><i class="fa-solid fa-location-dot"></i> {{ jobRole.jobRoleLocation }}</div>
-						<div><i class="fa-solid fa-briefcase"></i> {{ jobRole.capabilityName }}</div>
+					<h6 class="card-subtitle mb-2 card-content text-muted d-flex flex-col gap-3">
+                        <div><i class="fa-solid fa-location-dot"></i> {{ jobRole.jobRoleLocation }}</div>
+						<div><i class="fa-solid fa-briefcase"></i> Capability: {{ jobRole.capabilityName }}</div>
 					</h6>
+                    <p class="card-text card-content"><strong>Band:</strong> {{ jobRole.bandName }}<br /></p>
 				</div>
 			</div>
 			{% endfor %} {% endif %}

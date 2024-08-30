@@ -1,16 +1,12 @@
-import axios, { AxiosResponse } from "axios";
-import { JobRoleResponse } from "../models/JobRoleResponse";
-
-axios.defaults.baseURL = process.env.BACKEND_APP_URL || 'http://localhost:8080/api';
-
-export const URL: string = "/job-roles";
+import { AxiosResponse } from 'axios';
+import { JobRoleResponse } from '../models/JobRoleResponse';
+import { axiosInstance } from '../config';
 
 export const getAllJobRoles = async (): Promise<JobRoleResponse[]> => {
-    try {
-        const response: AxiosResponse = await axios.get(URL);
-        return response.data;
-    } catch (e) {
-        console.log(e);
-        throw new Error('Failed to get job-roles');
-    }
-} 
+  try {
+    const response: AxiosResponse = await axiosInstance.get('/api/job-roles');
+    return response.data;
+  } catch (e) {
+    throw new Error('Currently no job-roles available');
+  }
+};

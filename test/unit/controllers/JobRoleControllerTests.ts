@@ -1,59 +1,65 @@
-import * as JobRoleController from "../../../src/controllers/JobRoleController";
-import * as JobRoleService from "../../../src/services/JobRoleService";
+import * as JobRoleController from '../../../src/controllers/JobRoleController';
+import * as JobRoleService from '../../../src/services/JobRoleService';
 import { expect } from 'chai';
-import { JobRoleResponse } from "../../../src/models/JobRoleResponse";
+import { JobRoleResponse } from '../../../src/models/JobRoleResponse';
 import sinon from 'sinon';
-import { afterEach, describe, it } from "node:test";
-import express from "express";
+import { afterEach, describe, it } from 'node:test';
+import express from 'express';
 
 const jobRoleResponse: JobRoleResponse = {
-    jobRoleId: 1,
-    roleName: "delivery_master",
-    jobRoleLocation: "Buenos Aires",
-    capabilityName: "delivery",
-    bandName: "Architect",
-    closingDate: new Date("10/10/2024")
-}
+  jobRoleId: 1,
+  roleName: 'delivery_master',
+  jobRoleLocation: 'Buenos Aires',
+  capabilityName: 'delivery',
+  bandName: 'Architect',
+  closingDate: new Date('10/10/2024'),
+};
 
 interface MockResponse extends express.Response {
-    render: sinon.SinonSpy;
-    locals: {
-        errormessage: string;
-    };
+  render: sinon.SinonSpy;
+  locals: {
+    errormessage: string;
+  };
 }
 
 describe('JobRoleContoller', function () {
-    afterEach(() => {
-        sinon.restore();
+  afterEach(() => {
+    sinon.restore();
+  });
+
+  describe('getJobRoles', function () {
+    it('should render view with job roles when job roles returned', async () => {
+      const jobRolesList = [jobRoleResponse];
+
+      sinon.stub(JobRoleService, 'getAllJobRoles').resolves(jobRolesList);
+
+      const req = {};
+      const res = { render: sinon.spy() } as MockResponse;
+
+      await JobRoleController.getJobRoles(req as express.Request, res);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render.calledWith('job-role-list', { jobRoles: jobRolesList }))
+        .to.be.true;
     });
 
-    describe('getJobRoles', function () {
-      it('should render view with job roles when job roles returned', async () => {
-        const jobRolesList = [jobRoleResponse];
+    it('should render view with error message when error thrown', async () => {
+      const errorMessage: string = 'Error message';
+      sinon
+        .stub(JobRoleService, 'getAllJobRoles')
+        .rejects(new Error(errorMessage));
 
-        sinon.stub(JobRoleService, 'getAllJobRoles').resolves(jobRolesList);
+      const req = {};
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' },
+      } as MockResponse;
 
-        const req = { };
-        const res = { render: sinon.spy() } as MockResponse;
+      await JobRoleController.getJobRoles(req as express.Request, res);
 
-        await JobRoleController.getJobRoles(req as express.Request, res);
-
-        expect(res.render.calledOnce).to.be.true;
-        expect(res.render.calledWith('job-role-list', { jobRoles: jobRolesList })).to.be.true;
-      });
-
-      it('should render view with error message when error thrown', async () => {
-        const errorMessage: string = 'Error message';
-        sinon.stub(JobRoleService, 'getAllJobRoles').rejects(new Error(errorMessage));
-
-        const req = { };
-        const res = { render: sinon.spy(), locals: { errormessage: '' } } as MockResponse;
-
-        await JobRoleController.getJobRoles(req as express.Request, res);
-
-        expect(res.render.calledOnce).to.be.true;
-        expect(res.render.calledWith('job-role-list')).to.be.true;
-        expect(res.locals.errormessage).to.equal(errorMessage);
-      });
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render.calledWith('job-role-list')).to.be.true;
+      expect(res.locals.errormessage).to.equal(errorMessage);
     });
+  });
 });
