@@ -2,22 +2,30 @@ import express from 'express';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
 import session from 'express-session';
-
-import { getAllDatabases } from './controllers/TestController';
+import { getJobRoles } from './controllers/JobRoleController';
+import { formatDate } from './utils/JobRoleUtil';
 
 const app = express();
 
-nunjucks.configure('views', {
-    autoescape: true,
-    express: app,
+const env = nunjucks.configure('views', {
+  autoescape: true,
+  express: app,
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: true,
-}));
+env.addFilter('formatDate', formatDate);
 
-app.use(session({ secret: 'SUPER_SECRET', cookie: { maxAge: 28800000 }}));
+app.set('view engine', 'html');
+
+app.use(express.static('public'));
+
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+);
+
+app.use(session({ secret: 'SUPER_SECRET', cookie: { maxAge: 28800000 } }));
 
 declare module 'express-session' {
   interface SessionData {
@@ -25,8 +33,8 @@ declare module 'express-session' {
   }
 }
 
-app.listen(3000, () => {
-    console.log('Server started on port 3000');
-});
+app.get('/job-roles', getJobRoles);
 
-app.get('/', getAllDatabases);
+app.listen(3000, () => {
+  console.log('Server started on port 3000');
+});
