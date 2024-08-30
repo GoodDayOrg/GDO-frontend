@@ -37,7 +37,7 @@ describe('JobRoleService', function () {
         await getAllJobRoles();
         expect(true).equal(false);
       } catch (e) {
-        expect(e.message).to.equal('Failed to get job-roles');
+        expect(e.message).to.equal('Currently no job-roles available');
         return;
       }
     });
@@ -49,7 +49,7 @@ describe('JobRoleService', function () {
         await getAllJobRoles();
         expect(true).equal(false);
       } catch (e) {
-        expect(e.message).to.equal('Failed to get job-roles');
+        expect(e.message).to.equal('Currently no job-roles available');
         return;
       }
     });
