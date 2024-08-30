@@ -5,9 +5,12 @@ import { getToken } from '../../../src/services/AuthService';
 
 const URL: string = '/api/auth/login';
 
-const mock = new MockAdapter(axiosInstance);
+let mock: MockAdapter;
 
 describe('AuthService', function () {
+  beforeEach(() => {
+    mock = new MockAdapter(axiosInstance);
+  });
   afterEach(() => {
     mock.reset();
   });
@@ -21,13 +24,13 @@ describe('AuthService', function () {
 
       const result = await getToken(loginRequest);
 
-      expect(result).to.equal(expectedToken);
+      expect(result).to.deep.equal(expectedToken);
     });
 
     it('should throw exception on 500 error from axios', async () => {
       const loginRequest = { email: 'test@test.com', password: 'test' };
 
-      mock.onPost('/api/auth/login').reply(500);
+      mock.onPost(URL).reply(500);
 
       try {
         await getToken(loginRequest);
@@ -40,7 +43,7 @@ describe('AuthService', function () {
     it('should throw exception on 404 error from axios', async () => {
       const loginRequest = { email: 'test@test.com', password: 'test' };
 
-      mock.onPost('/api/auth/login').reply(404);
+      mock.onPost(URL).reply(404);
 
       try {
         await getToken(loginRequest);

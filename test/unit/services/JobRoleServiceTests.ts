@@ -15,9 +15,15 @@ const jobRoleResponse: JobRoleResponse = {
   closingDate: new Date('10/10/2024'),
 };
 
-const mock = new MockAdapter(axiosInstance);
+let mock: MockAdapter;
 
 describe('JobRoleService', function () {
+  beforeEach(() => {
+    mock = new MockAdapter(axiosInstance);
+  });
+  afterEach(() => {
+    mock.reset();
+  });
   describe('getAllJobRoles', function () {
     it('should return job roles from response', async () => {
       const data = [jobRoleResponse];
