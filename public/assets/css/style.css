@@ -206,7 +206,7 @@ main .hero-section h2 {
 
 .job-list-container .job-list .card-container .card {
     width: 48%;
-    height: 10rem;
+    height: 12rem;
     box-shadow: 3px 1px 7px var(--break-line);
     transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
     border: none;
