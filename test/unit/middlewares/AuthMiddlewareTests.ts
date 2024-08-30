@@ -3,10 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { allowRoles } from '../../../src/middlewares/AuthMiddleware';
 import { UserRole } from '../../../src/models/JwtToken';
-// import { jwtDecode } from "jwt-decode";
-// import "jwt-decode"; 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const jwt = require("jwt-decode");
+import * as jwt from "jwt-decode";
 
 interface MockResponse extends express.Response {
     render: sinon.SinonSpy;
@@ -58,7 +55,7 @@ describe('allowRoles Middleware', function () {
                 return this;
             },
         } as unknown as MockResponse;
-        sinon.stub(jwt, 'jwtDecode').callsFake(() => {return UserRole.User});
+        sinon.stub(jwt, 'jwtDecode').callsFake(() => { return UserRole.User });
 
         const middleware = allowRoles([UserRole.Admin]);
 
@@ -84,7 +81,7 @@ describe('allowRoles Middleware', function () {
                 return this;
             },
         } as unknown as MockResponse;
-        sinon.stub(jwt, 'jwtDecode').callsFake(() => {return UserRole.User});
+        sinon.stub(jwt, 'jwtDecode').callsFake(() => { return UserRole.User });
 
         const middleware = allowRoles([UserRole.Admin]);
 
@@ -109,7 +106,7 @@ describe('allowRoles Middleware', function () {
                 return this;
             },
         } as unknown as MockResponse;
-        sinon.stub(jwt, 'jwtDecode').callsFake(() => {return UserRole.User});
+        sinon.stub(jwt, 'jwtDecode').callsFake(() => { return UserRole.User });
 
         const middleware = allowRoles(); 
 
