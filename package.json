@@ -8,7 +8,12 @@
     "dev": "nodemon src/app.ts",
     "build": "tsc",
     "linter": "npx eslint .",
-    "test": "mocha --require ts-node/register 'test/unit/**/*.ts'"
+    "test": "mocha --require ts-node/register 'test/unit/**/*.ts'",
+    "prepare": "husky",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": "prettier --write"
   },
   "keywords": [],
   "author": "Shaun Ganley <shaung@kainos.com>",
@@ -31,15 +36,18 @@
     "@types/node": "^20.11.30",
     "@types/nunjucks": "^3.2.6",
     "@types/sinon": "^17.0.3",
+    "axios-mock-adapter": "^1.21.4",
     "chai": "^4.5.0",
     "eslint": "^8.57.0",
+    "husky": "^9.1.5",
+    "lint-staged": "^15.2.9",
     "mocha": "^10.7.3",
     "nodemon": "^3.1.0",
-    "tsx": "^4.19.0",
-    "typescript": "^5.5.4",
-    "typescript-eslint": "^7.6.0",
+    "prettier": "^3.3.3",
     "sinon": "^17.0.1",
     "ts-node": "^10.9.2",
-    "axios-mock-adapter": "^1.21.4"
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^7.6.0"
   }
 }
