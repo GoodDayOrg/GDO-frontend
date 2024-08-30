@@ -50,6 +50,42 @@ body {
     min-height: 100vh;
 }
 
+.home-page {
+    background: rgb(65,103,159);
+    background: radial-gradient(circle, rgba(65,103,159,1) 6%, rgba(40,53,131,1) 91%);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-page img {
+    height: 150px;
+}
+
+.home-page h3 {
+    font-family: 'KainosSecondary';
+    font-size: 2rem;
+    color: var(--main-white);
+    text-shadow: 0 5px 5px var(--main-grey);
+}
+
+.home-page .btn {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    height: 50px;
+    width: 150px;
+    background-color: var(--main-green);
+    border-color: var(--main-green);
+    transform: 0.5s;
+}
+
+.home-page .btn:hover {
+    border-color: white;
+    box-shadow: 0px 0px 10px var(--main-green);
+}
+
 /* GENERAL CSS */
 h3 {
     padding: 15px 0;

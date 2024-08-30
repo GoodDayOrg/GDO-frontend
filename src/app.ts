@@ -32,6 +32,9 @@ declare module 'express-session' {
     token: string;
   }
 }
+app.get('/', async (req: express.Request, res: express.Response) => {
+  res.render('index.html');
+});
 
 app.get('/job-roles', getJobRoles);
 
