@@ -4,45 +4,40 @@ block details %}
 <div class="container job-role-hero-section">
   <img src="/assets/images/job-details.jpg" alt="person" />
   <div class="dark-overlay"></div>
-  <h2 class="job-role-title">jobRole.name</h2>
+  <h2 class="job-role-title">{{ jobRole.roleName }}</h2>
 </div>
 <div class="container details-section">
   <div class="details-header">
-      <h3>jobRole.name</h3>
+      <h3>{{ jobRole.roleName }}</h3>
       <div class="details-action">
           <a href="/job-roles" class="btn btn-light"><img class="btn-icon"src="/assets/images/back.png" alt="To list"></a>
-          <a href="" class="btn btn-light"><img class="btn-icon"src="/assets/images/arrow_left.png" alt="Previous"></a>
-          <a href="" class="btn btn-light"><img class="btn-icon"src="/assets/images/arrow_right.png" alt="Next"></a>
-          <a href="" class="btn btn-light"><img class="btn-icon"src="/assets/images/sharepoint.png" alt="sharepoint link"></a>
+          <a href="/job/{{prevId}}" class="btn btn-light"><img class="btn-icon"src="/assets/images/arrow_left.png" alt="Previous"></a>
+          <a href="/job/{{nextId}}" class="btn btn-light"><img class="btn-icon"src="/assets/images/arrow_right.png" alt="Next"></a>
+          <a href="https://www.{{jobRole.sharepointUrl}}" target="_blank" class="btn btn-light"><img class="btn-icon"src="/assets/images/sharepoint.png" alt="sharepoint link"></a>
     </div>
   </div>
   <div class="details-info">
     <div class="position-details">
       <ul>
-        <li class="detail-list-element"><i class="fa-solid fa-location-dot"></i>Location: jobRole.location</li>
-        <li class="detail-list-element"><i class="fa-solid fa-briefcase"></i>Capability: jobRole.capability</li>
-        <li class="detail-list-element"><i class="fa-solid fa-signal"></i>Band: jobRole.band</li>
+        <li class="detail-list-element"><i class="fa-solid fa-location-dot"></i>Location: {{ jobRole.jobRoleLocation }}</li>
+        <li class="detail-list-element"><i class="fa-solid fa-briefcase"></i>Capability: {{ jobRole.capabilityName }}</li>
+        <li class="detail-list-element"><i class="fa-solid fa-signal"></i>Band: {{ jobRole.bandName }}</li>
       </ul>
     </div>
     <div class="notice-details">
       <ul>
-        <li class="detail-list-element">Closing date: DD/MM/YYYY</li>
-        <li class="detail-list-element">Status: jobRole.status</li>
-        <li class="detail-list-element">Open positions: jobRole.availableNr</li>
+        <li class="detail-list-element">Closing date: {{ jobRole.closingDate | formatDate }}</li>
+        <li class="detail-list-element">Status: {{ jobRole.status }}</li>
+        <li class="detail-list-element">Open positions: {{ jobRole.numberOfOpenPositions }}</li>
       </ul>
     </div>
   </div>
   <div class="details-content">
     <div class="details-description">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quae
-      fugit cupiditate ratione temporibus debitis quibusdam eligendi? Obcaecati,
-      perspiciatis iste quo dolores necessitatibus quaerat voluptates fugit sunt
-      aliquid. Numquam explicabo corrupti debitis veritatis tempora non
-      laboriosam similique nemo illo soluta sit aspernatur blanditiis beatae
-      porro voluptatibus recusandae accusantium, dolorem quae?
+      {{ jobRole.description }}
     </div>
     <div class="details-responsibilities">
-      ???? responsibilities ??? Nie wiem jak to pokazac
+      {{ jobRole.responsibilities }}
     </div>
   </div>
 </div>

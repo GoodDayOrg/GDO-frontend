@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllJobRoles } from '../services/JobRoleService';
+import { getAllJobRoles, getJobRoleById } from '../services/JobRoleService';
 
 export const getJobRoles = async (
   req: express.Request,
@@ -10,5 +10,26 @@ export const getJobRoles = async (
   } catch (e) {
     res.locals.errormessage = e.message;
     res.render('job-role-list');
+  }
+};
+
+export const getSingleJobRole = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    const currentId = parseInt(req.params.id, 10);
+    const nextId = currentId + 1;
+    const prevId = currentId - 1;
+
+    res.render('job-role-details', {
+      jobRole: await getJobRoleById(req.params.id),
+      currentId,
+      nextId,
+      prevId,
+    });
+  } catch (e) {
+    res.locals.errormessage = e.message;
+    res.render('job-role-details');
   }
 };
