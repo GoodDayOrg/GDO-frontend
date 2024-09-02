@@ -1,4 +1,4 @@
-export const getHeader = (token: string) => {
+export const getHeader = (token: String) => {
   return {
     headers: { Authorization: `Bearer ${token}` },
   };
