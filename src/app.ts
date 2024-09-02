@@ -9,6 +9,8 @@ import {
 } from './controllers/AuthController';
 import { getJobRoles } from './controllers/JobRoleController';
 import { formatDate } from './utils/JobRoleUtil';
+import { allowRoles, redirectIfLogged } from './middlewares/AuthMiddleware';
+import { UserRole } from './models/JwtToken';
 
 const app = express();
 
@@ -37,10 +39,13 @@ declare module 'express-session' {
     token: string;
   }
 }
+app.get('/', async (req: express.Request, res: express.Response) => {
+  res.render('index.html');
+});
 
-app.get('/job-roles', getJobRoles);
-app.get('/login', getLoginForm);
-app.post('/login', postLoginForm);
+app.get('/job-roles', allowRoles(), getJobRoles);
+app.get('/login', redirectIfLogged(), getLoginForm);
+app.post('/login', redirectIfLogged(), postLoginForm);
 app.get('/logout', logOutUser);
 
 app.listen(3000, () => {

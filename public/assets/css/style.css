@@ -1,0 +1,332 @@
+@font-face {
+    font-family: 'KainosFont';
+    src: url('../fonts/GOTHICB.TTF') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'KainosFont';
+    src: url('../fonts/GOTHICI.TTF') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'KainosFont';
+    src: url('../fonts/GOTHICBI.TTF') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'KainosSecondary';
+    src: url('../fonts/FoundryGridnik\ Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --main-blue: #283583;
+    --main-green: #61a83f;
+    --main-white: #ffffff;
+    --main-mid-blue: #41679f;
+    --main-mid-green: #004631;
+    --main-grey: #575756;
+    --second-orange: #ec6608;
+    --second-green: #cfd600;
+    --second-blue: #009fe3;
+    --font-black: #2e2e2e;
+    --break-line: rgba(125, 125, 125, 0.515);
+    --break-line-hover: rgba(125, 125, 125, 0.715)
+}
+  
+
+body {
+    font-family: 'KainosFont', 'KainosSecondary', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+}
+
+.home-page {
+    background: rgb(65,103,159);
+    background: radial-gradient(circle, rgba(65,103,159,1) 6%, rgba(40,53,131,1) 91%);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-page img {
+    height: 150px;
+}
+
+.home-page h3 {
+    font-family: 'KainosSecondary';
+    font-size: 2rem;
+    color: var(--main-white);
+    text-shadow: 0 5px 5px var(--main-grey);
+}
+
+.home-page .btn {
+    font-size: 1.5rem;
+    margin-top: 20px;
+    height: 50px;
+    width: 150px;
+    background-color: var(--main-green);
+    border-color: var(--main-green);
+    transform: 0.5s;
+}
+
+.home-page .btn:hover {
+    border-color: white;
+    box-shadow: 0px 0px 10px var(--main-green);
+}
+
+/* GENERAL CSS */
+h3 {
+    padding: 15px 0;
+    color: var(--font-black);
+    font-size: 2.5rem;
+}
+
+h5 {
+    padding: 15px 0;
+    color: var(--font-black);
+    font-size: 1.5rem;
+}
+/* HEADER */
+body {
+    display: flex;
+}
+
+body header {
+    margin: 30px 0px;
+}
+
+body header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10%;
+}
+
+body header nav .btn-outline-primary {
+    color: var(--main-blue);
+    border-color: var(--main-blue);
+}
+
+body header nav .btn-outline-primary:hover {
+    background-color: var(--main-blue);
+    border-color: var(--main-blue);
+}
+
+body header nav a img {
+    height: 40px;
+}
+
+/* MAIN - HERO SECTION */
+
+main .hero-section {
+    position: relative;
+    height: 10%;
+    width: 100vw;
+    left: 50%; 
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, rgba(0,70,49,1) 1%, rgba(97,168,63,1) 35%, rgba(40,53,131,1) 73%);
+    z-index: 0; 
+}
+
+main .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; 
+    background: linear-gradient(90deg, rgba(0,70,49,1) 1%, rgba(97,168,63,1) 35%, rgba(40,53,131,1) 73%);
+    z-index: -1;
+}
+
+main .hero-section img {
+    display: block;
+    margin: 0 auto;
+    padding: 30px 0;
+    height: 20%;
+    width: 60%;
+    object-fit: fill;
+}
+
+main .hero-section h2 {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    color: white;
+    z-index: 1;
+    text-align: center;
+    font-family: 'KainosSecondary';
+    font-size: 3rem;
+    text-shadow: 0 0 20px black;
+}
+
+/* MAIN - JOB ROLE LIST SECTION */
+
+/* FILTERS */
+.job-list-container {
+    display: flex;
+    flex-direction: row;
+    padding: 3% 0;
+}
+
+.job-list-container .side-bar {
+    margin: 15px 0;
+    width: 15%;
+}
+
+.job-list-container .side-bar h5 {
+    border-bottom: 1px solid var(--break-line);
+}
+
+.job-list-container .side-bar .filter-container {
+    margin: 20px 0;
+}
+
+.filter-container .filter-title {
+    margin: 20px 0;
+}
+
+.job-list-container .side-bar .filter-container .filter-list-container {
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset  0 1px 5px var(--break-line);
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #fbfbfb;
+    list-style-type: none;
+}
+
+.filter-list-container .filter-text-element {
+    font-size: 0.8rem;
+    padding: 5px 0;
+    color: var(--main-grey);
+    transition: 0.3s;
+}
+
+.filter-list-container .filter-text-element:hover {
+    font-size: 0.8rem;
+    color: var(--main-blue);
+    background-color: var(--main-white);
+}
+
+
+/* CARDS */
+.job-list-container .job-list {
+    /* width: 70%; */
+    width: 100vw;
+}
+
+.job-list-container .job-list h3 {
+    border-bottom: 1px solid var(--break-line);
+}
+
+.job-list-container .job-list .card-container {
+    display: flex;
+    gap: 10px 20px;
+    margin: 30px 0;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+.job-list-container .job-list .card-container .card {
+    width: 48%;
+    height: 12rem;
+    box-shadow: 3px 1px 7px var(--break-line);
+    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    background-color: #fbfbfb;
+}
+
+.job-list-container .job-list .card-container .card:hover {
+    transform: scale(1.02);
+    box-shadow: 5px 5px 10px var(--break-line-hover);
+    z-index: 1;
+}
+
+.job-list-container .job-list .card-container .card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body .card-title {
+    padding: 0;
+    font-size: 1.4rem;
+    align-items: flex-end;
+}
+
+.card-body .card-closing-date {
+    font-size: 1rem;
+    color: var(--main-grey);
+    bottom: 0;
+    margin: 0;
+}
+
+.card-body .card-content {
+    margin: 10px 0;
+}
+
+/* FOOTER */
+
+.footer {
+    background: rgb(40,53,131);
+    background: linear-gradient(90deg, rgba(40,53,131,1) 30%, rgba(65,103,159,1) 81%, rgba(40,53,131,1) 97%);
+    background-size: cover;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
+    font-family: 'KainosSecondary';
+}
+
+.footer img {
+    display: block;
+    margin: 0 auto;
+    padding: 30px 0;
+    height: 20%;
+    width: 60%;
+    object-fit: fill;
+    z-index: -1;
+}
+
+.footer-img {
+    height: 200px;
+    width: 100%;
+}
+
+.footer a {
+    font-size: 1.4rem;
+    font-weight: 100;
+    transition: color 0.3s;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #00aced; /* Change the color on hover */
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer .row {
+    align-items: center;
+}
+
+.login-page {
+    height: 70vh;
+}

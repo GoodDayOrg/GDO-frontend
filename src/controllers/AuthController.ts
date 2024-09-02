@@ -15,7 +15,7 @@ export const postLoginForm = async (
 ): Promise<void> => {
   try {
     req.session.token = await getToken(req.body);
-    res.redirect('/');
+    res.redirect('/job-roles');
   } catch (e) {
     res.locals.errormessage = e.message;
     res.render('loginForm.html', req.body);

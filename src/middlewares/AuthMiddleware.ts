@@ -27,3 +27,16 @@ export const allowRoles = (allowedRoles?: UserRole[]) => {
     next();
   };
 };
+
+export const redirectIfLogged = () => {
+  return (
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) => {
+    if (req.session.token) {
+      return res.redirect('/');
+    }
+    next();
+  };
+};
