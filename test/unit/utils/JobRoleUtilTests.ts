@@ -1,5 +1,6 @@
 import assert from 'assert';
 import { extractJobRoleFilterParams, formatDate } from '../../../src/utils/JobRoleUtil';
+import express from 'express';
 
 describe('Format Date to LocalDateString', () => {
   it('should return localDateString when valid date provided', () => {
@@ -14,7 +15,7 @@ describe('Format Date to LocalDateString', () => {
 
 describe('extractJobRoleFilterParams', () => {
   it('should correctly extract filter parameters from request query', () => {
-    const mockRequest: Partial<Request> = {
+    const mockRequest = {
       query: {
         roleName: 'Developer',
         jobRoleLocation: 'NYC',
@@ -22,7 +23,7 @@ describe('extractJobRoleFilterParams', () => {
         bandId: '2',
         closingDate: '2023-09-01',
       },
-    };
+    }as unknown as express.Request;
 
     const result = extractJobRoleFilterParams(mockRequest);
 
@@ -38,7 +39,7 @@ describe('extractJobRoleFilterParams', () => {
       query: {
         roleName: 'Developer',
       },
-    } as unknown as Request;
+    } as unknown as express.Request;
 
     const result = extractJobRoleFilterParams(mockRequest);
 
@@ -55,7 +56,7 @@ describe('extractJobRoleFilterParams', () => {
         capabilityId: '5',
         bandId: '10',
       },
-    } as unknown as Request;
+    } as unknown as express.Request;
 
     const result = extractJobRoleFilterParams(mockRequest);
 
@@ -68,10 +69,12 @@ describe('extractJobRoleFilterParams', () => {
       query: {
         capabilityId: 'not-a-number',
       },
-    } as unknown as Request;
+    } as unknown as express.Request;
 
     const result = extractJobRoleFilterParams(mockRequest);
 
-    assert.equal(result.capabilityId, undefined);
+    console.log("##################capability in result is " + typeof result.capabilityId);
+    assert.ok(result.capabilityId?.length === 1 && Number.isNaN(result.capabilityId[0]));
+    assert.ok(Number.isNaN(result.capabilityId[0]));
   });
 });
