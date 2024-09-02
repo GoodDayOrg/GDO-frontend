@@ -1,0 +1,57 @@
+<aside class="side-bar">
+    <h5>Filters</h5>
+    <form action="/job-roles" method="get">
+        <!-- Free text field for roleName -->
+        <div class="filter-container">
+            <h6 class="filter-title">Role Name</h6>
+            <input type="text" name="roleName" placeholder="Enter role name">
+        </div>
+
+        <!-- Checkbox list for jobRoleLocation -->
+        <div class="filter-container">
+            <h6 class="filter-title">Job Role Location</h6>
+            <div>
+                <label>
+                    <input type="checkbox" name="jobRoleLocation" value="NYC"> NYC
+                    <input type="checkbox" name="jobRoleLocation" value="SF"> SF
+                    <input type="checkbox" name="jobRoleLocation" value="LA"> LA
+                </label>
+                <!-- Add more options as needed -->
+            </div>
+        </div>
+
+        <!-- Dropdown for capabilityId -->
+        <div class="filter-container">
+            <h6 class="filter-title">Capability</h6>
+            <div>
+                <label><input type="checkbox" name="capabilityId" value="1"> Leadership Community</label>
+                <label><input type="checkbox" name="capabilityId" value="2"> Principal</label>
+                <label><input type="checkbox" name="capabilityId" value="3"> Manager</label>
+                <!-- Add more options as needed -->
+            </div>
+        </div>
+
+        <!-- Dropdown for bandId -->
+        <div class="filter-container">
+            <h6 class="filter-title">Band</h6>
+            <select name="bandId">
+                <option value="">Select band</option>
+                <option value="1">Band 1</option>
+                <option value="2">Band 2</option>
+                <option value="3">Band 3</option>
+                <!-- Populate with actual band names and IDs -->
+            </select>
+        </div>
+
+        <!-- Date field for closingDate -->
+        <div class="filter-container">
+            <h6 class="filter-title">Closing Date</h6>
+            <input type="date" name="closingDate">
+        </div>
+
+        <!-- Submit button -->
+        <div class="filter-container">
+            <button type="submit">Filter</button>
+        </div>
+    </form>
+</aside>

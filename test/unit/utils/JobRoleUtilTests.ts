@@ -14,7 +14,7 @@ describe('Format Date to LocalDateString', () => {
 
 describe('extractJobRoleFilterParams', () => {
   it('should correctly extract filter parameters from request query', () => {
-    const mockRequest = {
+    const mockRequest: Partial<Request> = {
       query: {
         roleName: 'Developer',
         jobRoleLocation: 'NYC',
@@ -22,7 +22,7 @@ describe('extractJobRoleFilterParams', () => {
         bandId: '2',
         closingDate: '2023-09-01',
       },
-    } as unknown as Request;
+    };
 
     const result = extractJobRoleFilterParams(mockRequest);
 
