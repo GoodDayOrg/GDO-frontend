@@ -1,3 +1,23 @@
+:root {
+    --main-blue: #283583;
+    --main-green: #61a83f;
+    --main-white: #ffffff;
+    --main-mid-blue: #41679f;
+    --main-mid-green: #004631;
+    --main-grey: #575756;
+    --second-orange: #ec6608;
+    --second-green: #cfd600;
+    --second-blue: #009fe3;
+    --font-black: #2e2e2e;
+    --break-line: rgba(125, 125, 125, 0.515);
+    --break-line-hover: rgba(125, 125, 125, 0.715)
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
 .job-role-hero-section {
     position: relative;
     display: flex;
@@ -40,12 +60,52 @@
 
 .details-header {
     display: flex;
-    flex-direction: column;
-    border-bottom: 1px solid var(--break-line);
+    justify-content: space-between;
+    align-items: center;
+    /* border-bottom: 1px solid var(--break-line); */
+}
+
+.details-header .details-action {
+    display: flex;
+
 }
 
 .details-info {
     display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; 
+    border-bottom: 1px solid var(--break-line);  
+}
 
+.details-info .detail-list-element {
+    color: var(--main-grey);
+}
+
+.details-info i {
+    margin: 5px 10px;
+    width: 16px;
+    height: 16px;
+}
+
+
+/* OVERRIDING BOOTSTRAP */
+
+.btn-light {
+    height: 40px;
+    width: 40px;
+    padding: 5px 5px;
+    margin: 0 5px;
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    padding: 0;              
+    background-color: #f8f9fa; 
+    border: none;              
+    cursor: pointer;          
+}
+
+.btn-light img {
+    height: 25px;  
+    width: auto;    
 }
 
