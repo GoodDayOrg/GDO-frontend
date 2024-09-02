@@ -37,6 +37,9 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 app.get('/job-roles', getJobRoles);
+app.get('/job/id', async (req: express.Request, res: express.Response) => {
+  res.render('job-role-details.html');
+});
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');

@@ -1,0 +1,43 @@
+{% extends "base.html" %} 
+{% block title %} Job role view {% endblock %} 
+{% block details %}
+
+<div class="container job-role-hero-section">
+	<img src="/assets/images/job-details.jpg" alt="person" />
+    <div class="dark-overlay"></div>
+	<h2 class="job-role-title"> jobRole.name </h2>
+</div>
+<div class="container details-section">
+    <div class="details-header">
+        <a href="" class="btn">Go back</a>
+        <h3>jobRole.name</h3>
+        <div class="details-info">
+            <div class="position-details">
+                <ul>
+                    <li>Location: jobRole.location</li>
+                    <li>Capability: jobRole.capability</li>
+                    <li>Band: jobRole.band</li>
+                </ul>
+            </div>
+            <div class="notice-details">
+                <ul>
+                    <li>Closing date: DD/MM/YYYY</li>
+                    <li>Status: jobRole.status</li>
+                    <li>Open positions: jobRole.availableNr</li>
+                </ul>
+            </div>
+        </div>
+        <div class="details-action">
+            <a href="" class="btn">Prev</a>
+            <a href="" class="btn">Next</a>
+            <a href="" class="btn">Job spec</a>
+        </div>
+    </div>
+    <div class="details-content">
+        <div class="details-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur quae fugit cupiditate ratione temporibus debitis quibusdam eligendi? Obcaecati, perspiciatis iste quo dolores necessitatibus quaerat voluptates fugit sunt aliquid. Numquam explicabo corrupti debitis veritatis tempora non laboriosam similique nemo illo soluta sit aspernatur blanditiis beatae porro voluptatibus recusandae accusantium, dolorem quae?</div>
+        <div class="details-responsibilities">???? responsibilities ??? Nie wiem jak to pokazac</div>
+    </div>
+</div>
+
+
+{% endblock %}
