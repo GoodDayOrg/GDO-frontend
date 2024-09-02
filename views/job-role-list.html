@@ -5,10 +5,10 @@
 	<h2>Find your new path</h2>
 </div>
 <div class="container job-list-container">
-	<!-- <aside class="side-bar">
-		<h5>Filters</h5> -->
+	<aside class="side-bar">
+		<h5>Filters</h5>
 		<!-- here will START nunjack loop -->
-		<!-- <div class="filter-container">
+		<div class="filter-container">
 			<h6 class="filter-title">First type</h6>
 
                 <ul class="filter-list-container">
@@ -26,9 +26,9 @@
                     <li class="filter-text-element">It</li>
                 </ul>
 
-		</div> -->
+		</div>
 		<!-- here will STOP nunjack loop -->
-		<!-- <div class="filter-container">
+		<div class="filter-container">
 			<h6 class="filter-title">Second type</h6>
 			<ul class="filter-list-container">
                 <li class="filter-text-element">Another</li>
@@ -37,9 +37,9 @@
                 <li class="filter-text-element">Less</li>
             </ul>
 
-		</div> -->
+		</div>
 		<!-- Above just for presentation purpose. To be deleted after loop added -->
-	<!-- </aside> -->
+	</aside>
 	<div class="container job-list">
 		<h3>Job Role List</h3>
 		{% if errormessage %}
@@ -56,6 +56,7 @@
 					<div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
                         <div><i class="fa-solid fa-location-dot"></i> {{ jobRole.jobRoleLocation }}</div>
 					</div>
+
 					<div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
 						<div><i class="fa-solid fa-briefcase"></i> Capability: {{ jobRole.capabilityName }}</div>
 					</div>
