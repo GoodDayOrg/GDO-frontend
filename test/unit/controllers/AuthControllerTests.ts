@@ -44,7 +44,7 @@ describe('AuthController', function () {
       await AuthController.postLoginForm(req, res);
       expect(req.session.token).to.equal(token);
       expect(res.redirect.calledOnce).to.be.true;
-      expect(res.redirect.calledWith('/')).to.be.true;
+      expect(res.redirect.calledWith('/job-roles')).to.be.true;
     });
 
     it('should render login form with error message on failed login', async () => {
