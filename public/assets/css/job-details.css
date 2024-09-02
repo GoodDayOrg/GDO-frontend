@@ -87,6 +87,11 @@ ul {
     height: 16px;
 }
 
+.details-content {
+    font-size: 1rem;
+    color: var(--font-black);
+}
+
 
 /* OVERRIDING BOOTSTRAP */
 

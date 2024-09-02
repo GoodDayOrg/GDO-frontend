@@ -8,6 +8,6 @@ export type JobRoleDetailsResponse = {
   description: string;
   responsibilities: string;
   sharepointUrl: string;
-  status: string;
+  statusName: string;
   numberOfOpenPositions: number;
 };

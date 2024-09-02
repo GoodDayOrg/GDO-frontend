@@ -245,16 +245,18 @@ main .hero-section h2 {
     width: 48%;
     height: 12rem;
     box-shadow: 3px 1px 7px var(--break-line);
-    transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s, border 0.3s;
     border: none;
     position: relative;
     overflow: hidden;
     background-color: #fbfbfb;
+    text-decoration: none;
 }
 
 .job-list-container .job-list .card-container .card:hover {
     transform: scale(1.02);
-    box-shadow: 5px 5px 10px var(--break-line-hover);
+    box-shadow: 5px 5px 10px var(--main-blue);
+    border: 1px solid var(--main-green);
     z-index: 1;
 }
 

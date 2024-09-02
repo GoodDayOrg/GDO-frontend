@@ -1,5 +1,10 @@
-{% extends "base.html" %} {% block title %} Job role view {% endblock %} {%
-block details %}
+{% extends "base.html" %} 
+{% block title %} Job role view {% endblock %} 
+{% block details %}
+
+{% if errormessage %}
+    <h3>{{ errormessage }}</h3>
+    {% endif %}
 
 <div class="container job-role-hero-section">
   <img src="/assets/images/job-details.jpg" alt="person" />
