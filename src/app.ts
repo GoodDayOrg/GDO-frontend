@@ -10,7 +10,6 @@ import {
 import { getJobRoles } from './controllers/JobRoleController';
 import { formatDate } from './utils/JobRoleUtil';
 import { allowRoles, redirectIfLogged } from './middlewares/AuthMiddleware';
-import { UserRole } from './models/JwtToken';
 
 const app = express();
 
