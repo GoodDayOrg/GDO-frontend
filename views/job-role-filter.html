@@ -4,34 +4,31 @@
         <!-- Free text field for roleName -->
         <div class="filter-container">
             <h6 class="filter-title">Role Name</h6>
-            <input type="text" name="roleName" placeholder="Enter role name">
+            <input class="no-border-input" type="text" name="roleName" placeholder="Enter role name">
         </div>
 
         <!-- Checkbox list for jobRoleLocation -->
         <div class="filter-container">
-            <h6 class="filter-title">Job Role Location</h6>
-            <div>
-                <label>
-                    <input type="checkbox" name="jobRoleLocation" value="Belfast"> Belfast
-                    <input type="checkbox" name="jobRoleLocation" value="Atlanta"> Atlanta
-                    <input type="checkbox" name="jobRoleLocation" value="Indianapolis"> Indianapolis
-                    <input type="checkbox" name="jobRoleLocation" value="Buenos Aires"> Buenos Aires
-                    <input type="checkbox" name="jobRoleLocation" value="Antwerp"> Antwerp
-                    <input type="checkbox" name="jobRoleLocation" value="Toronto"> Toronto
-                    <input type="checkbox" name="jobRoleLocation" value="Copenhagen"> Copenhagen
-                    <input type="checkbox" name="jobRoleLocation" value="Helsinki"> Helsinki
-                    <input type="checkbox" name="jobRoleLocation" value="Paris"> Paris
-                    <input type="checkbox" name="jobRoleLocation" value="Frankfurt am Main"> Frankfurt am Main
-                    <input type="checkbox" name="jobRoleLocation" value="Gdańsk"> Gdańsk
-                </label>
-                <!-- Add more options as needed -->
+            <h6 class="filter-title">Location</h6>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="jobRoleLocation" value="Belfast"> Belfast</label>
+                <label><input type="checkbox" name="jobRoleLocation" value="Atlanta"> Atlanta</label>
+                <label><input type="checkbox" name="jobRoleLocation" value="Indianapolis"> Indianapolis</label>
+                <label><input type="checkbox" name="jobRoleLocation" value="Buenos Aires"> Buenos Aires</label>
+                <label><input type="checkbox" name="jobRoleLocation" value="Antwerp"> Antwerp</label>
+                <label><input type="checkbox" name="jobRoleLocation" value="Toronto"> Toronto</label>
+                <label><input type="checkbox" name="jobRoleLocation" value="Copenhagen"> Copenhagen</label>
+                <label><input type="checkbox" name="jobRoleLocation" value="Helsinki"> Helsinki</label>
+                <label><input type="checkbox" name="jobRoleLocation" value="Paris"> Paris</label>
+                <label><input type="checkbox" name="jobRoleLocation" value="Frankfurt am Main"> Frankfurt am Main</label>
+                <label><input type="checkbox" name="jobRoleLocation" value="Gdańsk"> Gdańsk</label>
             </div>
         </div>
 
         <!-- Dropdown for capabilityId -->
         <div class="filter-container">
             <h6 class="filter-title">Capability</h6>
-            <div>
+            <div class="checkbox-group">
                 <label><input type="checkbox" name="capabilityId" value="1"> Applied Innovation</label>
                 <label><input type="checkbox" name="capabilityId" value="2"> Business Development & Marketing</label>
                 <label><input type="checkbox" name="capabilityId" value="3"> Business Services Support</label>
@@ -51,7 +48,7 @@
         <!-- Dropdown for bandId -->
         <div class="filter-container">
             <h6 class="filter-title">Band</h6>
-            <div>
+            <div class="checkbox-group">
                 <label><input type="checkbox" name="bandId" value="1"> Apprentice</label>
                 <label><input type="checkbox" name="bandId" value="2"> Trainee</label>
                 <label><input type="checkbox" name="bandId" value="3"> Associate</label>
@@ -67,12 +64,12 @@
         <!-- Date field for closingDate -->
         <div class="filter-container">
             <h6 class="filter-title">Closing Date</h6>
-            <input type="date" name="closingDate">
+            <input class="no-border-input" type="date" name="closingDate">
         </div>
 
         <!-- Submit button -->
         <div class="filter-container">
-            <button type="submit">Filter</button>
+            <button class="btn btn-outline-primary" type="submit">Filter</button>
         </div>
     </form>
 </aside>
