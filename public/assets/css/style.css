@@ -75,7 +75,6 @@ body {
     font-family: 'KainosSecondary';
     font-size: 2rem;
     color: var(--main-white);
-    text-shadow: 0 5px 5px var(--main-grey);
 }
 
 .home-page .btn {
@@ -338,3 +337,33 @@ main .hero-section h2 {
 .footer .row {
     align-items: center;
 }
+
+
+/* ERROR MESSAGE */
+
+.error-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.error-message img {
+    height: 100px;
+}
+
+.error-message .btn {
+    margin: 20px 0;
+    font-weight: bold;
+    color: var(--main-blue);
+    border-color: var(--main-blue);
+}
+
+.error-message .btn:hover {
+    color: var(--main-white);
+    background-color: var(--main-blue);
+    border-color: var(--main-blue);
+}
+
+

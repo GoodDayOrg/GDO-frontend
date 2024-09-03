@@ -2,10 +2,12 @@
 {% block title %} Job role view {% endblock %} 
 {% block details %}
 
-{% if errormessage %}
-    <h3>{{ errormessage }}</h3>
-    {% endif %}
+<!-- {% if errormessage %}
+  <h3>{{ errormessage }}</h3>
+{% endif %} -->
+{% include "not_found.html" %}
 
+{% if not errormessage %}
 <div class="container job-role-hero-section">
   <img src="/assets/images/job-details.jpg" alt="person" />
   <div class="dark-overlay"></div>
@@ -48,5 +50,5 @@
     </div>
   </div>
 </div>
-
+{% endif %}
 {% endblock %}
