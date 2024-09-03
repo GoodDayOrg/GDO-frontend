@@ -70,6 +70,10 @@ ul {
 
 }
 
+.details-header .details-action .hide {
+    display: none;
+}
+
 .details-info {
     display: flex;
     justify-content: space-between;
@@ -92,6 +96,7 @@ ul {
     font-style: normal;
     font-size: 1.2rem;
     padding: 2% 0;
+    margin-bottom: 50px;
     color: var(--font-black);
 }
 

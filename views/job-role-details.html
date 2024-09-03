@@ -18,9 +18,11 @@
       <h3>{{ jobRole.roleName }}</h3>
       <div class="details-action">
           <a href="/job-roles" class="btn btn-light"><img class="btn-icon"src="/assets/images/back.png" alt="To list"></a>
-          <a href="/job/{{prevId}}" class="btn btn-light"><img class="btn-icon"src="/assets/images/arrow_left.png" alt="Previous"></a>
+          <a href="/job/{{ prevId }}" class="btn {% if currentId == 1 %}hide{% endif %} btn-light">
+            <img class="btn-icon" src="/assets/images/arrow_left.png" alt="Previous">
+          </a>          
           <a href="/job/{{nextId}}" class="btn btn-light"><img class="btn-icon"src="/assets/images/arrow_right.png" alt="Next"></a>
-          <a href="https://www.{{jobRole.sharepointUrl}}" target="_blank" class="btn btn-light"><img class="btn-icon"src="/assets/images/sharepoint.png" alt="sharepoint link"></a>
+          <a href="{{jobRole.sharepointUrl}}" target="_blank" class="btn btn-light"><img class="btn-icon"src="/assets/images/sharepoint.png" alt="sharepoint link"></a>
     </div>
   </div>
   <div class="details-info">
