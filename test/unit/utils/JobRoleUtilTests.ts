@@ -72,8 +72,6 @@ describe('extractJobRoleFilterParams', () => {
     } as unknown as express.Request;
 
     const result = extractJobRoleFilterParams(mockRequest);
-
-    console.log("##################capability in result is " + typeof result.capabilityId);
     assert.ok(result.capabilityId?.length === 1 && Number.isNaN(result.capabilityId[0]));
     assert.ok(Number.isNaN(result.capabilityId[0]));
   });

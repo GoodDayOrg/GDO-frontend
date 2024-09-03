@@ -2,7 +2,6 @@ import { AxiosResponse } from 'axios';
 import { JobRoleResponse } from '../models/JobRoleResponse';
 import { axiosInstance } from '../config';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
-import qs from 'qs';
 
 export const getFilteredJobRoles = async (
   filters?: JobRoleFilterParams,
