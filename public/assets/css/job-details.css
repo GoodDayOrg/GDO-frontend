@@ -88,8 +88,15 @@ ul {
 }
 
 .details-content {
-    font-size: 1rem;
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.2rem;
+    padding: 2% 0;
     color: var(--font-black);
+}
+
+.details-content h5 {
+    font-weight: bold;
 }
 
 
