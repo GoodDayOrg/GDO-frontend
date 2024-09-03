@@ -6,7 +6,7 @@ import qs from 'qs';
 
 export const getFilteredJobRoles = async (filters?: JobRoleFilterParams): Promise<JobRoleResponse[]> => {
   try {
-    const response: AxiosResponse = await axiosInstance.get('/api/job-roles', {
+    const response: AxiosResponse = await axiosInstance.get('/api/job-roles/filter', {
       params: filters
     });
     return response.data;
