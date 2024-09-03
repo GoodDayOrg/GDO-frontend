@@ -16,12 +16,13 @@ export const allowRoles = (allowedRoles?: UserRole[]) => {
     if (
       allowedRoles &&
       allowedRoles.length > 0 &&
-      !allowedRoles.includes(decodedToken.Role)
+      !allowedRoles.includes(decodedToken.role_id)
     ) {
       return res.status(403).send('User role not authorised for this action');
     }
     if (res.locals) {
       res.locals.session = req.session;
+      res.locals.userRole = UserRole[decodedToken.role_id];
     }
 
     next();
