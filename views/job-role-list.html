@@ -38,51 +38,35 @@ block content %}
             </ul>
 
 		</div> -->
-  <!-- Above just for presentation purpose. To be deleted after loop added -->
-  <!-- </aside> -->
-  <div class="container job-list">
-    <h3>Job Role List</h3>
-    {% if errormessage %}
-    <h5>{{ errormessage }}</h5>
-    {% else %}
-    <div class="card-container">
-      {% for jobRole in jobRoles %}
-      <a href="/job/{{ jobRole.jobRoleId }}" class="card mb-4 col-12">
-        <div class="card-body">
-          <h5 class="card-title d-flex justify-content-between">
-            <div class="card-role-name">{{ jobRole.roleName }}</div>
-            <div class="card-closing-date">
-              Valid: {{ jobRole.closingDate | formatDate }}
-            </div>
-          </h5>
-          <div
-            class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3"
-          >
-            <div>
-              <i class="fa-solid fa-location-dot"></i> {{
-              jobRole.jobRoleLocation }}
-            </div>
-          </div>
-          <div
-            class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3"
-          >
-            <div>
-              <i class="fa-solid fa-briefcase"></i> Capability: {{
-              jobRole.capabilityName }}
-            </div>
-          </div>
-          <div
-            class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3"
-          >
-            <div>
-              <i class="fa-solid fa-signal"></i> Band: {{ jobRole.bandName }}
-            </div>
-          </div>
-        </div>
-      </a>
-      {% endfor %} {% endif %}
-    </div>
-  </div>
+		<!-- Above just for presentation purpose. To be deleted after loop added -->
+	<!-- </aside> -->
+	<div class="container job-list">
+		<h3>Job Role List</h3>
+		{% if errormessage %}
+		<h5>{{ errormessage }}</h5>
+		{% else %}
+		<div class="card-container">
+			{% for jobRole in jobRoles %}
+			<div class="card mb-4 col-12">
+				<div class="card-body">
+					<h5 class="card-title d-flex justify-content-between">
+						<div class="card-role-name role-name">{{ jobRole.roleName }}</div>
+						<div class="card-closing-date valid-date">Valid: {{ jobRole.closingDate | formatDate }}</div>
+					</h5>
+					<div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
+                        <div class="card-location-info location"><i class="fa-solid fa-location-dot"></i> {{ jobRole.jobRoleLocation }}</div>
+					</div>
+					<div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
+						<div class="card-capability-info capability"><i class="fa-solid fa-briefcase"></i> Capability: {{ jobRole.capabilityName }}</div>
+					</div>
+					<div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
+						<div class="card-band-info band"><i class="fa-solid fa-signal"></i></i> Band: {{ jobRole.bandName }}</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %} {% endif %}
+		</div>
+	</div>
 </div>
 
 {% endblock %}
