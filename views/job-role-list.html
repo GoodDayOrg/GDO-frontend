@@ -47,7 +47,7 @@ block content %}
 		{% else %}
 		<div class="card-container">
 			{% for jobRole in jobRoles %}
-			<div class="card mb-4 col-12">
+			<a href="/job/{{ jobRole.jobRoleId }}" class="card mb-4 col-12">
 				<div class="card-body">
 					<h5 class="card-title d-flex justify-content-between">
 						<div class="card-role-name role-name">{{ jobRole.roleName }}</div>
@@ -63,7 +63,7 @@ block content %}
 						<div class="card-band-info band"><i class="fa-solid fa-signal"></i></i> Band: {{ jobRole.bandName }}</div>
 					</div>
 				</div>
-			</div>
+			</a>
 			{% endfor %} {% endif %}
 		</div>
 	</div>
