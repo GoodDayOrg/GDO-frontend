@@ -326,3 +326,7 @@ main .hero-section h2 {
 .footer .row {
     align-items: center;
 }
+
+.login-page {
+    height: 70vh;
+}
