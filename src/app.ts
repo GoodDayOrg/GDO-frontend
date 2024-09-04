@@ -2,7 +2,7 @@ import express from 'express';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
 import session from 'express-session';
-import { getJobRoles } from './controllers/JobRoleController';
+import { getJobRoles, getMyApplications } from './controllers/JobRoleController';
 import { formatDate } from './utils/JobRoleUtil';
 
 const app = express();
@@ -37,6 +37,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 app.get('/job-roles', getJobRoles);
+app.get('/my-job-applications', getMyApplications);
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');
