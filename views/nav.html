@@ -5,7 +5,7 @@
     {% if session.token %}
     <div class="d-flex align-items-center">
         {% if userRole %}
-        <div class="me-3 fw-bold">Hello, <span class="text-primary">{{ userRole }}</span>!</div>
+        <div class="me-3 fw-bold">Hello, <span class="text-primary" id="user-role">{{ userRole }}</span>!</div>
         {% endif %}
         <a href="/logout" class="btn btn-outline-danger">Logout</a>
     </div>
