@@ -1,8 +1,9 @@
 import { AxiosResponse } from 'axios';
 import { JobRoleResponse } from '../models/JobRoleResponse';
 import { axiosInstance } from '../config';
-import { MyApplicationsResponse, JobRoleDetailsResponse} from '../models/MyApplicationsResponse';
+import { MyApplicationsResponse } from '../models/MyApplicationsResponse';
 import { getHeader } from '../utils/AuthUtil';
+import { JobRoleDetailsResponse } from '../models/JobRoleDetailsResponse';
 
 export const getAllJobRoles = async (
   token: String,
@@ -18,20 +19,29 @@ export const getAllJobRoles = async (
   }
 };
 
-export const getMyAllApplications = async (): Promise<MyApplicationsResponse[]> => { // do zmiany struktura MyApplicationsResponse
+export const getMyAllApplications = async (
+  token: String,
+): Promise<MyApplicationsResponse[]> => {
+  // do zmiany struktura MyApplicationsResponse
   try {
-    const response: AxiosResponse = await axiosInstance.get('/api/job-roles'); // do zmiany api url
+    const response: AxiosResponse = await axiosInstance.get(
+      '/api/job-roles',
+      getHeader(token),
+    ); // do zmiany api url
     return response.data;
   } catch (e) {
     throw new Error("Currently You don't have any applications");
-  }}
-  
+  }
+};
+
 export const getJobRoleById = async (
   id: string,
+  token: String,
 ): Promise<JobRoleDetailsResponse> => {
   try {
     const response: AxiosResponse = await axiosInstance.get(
       '/api/job-roles/' + id,
+      getHeader(token),
     );
     return response.data;
   } catch (e) {

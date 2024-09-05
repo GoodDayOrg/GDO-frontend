@@ -124,6 +124,7 @@ body header nav {
 body header nav .btn-outline-primary {
     font-weight: bold;
     color: var(--main-blue);
+    margin-right:15px;
     border-color: var(--main-blue);
 }
 
@@ -356,6 +357,7 @@ main .hero-section h2 {
 
 .app-list-container  .app-list .card-container {
     display: flex;
+    flex-direction: column;
     gap: 10px 20px;
     margin: 30px 0;
     position: relative;
@@ -363,8 +365,8 @@ main .hero-section h2 {
 }
 
 .app-list-container .app-list .card-container .card {
-    width: 48%;
-    height: 12rem;
+    width: 90%;
+    height: 5rem;
     box-shadow: 3px 1px 7px var(--break-line);
     transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
     border: none;
@@ -381,7 +383,8 @@ main .hero-section h2 {
 
 .app-list-container  .app-list .card-container .card .card-body {
     display: flex;
-    flex-direction: column;
+    margin: 0 40px;
+    justify-content: space-between;
 }
 
 .card-app-link{
