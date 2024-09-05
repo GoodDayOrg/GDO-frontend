@@ -377,7 +377,8 @@ main .hero-section h2 {
 
 .app-list-container .app-list .card-container .card:hover {
     transform: scale(1.02);
-    box-shadow: 5px 5px 10px var(--break-line-hover);
+    box-shadow: 3px 3px 10px var(--main-blue);
+    border: 1px solid var(--main-green);
     z-index: 1;
 }
 
