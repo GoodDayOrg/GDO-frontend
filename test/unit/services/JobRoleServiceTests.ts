@@ -94,7 +94,7 @@ describe('JobRoleService', function () {
         jobRoleLocation: ['Gdansk', 'Buenos Aires'],
       };
 
-      const results = await getFilteredJobRoles(filterParams);
+      const results = await getFilteredJobRoles('token', filterParams);
       results[0].closingDate = new Date(results[0].closingDate);
 
       expect(results[0]).to.deep.equal(jobRoleResponse);
@@ -104,7 +104,7 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/filter').reply(404);
 
       try {
-        await getFilteredJobRoles();
+        await getFilteredJobRoles('token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal('Currently no job-roles available');
@@ -116,7 +116,7 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/filter').reply(500);
 
       try {
-        await getFilteredJobRoles();
+        await getFilteredJobRoles('token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal('Currently no job-roles available');

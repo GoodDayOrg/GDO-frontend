@@ -19,9 +19,15 @@ export const extractJobRoleFilterParams = (
     roleName: req.query.roleName as string | undefined,
     jobRoleLocation: req.query.jobRoleLocation as string[] | undefined,
     capabilityId: req.query.capabilityId
-      ? [Number(req.query.capabilityId)]
+      ? Array.isArray(req.query.capabilityId)
+        ? (req.query.capabilityId as string[]).map(Number)
+        : [Number(req.query.capabilityId)]
       : undefined,
-    bandId: req.query.bandId ? [Number(req.query.bandId)] : undefined,
+    bandId: req.query.bandId
+      ? Array.isArray(req.query.bandId)
+        ? (req.query.bandId as string[]).map(Number)
+        : [Number(req.query.bandId)]
+      : undefined,
     closingDate: req.query.closingDate as string | undefined,
   };
 };

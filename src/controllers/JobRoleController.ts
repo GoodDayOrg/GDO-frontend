@@ -13,7 +13,7 @@ export const getJobRolesFiltered = async (
 ): Promise<void> => {
   try {
     const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
-    const jobRoles = await getFilteredJobRoles(filters);
+    const jobRoles = await getFilteredJobRoles(req.session.token, filters);
 
     res.render('job-role-list', { jobRoles });
   } catch (e) {

@@ -6,6 +6,7 @@ import { JobRoleDetailsResponse } from '../models/JobRoleDetailsResponse';
 import { getHeader } from '../utils/AuthUtil';
 
 export const getFilteredJobRoles = async (
+  token: String,
   filters?: JobRoleFilterParams,
 ): Promise<JobRoleResponse[]> => {
   try {
@@ -16,6 +17,7 @@ export const getFilteredJobRoles = async (
         paramsSerializer: {
           indexes: null,
         },
+        ...getHeader(token),
       },
     );
     return response.data;

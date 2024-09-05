@@ -146,7 +146,11 @@ describe('JobRoleContoller', function () {
 
       sinon.stub(JobRoleService, 'getFilteredJobRoles').resolves(jobRolesList);
 
-      const req = {} as express.Request;
+      const req = {
+        session: {
+          token: 'token',
+        },
+      } as unknown as express.Request;
 
       req.query = {
         location: ['Belfast', 'Buenos Aires'],
@@ -166,7 +170,11 @@ describe('JobRoleContoller', function () {
         .stub(JobRoleService, 'getFilteredJobRoles')
         .rejects(new Error(errorMessage));
 
-      const req = {} as express.Request;
+      const req = {
+        session: {
+          token: 'token',
+        },
+      } as unknown as express.Request;
 
       req.query = {
         roleName: 'Test',
