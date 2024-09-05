@@ -120,6 +120,25 @@ body header nav {
     align-items: center;
     height: 10%;
 }
+body header nav div {
+    color: var(--main-blue);
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+body header nav span {
+    color: var(--main-green);
+}
+
+body header nav .btn-outline-danger{
+    color: var(--second-orange);
+    border-color: var(--second-orange);
+}
+
+body header nav .btn-outline-danger:hover{
+    background-color: var(--second-orange);
+    border-color: var(--second-orange);
+}
 
 body header nav .btn-outline-primary {
     font-weight: bold;
@@ -422,4 +441,17 @@ main .hero-section h2 {
 
 .login-page {
     height: 70vh;
+}
+
+.login-page .btn-primary {
+    background-color: var(--main-blue);
+    border: 0px solid transparent;
+    transition: 0.2s;
+    font-family: 'KainosFont';
+    font-weight: normal;
+}
+
+.login-page .btn-primary:hover {
+    background-color: var(--main-mid-blue);
+    border-color: none;
 }
