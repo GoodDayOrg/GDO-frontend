@@ -1,16 +1,16 @@
-{% extends "base.html" %} {% block title %} Job roles list {% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %} Job roles list {% endblock %} {%
+block content %}
 
 <div class="hero-section">
-	<img src="/assets/images/energy_lines.webp" alt="" />
-	<h2>Find your new path</h2>
+  <img src="/assets/images/energy_lines.webp" alt="" />
+  <h2>Find your new path</h2>
 </div>
 <div class="container job-list-container">
-	<!-- <aside class="side-bar">
+  <!-- <aside class="side-bar">
 		<h5>Filters</h5> -->
-		<!-- here will START nunjack loop -->
-		<!-- <div class="filter-container">
+  <!-- here will START nunjack loop -->
+  <!-- <div class="filter-container">
 			<h6 class="filter-title">First type</h6>
-
                 <ul class="filter-list-container">
                     <li class="filter-text-element">Examples</li>
                     <li class="filter-text-element">To</li>
@@ -27,8 +27,8 @@
                 </ul>
 
 		</div> -->
-		<!-- here will STOP nunjack loop -->
-		<!-- <div class="filter-container">
+  <!-- here will STOP nunjack loop -->
+  <!-- <div class="filter-container">
 			<h6 class="filter-title">Second type</h6>
 			<ul class="filter-list-container">
                 <li class="filter-text-element">Another</li>
@@ -47,7 +47,7 @@
 		{% else %}
 		<div class="card-container">
 			{% for jobRole in jobRoles %}
-			<div class="card mb-4 col-12">
+			<a href="/job/{{ jobRole.jobRoleId }}" class="card mb-4 col-12">
 				<div class="card-body">
 					<h5 class="card-title d-flex justify-content-between">
 						<div class="card-role-name role-name">{{ jobRole.roleName }}</div>
@@ -63,7 +63,7 @@
 						<div class="card-band-info band"><i class="fa-solid fa-signal"></i></i> Band: {{ jobRole.bandName }}</div>
 					</div>
 				</div>
-			</div>
+			</a>
 			{% endfor %} {% endif %}
 		</div>
 	</div>

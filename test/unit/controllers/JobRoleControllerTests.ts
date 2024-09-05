@@ -5,6 +5,7 @@ import { JobRoleResponse } from '../../../src/models/JobRoleResponse';
 import sinon from 'sinon';
 import { afterEach, describe, it } from 'node:test';
 import express from 'express';
+import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
 
 const jobRoleResponse: JobRoleResponse = {
   jobRoleId: 1,
@@ -13,6 +14,22 @@ const jobRoleResponse: JobRoleResponse = {
   capabilityName: 'delivery',
   bandName: 'Architect',
   closingDate: new Date('10/10/2024'),
+};
+
+const jobRoleDetailsResponse: JobRoleDetailsResponse = {
+  jobRoleId: 1,
+  roleName: 'Tester',
+  jobRoleLocation: 'Helsinki',
+  capabilityName: 'Business Development & Marketing',
+  bandName: 'Apprentice',
+  closingDate: new Date('10/10/2024'),
+  statusName: 'open',
+  description:
+    'In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.',
+  responsibilities:
+    'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.',
+  sharepointUrl: 'https://cdc.gov/metus/sapien/ut/nunc/vestibulum.js',
+  numberOfOpenPositions: 3,
 };
 
 interface MockResponse extends express.Response {
@@ -67,6 +84,53 @@ describe('JobRoleContoller', function () {
 
       expect(res.render.calledOnce).to.be.true;
       expect(res.render.calledWith('job-role-list')).to.be.true;
+      expect(res.locals.errormessage).to.equal(errorMessage);
+    });
+  });
+
+  describe('getSingleJobRole', function () {
+    it('should render view with details of job role', async () => {
+      const jobRoleDetails = jobRoleDetailsResponse;
+      sinon.stub(JobRoleService, 'getJobRoleById').resolves(jobRoleDetails);
+
+      const req = { params: { id: 1 } } as unknown as express.Request;
+      const res = {
+        render: sinon.spy(),
+      } as MockResponse;
+
+      await JobRoleController.getSingleJobRole(req, res);
+
+      const currentId = req.params.id;
+      const nextId = 2;
+      const prevId = 0;
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(
+        res.render.calledWith('job-role-details', {
+          jobRole: jobRoleDetails,
+          currentId,
+          nextId,
+          prevId,
+        }),
+      ).to.be.true;
+    });
+
+    it('should return error view, when id is invalid', async () => {
+      const errorMessage: string = 'Failed to get job role details.';
+      sinon
+        .stub(JobRoleService, 'getJobRoleById')
+        .rejects(new Error(errorMessage));
+
+      const req = { params: { id: 1 } } as unknown as express.Request;
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' },
+      } as MockResponse;
+
+      await JobRoleController.getSingleJobRole(req as express.Request, res);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render.calledWith('job-role-details')).to.be.true;
       expect(res.locals.errormessage).to.equal(errorMessage);
     });
   });

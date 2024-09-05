@@ -1,0 +1,128 @@
+:root {
+    --main-blue: #283583;
+    --main-green: #61a83f;
+    --main-white: #ffffff;
+    --main-mid-blue: #41679f;
+    --main-mid-green: #004631;
+    --main-grey: #575756;
+    --second-orange: #ec6608;
+    --second-green: #cfd600;
+    --second-blue: #009fe3;
+    --font-black: #2e2e2e;
+    --break-line: rgba(125, 125, 125, 0.515);
+    --break-line-hover: rgba(125, 125, 125, 0.715)
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+.job-role-hero-section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensures that the image and overlay stay within the section bounds */
+    background: rgb(40,53,131);
+    background: linear-gradient(90deg, rgba(40,53,131,1) 30%, rgba(65,103,159,1) 81%, rgba(40,53,131,1) 97%);
+    background-size: cover;
+}
+
+.job-role-hero-section img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: cover; /* Ensures the image covers the area without stretching */
+}
+
+.dark-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+    pointer-events: none; /* Ensures the overlay doesn’t block interactions with the image */
+}
+
+.job-role-title {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    color: white;
+    z-index: 1;
+    text-align: center;
+    font-family: 'KainosSecondary';
+    font-size: 3rem;
+    text-shadow: 0 0 20px black;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* border-bottom: 1px solid var(--break-line); */
+}
+
+.details-header .details-action {
+    display: flex;
+
+}
+
+.details-header .details-action .hide {
+    display: none;
+}
+
+.details-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; 
+    border-bottom: 1px solid var(--break-line);  
+}
+
+.details-info .detail-list-element {
+    color: var(--main-grey);
+}
+
+.details-info i {
+    margin: 5px 10px;
+    width: 16px;
+    height: 16px;
+}
+
+.details-content {
+    font-weight: normal;
+    font-style: normal;
+    font-size: 1.2rem;
+    padding: 2% 0;
+    margin-bottom: 50px;
+    color: var(--font-black);
+}
+
+.details-content h5 {
+    font-weight: bold;
+}
+
+
+/* OVERRIDING BOOTSTRAP */
+
+.btn-light {
+    height: 40px;
+    width: 40px;
+    padding: 5px 5px;
+    margin: 0 5px;
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    padding: 0;              
+    background-color: #f8f9fa; 
+    border: none;              
+    cursor: pointer;          
+}
+
+.btn-light img {
+    height: 25px;  
+    width: auto;    
+}
+

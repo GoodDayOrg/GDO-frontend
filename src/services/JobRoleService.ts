@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { JobRoleResponse } from '../models/JobRoleResponse';
 import { axiosInstance } from '../config';
+import { JobRoleDetailsResponse } from '../models/JobRoleDetailsResponse';
 import { getHeader } from '../utils/AuthUtil';
 
 export const getAllJobRoles = async (
@@ -14,5 +15,18 @@ export const getAllJobRoles = async (
     return response.data;
   } catch (e) {
     throw new Error('Currently no job-roles available');
+  }
+};
+
+export const getJobRoleById = async (
+  id: string,
+): Promise<JobRoleDetailsResponse> => {
+  try {
+    const response: AxiosResponse = await axiosInstance.get(
+      '/api/job-roles/' + id,
+    );
+    return response.data;
+  } catch (e) {
+    throw new Error('Failed to get job role details.');
   }
 };
