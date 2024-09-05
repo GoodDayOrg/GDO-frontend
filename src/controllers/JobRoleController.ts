@@ -1,5 +1,9 @@
 import express from 'express';
-import { getFilteredJobRoles , getAllJobRoles } from '../services/JobRoleService';
+import {
+  getFilteredJobRoles,
+  getJobRoleById,
+  getAllJobRoles,
+} from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
 
@@ -10,7 +14,7 @@ export const getJobRolesFiltered = async (
   try {
     const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
     const jobRoles = await getFilteredJobRoles(filters);
-    
+
     res.render('job-role-list', { jobRoles });
   } catch (e) {
     res.locals.errormessage = e.message;
@@ -23,13 +27,32 @@ export const getJobRoles = async (
   res: express.Response,
 ): Promise<void> => {
   try {
-    const jobRoles = await getAllJobRoles();
-    
-    res.render('job-role-list', { jobRoles });
+    res.render('job-role-list', {
+      jobRoles: await getAllJobRoles(req.session.token),
+    });
   } catch (e) {
     res.locals.errormessage = e.message;
     res.render('job-role-list');
   }
 };
 
-
+export const getSingleJobRole = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    const currentId = parseInt(req.params.id, 10);
+    const nextId = currentId + 1;
+    const prevId = currentId - 1;
+    const jobRole = await getJobRoleById(req.params.id);
+    res.render('job-role-details', {
+      jobRole,
+      currentId,
+      nextId,
+      prevId,
+    });
+  } catch (e) {
+    res.locals.errormessage = e.message;
+    res.render('job-role-details');
+  }
+};

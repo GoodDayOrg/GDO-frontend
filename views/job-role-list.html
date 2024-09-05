@@ -1,4 +1,5 @@
-{% extends "base.html" %} {% block title %} Job roles list {% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %} Job roles list {% endblock %} {%
+block content %}
 
 <div class="hero-section">
 	<div id="hero-img">
@@ -15,24 +16,24 @@
 		{% else %}
 		<div class="card-container">
 			{% for jobRole in jobRoles %}
-			<div class="card mb-4 col-12">
+			<a href="/job/{{ jobRole.jobRoleId }}" class="card mb-4 col-12">
 				<div class="card-body">
 					<h5 class="card-title d-flex justify-content-between">
-						<div class="card-role-name">{{ jobRole.roleName }}</div>
-						<div class="card-closing-date">Valid: {{ jobRole.closingDate | formatDate }}</div>
+						<div class="card-role-name role-name">{{ jobRole.roleName }}</div>
+						<div class="card-closing-date valid-date">Valid: {{ jobRole.closingDate | formatDate }}</div>
 					</h5>
 					<div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
-                        <div><i class="fa-solid fa-location-dot"></i> {{ jobRole.jobRoleLocation }}</div>
+                        <div class="card-location-info location"><i class="fa-solid fa-location-dot"></i> {{ jobRole.jobRoleLocation }}</div>
 					</div>
 
 					<div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
-						<div><i class="fa-solid fa-briefcase"></i> Capability: {{ jobRole.capabilityName }}</div>
+						<div class="card-capability-info capability"><i class="fa-solid fa-briefcase"></i> Capability: {{ jobRole.capabilityName }}</div>
 					</div>
 					<div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
-						<div><i class="fa-solid fa-signal"></i></i> Band: {{ jobRole.bandName }}</div>
+						<div class="card-band-info band"><i class="fa-solid fa-signal"></i></i> Band: {{ jobRole.bandName }}</div>
 					</div>
 				</div>
-			</div>
+			</a>
 			{% endfor %} {% endif %}
 		</div>
 	</div>
