@@ -7,7 +7,12 @@ import {
   logOutUser,
   postLoginForm,
 } from './controllers/AuthController';
-import { getJobRoles, getSingleJobRole } from './controllers/JobRoleController';
+import {
+  getJobApplyForm,
+  getJobRoles,
+  getSingleJobRole,
+  postJobApplyForm,
+} from './controllers/JobRoleController';
 import { formatDate } from './utils/JobRoleUtil';
 import { allowRoles, redirectIfLogged } from './middlewares/AuthMiddleware';
 
@@ -47,6 +52,16 @@ app.get('/job/:id', getSingleJobRole);
 app.get('/login', redirectIfLogged(), getLoginForm);
 app.post('/login', redirectIfLogged(), postLoginForm);
 app.get('/logout', logOutUser);
+app.get(
+  '/apply/:id',
+  // allowRoles(),
+  getJobApplyForm,
+);
+app.post(
+  '/apply/:id',
+  // allowRoles,
+  postJobApplyForm,
+);
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');

@@ -30,3 +30,42 @@ export const getJobRoleById = async (
     throw new Error('Failed to get job role details.');
   }
 };
+
+export const getApplyFormById = async (
+  id: string,
+  // token: String,
+): Promise<JobRoleDetailsResponse> => {
+  // do zmiany
+  try {
+    const response: AxiosResponse = await axiosInstance.get(
+      '/api/job-roles/' + id,
+    );
+    return response.data;
+  } catch (e) {
+    throw new Error('Failed to get job apply form.');
+  }
+};
+
+export const postApplyFileForm = async (
+  id: string,
+  file: File,
+): Promise<JobRoleDetailsResponse> => {
+  // do zmiany
+  try {
+    const formData = new FormData();
+    formData.append('pdf', file);
+    const response: AxiosResponse = await axiosInstance.post(
+      '/api/job-roles/' + id,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      },
+    );
+    console.log(response);
+    return response.data;
+  } catch (e) {
+    throw new Error('Failed to get job apply form.');
+  }
+};

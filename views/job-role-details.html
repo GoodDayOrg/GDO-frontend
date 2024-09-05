@@ -17,6 +17,8 @@
   <div class="details-header">
       <h3 id="job-role-name">{{ jobRole.roleName }}</h3>
       <div class="details-action">
+        <a href="/apply/{{currentId}}">APPPLY_FOR_A JOB</a>
+
           <a href="/job-roles" class="btn btn-light" id="go-back-button"><img class="btn-icon"src="/assets/images/back.png" alt="To list"></a>
           <a href="/job/{{ prevId }}" class="btn {% if currentId == 1 %}hide{% endif %} btn-light" id="previous-button">
             <img class="btn-icon" src="/assets/images/arrow_left.png" alt="Previous">
