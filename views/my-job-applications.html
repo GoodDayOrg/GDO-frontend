@@ -13,13 +13,13 @@
         <div class="card-container">
             {% for application in applications %}
             <div class="card mb-4 col-12">
-                <a class="card-app-link" href="/job/{{ application.jobRoleId}}">
+                <a class="card-app-link" href="/job/{{ application.jobRoleId }}">
                     <div class="card-body">
                         <h5 class="card-title d-flex justify-content-between">
-                            <div class="card-app-role-name app-role-name">Trainee Software Engineer</div>
+                            <div class="card-app-role-name app-role-name">{{ application.roleName }}</div>
                         </h5>
                         <div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
-                            <div class="card-progress-info progress-info"><i class="fa-solid fa-bars-progress"></i> In Progress</div>
+                            <div class="card-progress-info progress-info"><i class="fa-solid fa-bars-progress"></i> {{ application.statusApplicationName }}</div>
                         </div>
                     </div>
                 </a>

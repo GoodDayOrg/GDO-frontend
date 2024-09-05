@@ -22,12 +22,11 @@ export const getAllJobRoles = async (
 export const getMyAllApplications = async (
   token: String,
 ): Promise<MyApplicationsResponse[]> => {
-  // do zmiany struktura MyApplicationsResponse
   try {
     const response: AxiosResponse = await axiosInstance.get(
-      '/api/job-roles',
+      '/api/job-roles/my-job-applications',
       getHeader(token),
-    ); // do zmiany api url
+    );
     return response.data;
   } catch (e) {
     throw new Error("Currently You don't have any applications");
