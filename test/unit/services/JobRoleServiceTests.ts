@@ -35,16 +35,22 @@ const jobRoleDetailsResponse: JobRoleDetailsResponse = {
   numberOfOpenPositions: 3,
 };
 
-const mock = new MockAdapter(axiosInstance);
+let mock: MockAdapter;
 
 describe('JobRoleService', function () {
+  beforeEach(() => {
+    mock = new MockAdapter(axiosInstance);
+  });
+  afterEach(() => {
+    mock.reset();
+  });
   describe('getAllJobRoles', function () {
     it('should return job roles from response', async () => {
       const data = [jobRoleResponse];
 
       mock.onGet(URL).reply(200, data);
 
-      const results = await getAllJobRoles();
+      const results = await getAllJobRoles('token');
       results[0].closingDate = new Date(results[0].closingDate);
 
       expect(results[0]).to.deep.equal(jobRoleResponse);
@@ -54,7 +60,7 @@ describe('JobRoleService', function () {
       mock.onGet(URL).reply(500);
 
       try {
-        await getAllJobRoles();
+        await getAllJobRoles('token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal('Currently no job-roles available');
@@ -66,7 +72,7 @@ describe('JobRoleService', function () {
       mock.onGet(URL).reply(404);
 
       try {
-        await getAllJobRoles();
+        await getAllJobRoles('token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal('Currently no job-roles available');

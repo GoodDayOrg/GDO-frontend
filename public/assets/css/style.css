@@ -47,7 +47,7 @@
     --break-line: rgba(125, 125, 125, 0.515);
     --break-line-hover: rgba(125, 125, 125, 0.715)
 }
-  
+
 
 body {
     font-family: 'KainosFont', 'KainosSecondary', sans-serif;
@@ -142,10 +142,10 @@ main .hero-section {
     position: relative;
     height: 10%;
     width: 100vw;
-    left: 50%; 
+    left: 50%;
     transform: translateX(-50%);
     background: linear-gradient(90deg, rgba(0,70,49,1) 1%, rgba(97,168,63,1) 35%, rgba(40,53,131,1) 73%);
-    z-index: 0; 
+    z-index: 0;
 }
 
 main .hero-section::before {
@@ -153,7 +153,7 @@ main .hero-section::before {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw; 
+    width: 100vw;
     background: linear-gradient(90deg, rgba(0,70,49,1) 1%, rgba(97,168,63,1) 35%, rgba(40,53,131,1) 73%);
     z-index: -1;
 }
@@ -168,9 +168,9 @@ main .hero-section img {
 }
 
 main .hero-section h2 {
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     color: white;
     z-index: 1;
@@ -367,3 +367,6 @@ main .hero-section h2 {
 }
 
 
+.login-page {
+    height: 70vh;
+}

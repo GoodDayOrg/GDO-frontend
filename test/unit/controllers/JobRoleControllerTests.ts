@@ -50,7 +50,11 @@ describe('JobRoleContoller', function () {
 
       sinon.stub(JobRoleService, 'getAllJobRoles').resolves(jobRolesList);
 
-      const req = {};
+      const req = {
+        session: {
+          token: 'token',
+        },
+      };
       const res = { render: sinon.spy() } as MockResponse;
 
       await JobRoleController.getJobRoles(req as express.Request, res);
@@ -66,7 +70,11 @@ describe('JobRoleContoller', function () {
         .stub(JobRoleService, 'getAllJobRoles')
         .rejects(new Error(errorMessage));
 
-      const req = {};
+      const req = {
+        session: {
+          token: 'token',
+        },
+      };
       const res = {
         render: sinon.spy(),
         locals: { errormessage: '' },
