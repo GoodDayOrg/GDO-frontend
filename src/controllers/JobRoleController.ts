@@ -15,7 +15,7 @@ export const getJobRolesFiltered = async (
     const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
     const jobRoles = await getFilteredJobRoles(req.session.token, filters);
 
-    res.render('job-role-list', { jobRoles });
+    res.render('job-role-list', { jobRoles, filters });
   } catch (e) {
     res.locals.errormessage = e.message;
     res.render('job-role-list');
@@ -27,8 +27,10 @@ export const getJobRoles = async (
   res: express.Response,
 ): Promise<void> => {
   try {
+    const jobRoles = await getAllJobRoles(req.session.token);
     res.render('job-role-list', {
-      jobRoles: await getAllJobRoles(req.session.token),
+      jobRoles,
+      filters: {},
     });
   } catch (e) {
     res.locals.errormessage = e.message;
