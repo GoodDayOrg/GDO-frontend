@@ -63,8 +63,12 @@ describe('JobRoleContoller', function () {
       await JobRoleController.getJobRoles(req, res);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render.calledWith('job-role-list', { jobRoles: jobRolesList }))
-        .to.be.true;
+      expect(
+        res.render.calledWith('job-role-list', {
+          jobRoles: jobRolesList,
+          filters: {},
+        }),
+      ).to.be.true;
     });
 
     it('should render view with error message when error thrown', async () => {
@@ -160,8 +164,12 @@ describe('JobRoleContoller', function () {
       await JobRoleController.getJobRolesFiltered(req as express.Request, res);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render.calledWith('job-role-list', { jobRoles: jobRolesList }))
-        .to.be.true;
+      expect(
+        res.render.calledWith('job-role-list', {
+          jobRoles: jobRolesList,
+          filters: {},
+        }),
+      ).to.be.true;
     });
 
     it('should render view with error message when error thrown', async () => {
