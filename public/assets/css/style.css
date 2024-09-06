@@ -58,8 +58,8 @@ body {
 }
 
 .home-page {
-    background: rgb(65,103,159);
-    background: radial-gradient(circle, rgba(65,103,159,1) 6%, rgba(40,53,131,1) 91%);
+    background: rgb(65, 103, 159);
+    background: radial-gradient(circle, rgba(65, 103, 159, 1) 6%, rgba(40, 53, 131, 1) 91%);
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -105,6 +105,7 @@ h5 {
     color: var(--font-black);
     font-size: 1.5rem;
 }
+
 /* HEADER */
 body {
     display: flex;
@@ -140,11 +141,11 @@ body header nav a img {
 
 main .hero-section {
     position: relative;
-    height: 10%;
+    max-height: 10%;
     width: 100vw;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(90deg, rgba(0,70,49,1) 1%, rgba(97,168,63,1) 35%, rgba(40,53,131,1) 73%);
+    background: linear-gradient(90deg, rgba(0, 70, 49, 1) 1%, rgba(97, 168, 63, 1) 35%, rgba(40, 53, 131, 1) 73%);
     z-index: 0;
 }
 
@@ -154,7 +155,7 @@ main .hero-section::before {
     top: 0;
     left: 0;
     width: 100vw;
-    background: linear-gradient(90deg, rgba(0,70,49,1) 1%, rgba(97,168,63,1) 35%, rgba(40,53,131,1) 73%);
+    background: linear-gradient(90deg, rgba(0, 70, 49, 1) 1%, rgba(97, 168, 63, 1) 35%, rgba(40, 53, 131, 1) 73%);
     z-index: -1;
 }
 
@@ -162,9 +163,15 @@ main .hero-section img {
     display: block;
     margin: 0 auto;
     padding: 30px 0;
-    height: 20%;
-    width: 60%;
+    height: 100%;
+    width: 100%;
     object-fit: fill;
+}
+
+#hero-img {
+    width: 65%;
+    margin: auto;
+    height: 35vh;
 }
 
 main .hero-section h2 {
@@ -181,7 +188,6 @@ main .hero-section h2 {
 }
 
 /* MAIN - JOB ROLE LIST SECTION */
-
 /* FILTERS */
 .job-list-container {
     display: flex;
@@ -190,51 +196,92 @@ main .hero-section h2 {
 }
 
 .job-list-container .side-bar {
-    margin: 15px 0;
-    width: 15%;
+    margin: 15px 20px;
+    width: 20%;
 }
 
 .job-list-container .side-bar h5 {
     border-bottom: 1px solid var(--break-line);
 }
-
-.job-list-container .side-bar .filter-container {
-    margin: 20px 0;
+.checkbox-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    color: #333;
 }
 
-.filter-container .filter-title {
-    margin: 20px 0;
+.checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
 }
 
-.job-list-container .side-bar .filter-container .filter-list-container {
-    display: flex;
-    flex-direction: column;
-    box-shadow: inset  0 1px 5px var(--break-line);
-    max-height: 260px;
-    overflow-y: auto;
-    padding: 10px;
-    background-color: #fbfbfb;
-    list-style-type: none;
+.side-bar {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0px 20px;
+    height: 100%;
+    width: 10%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.filter-list-container .filter-text-element {
-    font-size: 0.8rem;
-    padding: 5px 0;
+.side-bar h5 {
+    font-size: 1.3em;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.filter-title {
+    font-size: 1em;
+    color: #000000;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.filter-container {
+    margin-bottom: 20px;
+}
+
+.no-border-input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ffffff;
+    border: none;
     color: var(--main-grey);
-    transition: 0.3s;
+    font-size: 0.8em;
 }
 
-.filter-list-container .filter-text-element:hover {
-    font-size: 0.8rem;
+.checkbox-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    color: var(--font-black)
+        /* font-weight: normal; */
+}
+
+.checkbox-group input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.btn-outline-primary {
     color: var(--main-blue);
-    background-color: var(--main-white);
+    border-color: var(--main-blue);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--main-blue);
+    border-color: var(--main-blue);
 }
 
 
 /* CARDS */
+.job-list-container {
+    width: 110vw;
+}
+
 .job-list-container .job-list {
-    /* width: 70%; */
-    width: 100vw;
+    width: 85%;
 }
 
 .job-list-container .job-list h3 {
@@ -294,8 +341,8 @@ main .hero-section h2 {
 /* FOOTER */
 
 .footer {
-    background: rgb(40,53,131);
-    background: linear-gradient(90deg, rgba(40,53,131,1) 30%, rgba(65,103,159,1) 81%, rgba(40,53,131,1) 97%);
+    background: rgb(40, 53, 131);
+    background: linear-gradient(90deg, rgba(40, 53, 131, 1) 30%, rgba(65, 103, 159, 1) 81%, rgba(40, 53, 131, 1) 97%);
     background-size: cover;
     color: white;
     position: relative;
@@ -308,15 +355,16 @@ main .hero-section h2 {
     display: block;
     margin: 0 auto;
     padding: 30px 0;
-    height: 20%;
-    width: 60%;
+    height: 100%;
+    width: 100%;
     object-fit: fill;
     z-index: -1;
 }
 
-.footer-img {
-    height: 200px;
-    width: 100%;
+#rescale-img {
+    width: 65%;
+    margin: auto;
+    height: 35vh;
 }
 
 .footer a {
@@ -324,10 +372,6 @@ main .hero-section h2 {
     font-weight: 100;
     transition: color 0.3s;
     text-decoration: none;
-}
-
-.footer a:hover {
-    color: #00aced; /* Change the color on hover */
 }
 
 .footer p {
