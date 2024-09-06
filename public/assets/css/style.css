@@ -444,7 +444,7 @@ main .hero-section h2 {
 }
 
 .login-page .btn-primary {
-    background-color: var(--main-blue);
+    background-color: var(--main-green);
     border: 0px solid transparent;
     transition: 0.2s;
     font-family: 'KainosFont';
@@ -452,6 +452,5 @@ main .hero-section h2 {
 }
 
 .login-page .btn-primary:hover {
-    background-color: var(--main-mid-blue);
-    border-color: none;
+    box-shadow: 0 0 3px var(--main-green);
 }
