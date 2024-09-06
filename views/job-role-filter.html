@@ -11,8 +11,8 @@
         <div class="filter-container">
             <h6 class="filter-title">Location</h6>
             <div class="checkbox-group">
-                {% set locations = ['Belfast', 'Atlanta', 'Indianapolis', 'Buenos Aires', 'Antwerp', 'Toronto', 'Copenhagen', 'Helsinki', 'Paris', 'Frankfurt am Main', 'Gdańsk'] %}
-                {% set selectedLocations = (filters.jobRoleLocation or '').split(',') %}
+                {% set locations = ['Belfast', 'Atlanta', 'Indianapolis', 'Buenos Aires', 'Antwerp', 'Toronto', 'Copenhagen', 'Helsinki', 'Paris', 'Frankfurt am Main', 'Gdansk'] %}
+                {% set selectedLocations = (filters.jobRoleLocation or '') %}
                 {% for location in locations %}
                     <label>
                         <input type="checkbox" name="jobRoleLocation" value="{{ location }}" {% if location in selectedLocations %} checked {% endif %}> {{ location }}
@@ -26,7 +26,7 @@
             <h6 class="filter-title">Capability</h6>
             <div class="checkbox-group">
                 {% set capabilities = ['Applied Innovation', 'Business Development & Marketing', 'Business Services Support', 'Cyber Security', 'Data & AI', 'Delivery Management', 'Engineering', 'Experience Design', 'Platforms', 'Pre-Sales', 'Product & Digital Advisory', 'Quality Assurance'] %}
-                {% set selectedCapabilities = (filters.capabilityName or '').split(',') %}
+                {% set selectedCapabilities = (filters.capabilityName or '') %}
                 {% for capability in capabilities %}
                     <label>
                         <input type="checkbox" name="capabilityName" value="{{ capability }}" {% if capability in selectedCapabilities %} checked {% endif %}> {{ capability }}
@@ -40,7 +40,7 @@
             <h6 class="filter-title">Band</h6>
             <div class="checkbox-group">
                 {% set bands = ['Apprentice', 'Trainee', 'Associate', 'Senior Associate', 'Consultant', 'Principal', 'Lead', 'Manager'] %}
-                {% set selectedBands = (filters.bandName or '').split(',') %}
+                {% set selectedBands = (filters.bandName or '') %}
                 {% for band in bands %}
                     <label>
                         <input type="checkbox" name="bandName" value="{{ band }}" {% if band in selectedBands %} checked {% endif %}> {{ band }}

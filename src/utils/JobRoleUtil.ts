@@ -15,13 +15,24 @@ export const formatDate = (date?: Date): string => {
 export const extractJobRoleFilterParams = (
   req: express.Request,
 ): JobRoleFilterParams => {
-  return {
-    roleName: req.query.roleName as string | undefined,
-    jobRoleLocation: req.query.jobRoleLocation as string[] | undefined,
-    capabilityName: req.query.capabilityName
-      ? (req.query.capabilityName as string[])
-      : undefined,
-    bandName: req.query.bandName ? (req.query.bandName as string[]) : undefined,
-    closingDate: req.query.closingDate as string | undefined,
-  };
+  const params: JobRoleFilterParams = {};
+
+  if (req.query.roleName) {
+    params.roleName = req.query.roleName as string;
+  }
+  if (req.query.jobRoleLocation) {
+    console.log();
+    params.jobRoleLocation = req.query.jobRoleLocation as string[];
+  }
+  if (req.query.capabilityName) {
+    params.capabilityName = req.query.capabilityName as string[];
+  }
+  if (req.query.bandName) {
+    params.bandName = req.query.bandName as string[];
+  }
+  if (req.query.closingDate) {
+    params.closingDate = req.query.closingDate as string;
+  }
+
+  return params;
 };
