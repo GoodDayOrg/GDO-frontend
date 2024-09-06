@@ -21,7 +21,6 @@ export const extractJobRoleFilterParams = (
     params.roleName = req.query.roleName as string;
   }
   if (req.query.jobRoleLocation) {
-    console.log();
     params.jobRoleLocation = req.query.jobRoleLocation as string[];
   }
   if (req.query.capabilityName) {
