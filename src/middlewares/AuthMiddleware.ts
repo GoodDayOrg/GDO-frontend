@@ -48,6 +48,6 @@ export const redirectIfLogged = (): ((
     if (req.session.token) {
       return res.redirect('/');
     }
-    next(); // Call next if no redirection is done
+    next();
   };
 };
