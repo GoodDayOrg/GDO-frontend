@@ -1,5 +1,8 @@
 import assert from 'assert';
-import { extractJobRoleFilterParams, formatDate } from '../../../src/utils/JobRoleUtil';
+import {
+  extractJobRoleFilterParams,
+  formatDate,
+} from '../../../src/utils/JobRoleUtil';
 import express from 'express';
 
 describe('Format Date to LocalDateString', () => {
@@ -19,18 +22,18 @@ describe('extractJobRoleFilterParams', () => {
       query: {
         roleName: 'Developer',
         jobRoleLocation: 'NYC',
-        capabilityId: '1',
-        bandId: '2',
+        capabilityName: '1',
+        bandName: '2',
         closingDate: '2023-09-01',
       },
-    }as unknown as express.Request;
+    } as unknown as express.Request;
 
     const result = extractJobRoleFilterParams(mockRequest);
 
     assert.equal(result.roleName, 'Developer');
     assert.equal(result.jobRoleLocation, 'NYC');
-    assert.equal(result.capabilityId, 1);
-    assert.equal(result.bandId, 2);
+    assert.equal(result.capabilityName, '1');
+    assert.equal(result.bandName, '2');
     assert.equal(result.closingDate, '2023-09-01');
   });
 
@@ -45,34 +48,8 @@ describe('extractJobRoleFilterParams', () => {
 
     assert.equal(result.roleName, 'Developer');
     assert.equal(result.jobRoleLocation, undefined);
-    assert.equal(result.capabilityId, undefined);
-    assert.equal(result.bandId, undefined);
+    assert.equal(result.capabilityName, undefined);
+    assert.equal(result.bandName, undefined);
     assert.equal(result.closingDate, undefined);
-  });
-
-  it('should convert numeric strings to numbers', () => {
-    const mockRequest = {
-      query: {
-        capabilityId: '5',
-        bandId: '10',
-      },
-    } as unknown as express.Request;
-
-    const result = extractJobRoleFilterParams(mockRequest);
-
-    assert.equal(result.capabilityId, 5);
-    assert.equal(result.bandId, 10);
-  });
-
-  it('should return undefined for invalid number conversions', () => {
-    const mockRequest = {
-      query: {
-        capabilityId: 'not-a-number',
-      },
-    } as unknown as express.Request;
-
-    const result = extractJobRoleFilterParams(mockRequest);
-    assert.ok(result.capabilityId?.length === 1 && Number.isNaN(result.capabilityId[0]));
-    assert.ok(Number.isNaN(result.capabilityId[0]));
   });
 });

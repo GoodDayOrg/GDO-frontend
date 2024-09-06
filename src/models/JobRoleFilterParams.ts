@@ -1,8 +1,7 @@
 export type JobRoleFilterParams = {
-    roleName?: string;
-    jobRoleLocation?: string[];
-    capabilityId?: Number[];
-    bandId?: Number[];
-    closingDate?: string;
-  };
-  
+  roleName?: string;
+  jobRoleLocation?: string[];
+  capabilityName?: string[];
+  bandName?: string[];
+  closingDate?: string;
+};
