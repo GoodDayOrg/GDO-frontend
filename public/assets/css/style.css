@@ -382,51 +382,60 @@ main .hero-section h2 {
     align-items: center;
 }
 
-input[type="file"] {
-    color: black;
+#file-input-label{
+    color: var(--main-blue);
     display: inline-block;
-    background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
-    border: 1px solid #7e7acc;
-    transition: 1s;
+    background: #f1f1f2;
+    transition: 0.3s;
     border-radius: 10px;
-    padding: 5px 8px;
+    padding: 15px;
     outline: none;
     white-space: nowrap;
     -webkit-user-select: none;
     cursor: pointer;
     text-shadow: 1px 1px #fff;
-    font-weight: 300;
+    font-weight: 100;
     font-size: 15pt;
-    width: 40%;
+    min-width: 35vw;
+    text-align: center;
+    border: 1px solid #d8d8d8;
+    margin-bottom: 30px;
+    max-width: 90%;
+
+
 }
 
-input[type="file"]::-webkit-file-upload-button {
-    visibility: hidden;
-}
 
-input[type="file"]::before {
-    content: 'Upload your CV';
-}
 
-input[type="file"]:hover {
+#file-input-label:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(130, 69, 175, 0.75);
-}
+    box-shadow: 3px 3px 10px var(--main-blue);
+    border: 1px solid var(--main-green);}
 
-input[type="file"]:active {
+#file-input-label:active {
     transform: scale(0.95);
 }
+
+
+input[type="file"] {
+    opacity: 0;
+    visibility: hidden;
+    width: 100%;
+    cursor: pointer;
+}
+
 
 
 
 
 
 input[type="submit"] {
+    z-index: 5;
     cursor: pointer;
     font-size: 16px;
     padding: 10px 20px;
     border: none;
-    background-color: #007BFF;
+    background-color: var(--main-green);
     color: white;
     border-radius: 5px;
     outline: none;
@@ -435,14 +444,27 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(0, 123, 255, 0.75);
+    box-shadow: 0 0 15px var(--main-green);
 }
 
 input[type="submit"]:active {
     transform: scale(0.95);
 }
 
-#file-input-label {
-    display: block;
-    margin-bottom: 10px;
+#apply-btn{
+    width:auto;
+    padding: 0px 10px;
+    color: #f1f1f2;
+    background-color: var(--main-green);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+
+#apply-btn:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 10px var(--main-green);
+}
+
+#apply-btn:active{
+    transform: scale(0.95);
 }

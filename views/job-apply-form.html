@@ -51,10 +51,18 @@
         <div class="details-description">
             <form method="post" action="/apply/{{ currentId }}">
                 <div class="form-group">
-                    <input type="file" value="Wyslij" name="customFileInput" accept="application/pdf" required>
+                    <input type="file" id="custom-file-input" name="customFileInput" accept="application/pdf" required>
+                    <label for="custom-file-input" id="file-input-label">Choose a file...</label>
                     <input type="submit" value="Send">
                 </div>
             </form>
+
+            <script>
+                document.getElementById('custom-file-input').addEventListener('change', function () {
+                    var fileName = this.files[0].name;
+                    document.getElementById('file-input-label').textContent = fileName; // Aktualizuje etykietę z nazwą pliku
+                });
+            </script>
 
 
 

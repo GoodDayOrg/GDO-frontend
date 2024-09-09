@@ -1,5 +1,5 @@
-{% extends "base.html" %} 
-{% block title %} Job role view {% endblock %} 
+{% extends "base.html" %}
+{% block title %} Job role view {% endblock %}
 {% block content %}
 
 <!-- {% if errormessage %}
@@ -15,23 +15,28 @@
 </div>
 <div class="container details-section">
   <div class="details-header">
-      <h3 id="job-role-name">{{ jobRole.roleName }}</h3>
-      <div class="details-action">
-        <a href="/apply/{{currentId}}">APPPLY_FOR_A JOB</a>
+    <h3 id="job-role-name">{{ jobRole.roleName }}</h3>
+    <div class="details-action">
+      <a href="/apply/{{currentId}}" class="btn btn-light" id="apply-btn" >Apply</a>
 
-          <a href="/job-roles" class="btn btn-light" id="go-back-button"><img class="btn-icon"src="/assets/images/back.png" alt="To list"></a>
-          <a href="/job/{{ prevId }}" class="btn {% if currentId == 1 %}hide{% endif %} btn-light" id="previous-button">
-            <img class="btn-icon" src="/assets/images/arrow_left.png" alt="Previous">
-          </a>          
-          <a href="/job/{{nextId}}" class="btn btn-light" id="next-button"><img class="btn-icon"src="/assets/images/arrow_right.png" alt="Next"></a>
-          <a href="{{jobRole.sharepointUrl}}" target="_blank" class="btn btn-light" id="sharepoint-url"><img class="btn-icon"src="/assets/images/sharepoint.png" alt="sharepoint link"></a>
+      <a href="/job-roles" class="btn btn-light" id="go-back-button"><img class="btn-icon" src="/assets/images/back.png"
+          alt="To list"></a>
+      <a href="/job/{{ prevId }}" class="btn {% if currentId == 1 %}hide{% endif %} btn-light" id="previous-button">
+        <img class="btn-icon" src="/assets/images/arrow_left.png" alt="Previous">
+      </a>
+      <a href="/job/{{nextId}}" class="btn btn-light" id="next-button"><img class="btn-icon"
+          src="/assets/images/arrow_right.png" alt="Next"></a>
+      <a href="{{jobRole.sharepointUrl}}" target="_blank" class="btn btn-light" id="sharepoint-url"><img
+          class="btn-icon" src="/assets/images/sharepoint.png" alt="sharepoint link"></a>
     </div>
   </div>
   <div class="details-info">
     <div class="position-details">
       <ul>
-        <li class="detail-list-element" id="location"><i class="fa-solid fa-location-dot"></i>Location: {{ jobRole.jobRoleLocation }}</li>
-        <li class="detail-list-element" id="capability"><i class="fa-solid fa-briefcase"></i>Capability: {{ jobRole.capabilityName }}</li>
+        <li class="detail-list-element" id="location"><i class="fa-solid fa-location-dot"></i>Location: {{
+          jobRole.jobRoleLocation }}</li>
+        <li class="detail-list-element" id="capability"><i class="fa-solid fa-briefcase"></i>Capability: {{
+          jobRole.capabilityName }}</li>
         <li class="detail-list-element" id="band"><i class="fa-solid fa-signal"></i>Band: {{ jobRole.bandName }}</li>
       </ul>
     </div>
@@ -39,7 +44,8 @@
       <ul>
         <li class="detail-list-element" id="closing-date">Closing date: {{ jobRole.closingDate | formatDate }}</li>
         <li class="detail-list-element" id="status">Status: {{ jobRole.statusName }}</li>
-        <li class="detail-list-element" id="number-of-positions">Open positions: {{ jobRole.numberOfOpenPositions }}</li>
+        <li class="detail-list-element" id="number-of-positions">Open positions: {{ jobRole.numberOfOpenPositions }}
+        </li>
       </ul>
     </div>
   </div>
