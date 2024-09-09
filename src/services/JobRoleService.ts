@@ -51,7 +51,7 @@ export const getMyAllApplications = async (
     );
     return response.data;
   } catch (e) {
-    throw new Error("Currently You don't have any applications");
+    throw new Error('Currently You dont have any applications');
   }
 };
 

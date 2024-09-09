@@ -189,7 +189,7 @@ describe('JobRoleService', function () {
         await getMyAllApplications('wrongToken');
         expect(true).equal(false);
       } catch (e) {
-        expect(e.message).to.equal("Currently You don't have any applications");
+        expect(e.message).to.equal('Currently You dont have any applications');
         return;
       }
     });
