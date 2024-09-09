@@ -41,10 +41,12 @@ export const getAllJobRoles = async (
 
 export const getJobRoleById = async (
   id: string,
+  token: string,
 ): Promise<JobRoleDetailsResponse> => {
   try {
     const response: AxiosResponse = await axiosInstance.get(
       '/api/job-roles/' + id,
+      getHeader(token),
     );
     return response.data;
   } catch (e) {

@@ -46,7 +46,7 @@ export const getSingleJobRole = async (
     const currentId = parseInt(req.params.id, 10);
     const nextId = currentId + 1;
     const prevId = currentId - 1;
-    const jobRole = await getJobRoleById(req.params.id);
+    const jobRole = await getJobRoleById(req.params.id, req.session.token);
     res.render('job-role-details', {
       jobRole,
       currentId,
