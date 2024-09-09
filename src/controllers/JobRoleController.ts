@@ -6,6 +6,7 @@ import {
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
+import { JobRoleResponse } from '../models/JobRoleResponse';
 
 export const getJobRolesFiltered = async (
   req: express.Request,
@@ -14,6 +15,7 @@ export const getJobRolesFiltered = async (
   try {
     const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
     const jobRoles = await getFilteredJobRoles(req.session.token, filters);
+    req.session.filteredJobRoles = jobRoles;
 
     res.render('job-role-list', { jobRoles, filters });
   } catch (e) {
@@ -44,9 +46,24 @@ export const getSingleJobRole = async (
 ): Promise<void> => {
   try {
     const currentId = parseInt(req.params.id, 10);
-    const nextId = currentId + 1;
-    const prevId = currentId - 1;
+    const jobRoles = req.session.filteredJobRoles || [];
+    const currentIndex = jobRoles.findIndex(
+      (jobRole: JobRoleResponse) => jobRole.jobRoleId === currentId,
+    );
+
+    if (currentIndex === -1) {
+      throw new Error('Job role not found in filtered list.');
+    }
+
     const jobRole = await getJobRoleById(req.params.id, req.session.token);
+    const prevId =
+      currentIndex > 0
+        ? jobRoles[currentIndex - 1].jobRoleId
+        : jobRoles[jobRoles.length - 1].jobRoleId;
+    const nextId =
+      currentIndex < jobRoles.length - 1
+        ? jobRoles[currentIndex + 1].jobRoleId
+        : jobRoles[0].jobRoleId;
     res.render('job-role-details', {
       jobRole,
       currentId,
