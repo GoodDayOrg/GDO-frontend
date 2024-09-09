@@ -46,31 +46,31 @@ export const getSingleJobRole = async (
   res: express.Response,
 ): Promise<void> => {
   try {
-    const currentId = parseInt(req.params.id, 10);
-    const jobRoles = req.session.jobRoles || [];
-    let currentIndex;
-    let nextId;
-    let prevId;
+    const { id } = req.params;
+    const { jobRoles = [], token } = req.session;
+    const currentId = parseInt(id, 10);
 
-    if (jobRoles.length != 0) {
+    let currentIndex = 0;
+    let nextId = 0;
+    let prevId = 0;
+
+    if (jobRoles.length > 0) {
       currentIndex = jobRoles.findIndex(
         (jobRole: JobRoleResponse) => jobRole.jobRoleId === currentId,
       );
+
       prevId =
         currentIndex > 0
           ? jobRoles[currentIndex - 1].jobRoleId
           : jobRoles[jobRoles.length - 1].jobRoleId;
+
       nextId =
         currentIndex < jobRoles.length - 1
           ? jobRoles[currentIndex + 1].jobRoleId
           : jobRoles[0].jobRoleId;
-    } else {
-      currentIndex = 0;
-      nextId = 0;
-      prevId = 0;
     }
 
-    const jobRole = await getJobRoleById(req.params.id, req.session.token);
+    const jobRole = await getJobRoleById(id, token);
 
     res.render('job-role-details', {
       jobRole,
