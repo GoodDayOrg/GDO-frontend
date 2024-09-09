@@ -47,24 +47,31 @@ export const getSingleJobRole = async (
 ): Promise<void> => {
   try {
     const currentId = parseInt(req.params.id, 10);
-    const jobRoles = req.session.jobRoles;
-    const currentIndex = jobRoles.findIndex(
-      (jobRole: JobRoleResponse) => jobRole.jobRoleId === currentId,
-    );
+    const jobRoles = req.session.jobRoles || [];
+    let currentIndex;
+    let nextId;
+    let prevId;
 
-    if (currentIndex === -1) {
-      throw new Error('Job role not found in filtered list.');
+    if (jobRoles.length != 0) {
+      currentIndex = jobRoles.findIndex(
+        (jobRole: JobRoleResponse) => jobRole.jobRoleId === currentId,
+      );
+      prevId =
+        currentIndex > 0
+          ? jobRoles[currentIndex - 1].jobRoleId
+          : jobRoles[jobRoles.length - 1].jobRoleId;
+      nextId =
+        currentIndex < jobRoles.length - 1
+          ? jobRoles[currentIndex + 1].jobRoleId
+          : jobRoles[0].jobRoleId;
+    } else {
+      currentIndex = 0;
+      nextId = 0;
+      prevId = 0;
     }
 
     const jobRole = await getJobRoleById(req.params.id, req.session.token);
-    const prevId =
-      currentIndex > 0
-        ? jobRoles[currentIndex - 1].jobRoleId
-        : jobRoles[jobRoles.length - 1].jobRoleId;
-    const nextId =
-      currentIndex < jobRoles.length - 1
-        ? jobRoles[currentIndex + 1].jobRoleId
-        : jobRoles[0].jobRoleId;
+
     res.render('job-role-details', {
       jobRole,
       currentId,

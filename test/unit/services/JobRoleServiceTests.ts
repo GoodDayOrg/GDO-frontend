@@ -132,7 +132,7 @@ describe('JobRoleService', function () {
 
       mock.onGet(URL + '/' + id).reply(200, data);
 
-      const result = await getJobRoleById(id);
+      const result = await getJobRoleById(id, 'token');
       result.closingDate = new Date(result.closingDate);
 
       expect(result).to.deep.equal(data);
@@ -143,7 +143,7 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/' + id).reply(404);
 
       try {
-        await getJobRoleById(id);
+        await getJobRoleById(id, 'token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal('Failed to get job role details.');
@@ -156,7 +156,7 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/' + id).reply(404);
 
       try {
-        await getJobRoleById(id);
+        await getJobRoleById(id, 'token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal('Failed to get job role details.');

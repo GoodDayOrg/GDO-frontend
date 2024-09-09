@@ -102,7 +102,10 @@ describe('JobRoleContoller', function () {
       const jobRoleDetails = jobRoleDetailsResponse;
       sinon.stub(JobRoleService, 'getJobRoleById').resolves(jobRoleDetails);
 
-      const req = { params: { id: 1 } } as unknown as express.Request;
+      const req = {
+        params: { id: 1 },
+        session: { token: 'token' },
+      } as unknown as express.Request;
       const res = {
         render: sinon.spy(),
       } as MockResponse;
@@ -110,7 +113,7 @@ describe('JobRoleContoller', function () {
       await JobRoleController.getSingleJobRole(req, res);
 
       const currentId = req.params.id;
-      const nextId = 2;
+      const nextId = 0;
       const prevId = 0;
 
       expect(res.render.calledOnce).to.be.true;
@@ -130,7 +133,10 @@ describe('JobRoleContoller', function () {
         .stub(JobRoleService, 'getJobRoleById')
         .rejects(new Error(errorMessage));
 
-      const req = { params: { id: 1 } } as unknown as express.Request;
+      const req = {
+        params: { id: 1 },
+        session: { token: 'token' },
+      } as unknown as express.Request;
       const res = {
         render: sinon.spy(),
         locals: { errormessage: '' },
