@@ -15,7 +15,7 @@ export const getJobRolesFiltered = async (
   try {
     const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
     const jobRoles = await getFilteredJobRoles(req.session.token, filters);
-    req.session.filteredJobRoles = jobRoles;
+    req.session.jobRoles = jobRoles;
 
     res.render('job-role-list', { jobRoles, filters });
   } catch (e) {
@@ -30,6 +30,7 @@ export const getJobRoles = async (
 ): Promise<void> => {
   try {
     const jobRoles = await getAllJobRoles(req.session.token);
+    req.session.jobRoles = jobRoles;
     res.render('job-role-list', {
       jobRoles,
       filters: {},
@@ -46,7 +47,7 @@ export const getSingleJobRole = async (
 ): Promise<void> => {
   try {
     const currentId = parseInt(req.params.id, 10);
-    const jobRoles = req.session.filteredJobRoles || [];
+    const jobRoles = req.session.jobRoles;
     const currentIndex = jobRoles.findIndex(
       (jobRole: JobRoleResponse) => jobRole.jobRoleId === currentId,
     );
