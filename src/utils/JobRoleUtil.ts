@@ -1,3 +1,6 @@
+import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
+import express from 'express';
+
 export const formatDate = (date?: Date): string => {
   return date == null
     ? 'N/A'
@@ -7,4 +10,18 @@ export const formatDate = (date?: Date): string => {
         month: '2-digit',
         day: '2-digit',
       });
+};
+
+export const extractJobRoleFilterParams = (
+  req: express.Request,
+): JobRoleFilterParams => {
+  return {
+    roleName: req.query.roleName as string | undefined,
+    jobRoleLocation: req.query.jobRoleLocation as string[] | undefined,
+    capabilityName: req.query.capabilityName
+      ? (req.query.capabilityName as string[])
+      : undefined,
+    bandName: req.query.bandName ? (req.query.bandName as string[]) : undefined,
+    closingDate: req.query.closingDate as string | undefined,
+  };
 };

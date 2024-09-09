@@ -2,8 +2,30 @@ import { AxiosResponse } from 'axios';
 import { JobRoleResponse } from '../models/JobRoleResponse';
 import { axiosInstance } from '../config';
 import { MyApplicationsResponse } from '../models/MyApplicationsResponse';
+import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { getHeader } from '../utils/AuthUtil';
 import { JobRoleDetailsResponse } from '../models/JobRoleDetailsResponse';
+
+export const getFilteredJobRoles = async (
+  token: String,
+  filters?: JobRoleFilterParams,
+): Promise<JobRoleResponse[]> => {
+  try {
+    const response: AxiosResponse = await axiosInstance.get(
+      '/api/job-roles/filter',
+      {
+        params: filters,
+        paramsSerializer: {
+          indexes: null,
+        },
+        ...getHeader(token),
+      },
+    );
+    return response.data;
+  } catch (e) {
+    throw new Error('Currently no job-roles available');
+  }
+};
 
 export const getAllJobRoles = async (
   token: String,

@@ -3,10 +3,12 @@ import { expect } from 'chai';
 import { JobRoleResponse } from '../../../src/models/JobRoleResponse';
 import {
   getAllJobRoles,
+  getFilteredJobRoles,
   getJobRoleById,
 } from '../../../src/services/JobRoleService';
 import { axiosInstance } from '../../../src/config';
 import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
+import { JobRoleFilterParams } from '../../../src/models/JobRoleFilterParams';
 
 const URL: string = '/api/job-roles';
 
@@ -73,6 +75,48 @@ describe('JobRoleService', function () {
 
       try {
         await getAllJobRoles('token');
+        expect(true).equal(false);
+      } catch (e) {
+        expect(e.message).to.equal('Currently no job-roles available');
+        return;
+      }
+    });
+  });
+
+  describe('getFilteredJobRoles', function () {
+    it('should return filtered job roles from response', async () => {
+      const data = [jobRoleResponse];
+
+      mock.onGet(URL + '/filter').reply(200, data);
+
+      const filterParams: JobRoleFilterParams = {
+        roleName: 'engineer',
+        jobRoleLocation: ['Gdansk', 'Buenos Aires'],
+      };
+
+      const results = await getFilteredJobRoles('token', filterParams);
+      results[0].closingDate = new Date(results[0].closingDate);
+
+      expect(results[0]).to.deep.equal(jobRoleResponse);
+    });
+
+    it('should throw exception when 404 error returned from axios', async () => {
+      mock.onGet(URL + '/filter').reply(404);
+
+      try {
+        await getFilteredJobRoles('token');
+        expect(true).equal(false);
+      } catch (e) {
+        expect(e.message).to.equal('Currently no job-roles available');
+        return;
+      }
+    });
+
+    it('should throw exception when 500 error returned from axios', async () => {
+      mock.onGet(URL + '/filter').reply(500);
+
+      try {
+        await getFilteredJobRoles('token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal('Currently no job-roles available');
