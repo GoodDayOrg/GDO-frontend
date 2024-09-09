@@ -15,6 +15,5 @@ export const serializeParams = (
     },
     {} as Record<string, string>,
   );
-
-  return qs.stringify(serializedParams, { encode: false });
+  return qs.stringify(serializedParams);
 };
