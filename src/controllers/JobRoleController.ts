@@ -1,7 +1,6 @@
 import express from 'express';
 import {
   getAllJobRoles,
-  getApplyFormById,
   getJobRoleById,
   postApplyFileForm,
 } from '../services/JobRoleService';
@@ -28,7 +27,11 @@ export const getSingleJobRole = async (
     const currentId = parseInt(req.params.id, 10);
     const nextId = currentId + 1;
     const prevId = currentId - 1;
-    const jobRole = await getJobRoleById(req.params.id);
+    const jobRole = await getJobRoleById(
+      req.params.id,
+      req.session.token,
+      'Failed to get job role details.',
+    );
     res.render('job-role-details', {
       jobRole,
       currentId,
@@ -47,7 +50,11 @@ export const getJobApplyForm = async (
 ): Promise<void> => {
   try {
     const currentId = parseInt(req.params.id, 10);
-    const jobRole = await getApplyFormById(req.params.id, req.session.token);
+    const jobRole = await getJobRoleById(
+      req.params.id,
+      req.session.token,
+      'Failed to get job apply form.',
+    );
     res.render('job-apply-form', {
       currentId,
       jobRole,
@@ -68,7 +75,7 @@ export const postJobApplyForm = async (
       req.params.id,
       req.body.customFileInput,
     );
-    res.render('job-role-list');
+    res.redirect(`/job/${req.params.id}`);
   } catch (e) {
     const backURL = req.header('Referer') || '/';
     res.locals.errormessage = e.message;

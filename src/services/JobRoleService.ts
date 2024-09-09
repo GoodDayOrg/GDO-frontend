@@ -20,22 +20,9 @@ export const getAllJobRoles = async (
 
 export const getJobRoleById = async (
   id: string,
+  token: string,
+  errorMessage: string,
 ): Promise<JobRoleDetailsResponse> => {
-  try {
-    const response: AxiosResponse = await axiosInstance.get(
-      '/api/job-roles/' + id,
-    );
-    return response.data;
-  } catch (e) {
-    throw new Error('Failed to get job role details.');
-  }
-};
-
-export const getApplyFormById = async (
-  id: string,
-  token: String,
-): Promise<JobRoleDetailsResponse> => {
-  // do zmiany
   try {
     const response: AxiosResponse = await axiosInstance.get(
       '/api/job-roles/' + id,
@@ -43,7 +30,7 @@ export const getApplyFormById = async (
     );
     return response.data;
   } catch (e) {
-    throw new Error('Failed to get job apply form.');
+    throw new Error(errorMessage);
   }
 };
 
@@ -65,9 +52,8 @@ export const postApplyFileForm = async (
         },
       },
     );
-    console.log(response);
     return response.data;
   } catch (e) {
-    throw new Error('Failed to get job apply form.');
+    throw new Error('Failed to post job apply form.');
   }
 };

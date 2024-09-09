@@ -4,6 +4,7 @@ import { JobRoleResponse } from '../../../src/models/JobRoleResponse';
 import {
   getAllJobRoles,
   getJobRoleById,
+  postApplyFileForm,
 } from '../../../src/services/JobRoleService';
 import { axiosInstance } from '../../../src/config';
 import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
@@ -36,6 +37,8 @@ const jobRoleDetailsResponse: JobRoleDetailsResponse = {
 };
 
 let mock: MockAdapter;
+
+const errorMessage = 'Failed to get job role details.';
 
 describe('JobRoleService', function () {
   beforeEach(() => {
@@ -88,7 +91,7 @@ describe('JobRoleService', function () {
 
       mock.onGet(URL + '/' + id).reply(200, data);
 
-      const result = await getJobRoleById(id);
+      const result = await getJobRoleById(id, 'token', errorMessage);
       result.closingDate = new Date(result.closingDate);
 
       expect(result).to.deep.equal(data);
@@ -99,10 +102,10 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/' + id).reply(404);
 
       try {
-        await getJobRoleById(id);
+        await getJobRoleById(id, 'token', errorMessage);
         expect(true).equal(false);
       } catch (e) {
-        expect(e.message).to.equal('Failed to get job role details.');
+        expect(e.message).to.equal(errorMessage);
         return;
       }
     });
@@ -112,12 +115,71 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/' + id).reply(404);
 
       try {
-        await getJobRoleById(id);
+        await getJobRoleById(id, 'token', errorMessage);
         expect(true).equal(false);
       } catch (e) {
-        expect(e.message).to.equal('Failed to get job role details.');
+        expect(e.message).to.equal(errorMessage);
         return;
       }
     });
+
+    it('should return error message if apply id out of scope', async () => {
+      const id = '1000';
+      mock.onGet(URL + '/' + id).reply(404);
+
+      try {
+        await getJobRoleById(id, 'token', 'Failed to get job apply form.');
+        expect(true).equal(false);
+      } catch (e) {
+        expect(e.message).to.equal('Failed to get job apply form.');
+        return;
+      }
+    });
+
+    // it('should return error message if job ', async () => {
+    //   const id = 'abc';
+    //   mock.onGet(URL + '/' + id).reply(404);
+
+    //   try {
+    //     await getJobRoleById(id, 'token', 'Failed to get job apply form.');
+    //     expect(true).equal(false);
+    //   } catch (e) {
+    //     expect(e.message).to.equal('Failed to get job apply form.');
+    //     return;
+    //   }
+    // });
+  });
+
+  describe('postApplyFileForm', function () {
+    it('should return job found by id', async () => {
+      const id = '1';
+      mock.onPost(URL + '/' + id).reply(200, jobRoleDetailsResponse);
+
+      const result = await postApplyFileForm(
+        'token',
+        '1',
+        new File(['dummy content'], 'test.pdf', { type: 'application/pdf' }),
+      );
+      result.closingDate = new Date(result.closingDate);
+
+      expect(result).to.deep.equal(jobRoleDetailsResponse);
+    });
+  });
+
+  it('should return error message when application job form failes', async () => {
+    const id = '1';
+    mock.onPost(URL + '/' + id).reply(500);
+
+    try {
+      await postApplyFileForm(
+        id,
+        'token',
+        new File(['dummy content'], 'test.pdf', { type: 'application/pdf' }),
+      );
+      expect(true).equal(false);
+    } catch (e) {
+      expect(e.message).to.equal('Failed to post job apply form.');
+      return;
+    }
   });
 });
