@@ -5,10 +5,12 @@ import {
   getAllJobRoles,
   getFilteredJobRoles,
   getJobRoleById,
+  getMyAllApplications,
 } from '../../../src/services/JobRoleService';
 import { axiosInstance } from '../../../src/config';
 import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
 import { JobRoleFilterParams } from '../../../src/models/JobRoleFilterParams';
+import { MyApplicationsResponse } from '../../../src/models/MyApplicationsResponse';
 
 const URL: string = '/api/job-roles';
 
@@ -35,6 +37,12 @@ const jobRoleDetailsResponse: JobRoleDetailsResponse = {
     'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.',
   sharepointUrl: 'https://cdc.gov/metus/sapien/ut/nunc/vestibulum.js',
   numberOfOpenPositions: 3,
+};
+
+const myApplicationsResponse: MyApplicationsResponse = {
+  jobRoleId: 1,
+  roleName: 'Tester',
+  statusApplicationName: 'hired',
 };
 
 let mock: MockAdapter;
@@ -132,7 +140,7 @@ describe('JobRoleService', function () {
 
       mock.onGet(URL + '/' + id).reply(200, data);
 
-      const result = await getJobRoleById(id);
+      const result = await getJobRoleById(id, 'token');
       result.closingDate = new Date(result.closingDate);
 
       expect(result).to.deep.equal(data);
@@ -143,7 +151,7 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/' + id).reply(404);
 
       try {
-        await getJobRoleById(id);
+        await getJobRoleById(id, 'token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal('Failed to get job role details.');
@@ -156,10 +164,32 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/' + id).reply(404);
 
       try {
-        await getJobRoleById(id);
+        await getJobRoleById(id, 'token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal('Failed to get job role details.');
+        return;
+      }
+    });
+  });
+
+  describe('getMyAllApplications', async () => {
+    it('should return myApplicationsResult object', async () => {
+      const data = [myApplicationsResponse];
+      mock.onGet(URL + '/my-job-applications').reply(200, data);
+
+      const result = await getMyAllApplications('token');
+      expect(result[0]).to.deep.equal(myApplicationsResponse);
+    });
+
+    it('should return error message when 401', async () => {
+      mock.onGet(URL + '/my-job-applications').reply(401);
+
+      try {
+        await getMyAllApplications('wrongToken');
+        expect(true).equal(false);
+      } catch (e) {
+        expect(e.message).to.equal("Currently You don't have any applications");
         return;
       }
     });
