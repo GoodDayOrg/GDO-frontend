@@ -52,16 +52,8 @@ app.get('/job/:id', getSingleJobRole);
 app.get('/login', redirectIfLogged(), getLoginForm);
 app.post('/login', redirectIfLogged(), postLoginForm);
 app.get('/logout', logOutUser);
-app.get(
-  '/apply/:id',
-  // allowRoles(),
-  getJobApplyForm,
-);
-app.post(
-  '/apply/:id',
-  // allowRoles,
-  postJobApplyForm,
-);
+app.get('/apply/:id', allowRoles(), getJobApplyForm);
+app.post('/apply/:id', allowRoles(), postJobApplyForm);
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');

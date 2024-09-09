@@ -33,12 +33,13 @@ export const getJobRoleById = async (
 
 export const getApplyFormById = async (
   id: string,
-  // token: String,
+  token: String,
 ): Promise<JobRoleDetailsResponse> => {
   // do zmiany
   try {
     const response: AxiosResponse = await axiosInstance.get(
       '/api/job-roles/' + id,
+      getHeader(token),
     );
     return response.data;
   } catch (e) {
@@ -47,10 +48,10 @@ export const getApplyFormById = async (
 };
 
 export const postApplyFileForm = async (
+  token: String,
   id: string,
   file: File,
 ): Promise<JobRoleDetailsResponse> => {
-  // do zmiany
   try {
     const formData = new FormData();
     formData.append('pdf', file);
@@ -60,6 +61,7 @@ export const postApplyFileForm = async (
       {
         headers: {
           'Content-Type': 'multipart/form-data',
+          ...getHeader(token).headers,
         },
       },
     );

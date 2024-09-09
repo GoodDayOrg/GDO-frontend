@@ -47,10 +47,7 @@ export const getJobApplyForm = async (
 ): Promise<void> => {
   try {
     const currentId = parseInt(req.params.id, 10);
-    const jobRole = await getApplyFormById(
-      // req.session.token,     //
-      req.params.id,
-    );
+    const jobRole = await getApplyFormById(req.params.id, req.session.token);
     res.render('job-apply-form', {
       currentId,
       jobRole,
@@ -67,7 +64,7 @@ export const postJobApplyForm = async (
 ): Promise<void> => {
   try {
     await postApplyFileForm(
-      // req.session.token,     //
+      req.session.token,
       req.params.id,
       req.body.customFileInput,
     );
