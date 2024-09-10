@@ -40,10 +40,15 @@ export const postApplyFileForm = async (
   file: File,
 ): Promise<JobRoleDetailsResponse> => {
   try {
+    var maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      throw new Error('File is bigger than 5MB');
+    }
     const formData = new FormData();
-    formData.append('pdf', file);
+    formData.append('file', file);
+    console.log(formData);
     const response: AxiosResponse = await axiosInstance.post(
-      '/api/job-roles/' + id,
+      '/api/job-roles/' + id + '/applications',
       formData,
       {
         headers: {

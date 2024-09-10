@@ -396,7 +396,7 @@ main .hero-section h2 {
     text-shadow: 1px 1px #fff;
     font-weight: 100;
     font-size: 15pt;
-    min-width: 35vw;
+    min-width: 35%;
     text-align: center;
     border: 1px solid #d8d8d8;
     margin-bottom: 30px;
