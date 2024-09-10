@@ -167,7 +167,7 @@ describe('JobRoleContoller', function () {
       };
       const res = { render: sinon.spy() } as MockResponse;
 
-      await JobRoleController.getJobRolesFiltered(req as express.Request, res);
+      await JobRoleController.getJobRoles(req as express.Request, res);
 
       expect(res.render.calledOnce).to.be.true;
       expect(
@@ -199,7 +199,7 @@ describe('JobRoleContoller', function () {
         locals: { errormessage: '' },
       } as MockResponse;
 
-      await JobRoleController.getJobRolesFiltered(req as express.Request, res);
+      await JobRoleController.getJobRoles(req as express.Request, res);
 
       expect(res.render.calledOnce).to.be.true;
       expect(res.render.calledWith('job-role-list')).to.be.true;
