@@ -132,8 +132,6 @@ describe('JobRoleContoller', function () {
           ? jobRoles[currentIndex - 1].jobRoleId
           : jobRoles[jobRoles.length - 1].jobRoleId;
 
-      console.log(res.render.getCall(0).args);
-
       expect(res.render.calledOnce).to.be.true;
       expect(
         res.render.calledWith('job-role-details', {
