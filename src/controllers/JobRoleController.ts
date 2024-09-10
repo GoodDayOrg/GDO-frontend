@@ -1,8 +1,9 @@
-import express from 'express';
+import express, { application } from 'express';
 import {
   getFilteredJobRoles,
   getJobRoleById,
   getAllJobRoles,
+  getMyAllApplications,
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
@@ -36,6 +37,20 @@ export const getJobRoles = async (
   }
 };
 
+export const getMyApplications = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    res.render('my-job-applications', {
+      applications: await getMyAllApplications(req.session.token),
+    });
+  } catch (e) {
+    res.locals.errormessage = e.message;
+    res.render('my-job-applications');
+  }
+};
+
 export const getSingleJobRole = async (
   req: express.Request,
   res: express.Response,
@@ -44,7 +59,7 @@ export const getSingleJobRole = async (
     const currentId = parseInt(req.params.id, 10);
     const nextId = currentId + 1;
     const prevId = currentId - 1;
-    const jobRole = await getJobRoleById(req.params.id);
+    const jobRole = await getJobRoleById(req.params.id, req.session.token);
     res.render('job-role-details', {
       jobRole,
       currentId,

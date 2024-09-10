@@ -1,9 +1,10 @@
 import { AxiosResponse } from 'axios';
 import { JobRoleResponse } from '../models/JobRoleResponse';
 import { axiosInstance } from '../config';
+import { MyApplicationsResponse } from '../models/MyApplicationsResponse';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
-import { JobRoleDetailsResponse } from '../models/JobRoleDetailsResponse';
 import { getHeader } from '../utils/AuthUtil';
+import { JobRoleDetailsResponse } from '../models/JobRoleDetailsResponse';
 
 export const getFilteredJobRoles = async (
   token: String,
@@ -40,12 +41,28 @@ export const getAllJobRoles = async (
   }
 };
 
+export const getMyAllApplications = async (
+  token: String,
+): Promise<MyApplicationsResponse[]> => {
+  try {
+    const response: AxiosResponse = await axiosInstance.get(
+      '/api/job-roles/my-job-applications',
+      getHeader(token),
+    );
+    return response.data;
+  } catch (e) {
+    throw new Error('Currently You dont have any applications');
+  }
+};
+
 export const getJobRoleById = async (
   id: string,
+  token: String,
 ): Promise<JobRoleDetailsResponse> => {
   try {
     const response: AxiosResponse = await axiosInstance.get(
       '/api/job-roles/' + id,
+      getHeader(token),
     );
     return response.data;
   } catch (e) {

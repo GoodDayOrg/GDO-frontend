@@ -6,6 +6,7 @@ import sinon from 'sinon';
 import { afterEach, describe, it } from 'node:test';
 import express from 'express';
 import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
+import { MyApplicationsResponse } from '../../../src/models/MyApplicationsResponse';
 
 const jobRoleResponse: JobRoleResponse = {
   jobRoleId: 1,
@@ -30,6 +31,12 @@ const jobRoleDetailsResponse: JobRoleDetailsResponse = {
     'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.',
   sharepointUrl: 'https://cdc.gov/metus/sapien/ut/nunc/vestibulum.js',
   numberOfOpenPositions: 3,
+};
+
+const myApplicationsResponse: MyApplicationsResponse = {
+  jobRoleId: 1,
+  roleName: 'Tester',
+  statusApplicationName: 'hired',
 };
 
 interface MockResponse extends express.Response {
@@ -98,7 +105,10 @@ describe('JobRoleContoller', function () {
       const jobRoleDetails = jobRoleDetailsResponse;
       sinon.stub(JobRoleService, 'getJobRoleById').resolves(jobRoleDetails);
 
-      const req = { params: { id: 1 } } as unknown as express.Request;
+      const req = {
+        params: { id: 1 },
+        session: { token: 'token' },
+      } as unknown as express.Request;
       const res = {
         render: sinon.spy(),
       } as MockResponse;
@@ -126,7 +136,10 @@ describe('JobRoleContoller', function () {
         .stub(JobRoleService, 'getJobRoleById')
         .rejects(new Error(errorMessage));
 
-      const req = { params: { id: 1 } } as unknown as express.Request;
+      const req = {
+        params: { id: 1 },
+        session: { token: 'token' },
+      } as unknown as express.Request;
       const res = {
         render: sinon.spy(),
         locals: { errormessage: '' },
@@ -191,5 +204,59 @@ describe('JobRoleContoller', function () {
       expect(res.render.calledWith('job-role-list')).to.be.true;
       expect(res.locals.errormessage).to.equal(errorMessage);
     });
+  });
+
+  describe('getMyAllApplications', function () {
+    it('should render view with job application list', async () => {
+      const applicationsList = [myApplicationsResponse];
+
+      sinon
+        .stub(JobRoleService, 'getMyAllApplications')
+        .resolves(applicationsList);
+
+      const req = {
+        query: {},
+
+        session: {
+          token: 'token',
+        },
+      } as unknown as express.Request;
+      const res = { render: sinon.spy() } as MockResponse;
+
+      await JobRoleController.getMyApplications(req, res);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(
+        res.render.calledWith('my-job-applications', {
+          applications: applicationsList,
+        }),
+      ).to.be.true;
+    });
+
+    it('should render view with error message'),
+      async () => {
+        const errorMessage: string = 'Error message';
+        sinon
+          .stub(JobRoleService, 'getMyAllApplications')
+          .rejects(new Error(errorMessage));
+
+        const req = {
+          session: {
+            token: 'token',
+          },
+
+          query: {},
+        } as unknown as express.Request;
+        const res = {
+          render: sinon.spy(),
+          locals: { errormessage: '' },
+        } as MockResponse;
+
+        await JobRoleController.getJobRoles(req, res);
+
+        expect(res.render.calledOnce).to.be.true;
+        expect(res.render.calledWith('my-job-applications')).to.be.true;
+        expect(res.locals.errormessage).to.equal(errorMessage);
+      };
   });
 });
