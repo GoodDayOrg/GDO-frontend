@@ -20,6 +20,7 @@ const jobRoleResponse: JobRoleResponse = {
   capabilityName: 'delivery',
   bandName: 'Architect',
   closingDate: new Date('10/10/2024'),
+  statusName: 'open',
 };
 
 const jobRoleDetailsResponse: JobRoleDetailsResponse = {
@@ -177,23 +178,27 @@ describe('JobRoleContoller', function () {
       const req = {
         session: {
           token: 'token',
+          jobRoles: [],
+          filters: { jobRoleLocation: ['Belfast', 'Buenos Aires'] },
+        },
+        query: {
+          jobRoleLocation: ['Belfast', 'Buenos Aires'],
         },
       } as unknown as express.Request;
 
-      req.query = {
-        location: ['Belfast', 'Buenos Aires'],
-      };
-      const res = { render: sinon.spy() } as MockResponse;
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' },
+      } as MockResponse;
 
       await JobRoleController.getJobRoles(req as express.Request, res);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(
-        res.render.calledWith('job-role-list', {
-          jobRoles: jobRolesList,
-          filters: {},
-        }),
-      ).to.be.true;
+      expect(res.render.getCall(0).args[0]).to.equal('job-role-list');
+      expect(res.render.getCall(0).args[1]).to.deep.equal({
+        jobRoles: jobRolesList,
+        filters: { jobRoleLocation: ['Belfast', 'Buenos Aires'] },
+      });
     });
 
     it('should render view with error message when error thrown', async () => {

@@ -19,6 +19,7 @@ const jobRoleResponse: JobRoleResponse = {
   capabilityName: 'delivery',
   bandName: 'Architect',
   closingDate: new Date('10/10/2024'),
+  statusName: 'open',
 };
 
 const jobRoleDetailsResponse: JobRoleDetailsResponse = {
