@@ -382,6 +382,11 @@ main .hero-section h2 {
     align-items: center;
 }
 
+.form-group p {
+    font-size: 1.5rem;
+    color: var(--main-blue);
+}
+
 #file-input-label{
     color: var(--main-blue);
     display: inline-block;
