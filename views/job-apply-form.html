@@ -1,72 +1,113 @@
-{% extends "base.html" %}
-{% block title %} Job role view {% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %} Job role view {% endblock %} {%
+block content %}
 
 <!-- {% if errormessage %}
   <h3>{{ errormessage }}</h3>
 {% endif %} -->
-{% include "not_found.html" %}
-
-{% if not errormessage %}
+{% include "not_found.html" %} {% if not errormessage %}
 <div class="container job-role-hero-section">
-    <img src="/assets/images/job-details.jpg" alt="person" />
-    <div class="dark-overlay"></div>
-    <h2 class="job-role-title">{{ jobRole.roleName }}</h2>
+  <img src="/assets/images/job-details.jpg" alt="person" />
+  <div class="dark-overlay"></div>
+  <h2 class="job-role-title">{{ jobRole.roleName }}</h2>
 </div>
 <div class="container details-section">
-    <div class="details-header">
-        <h3 id="job-role-name">{{ jobRole.roleName }}</h3>
-        <div class="details-action">
-            <a href="/job-roles" class="btn btn-light" id="go-back-button"><img class="btn-icon"
-                    src="/assets/images/back.png" alt="To list"></a>
-            <a href="/job/{{ currentId }}" class="btn btn-light" id="previous-button">
-                <img class="btn-icon" src="/assets/images/arrow_left.png" alt="Previous">
-            </a>
-            <a href="{{jobRole.sharepointUrl}}" target="_blank" class="btn btn-light" id="sharepoint-url"><img
-                    class="btn-icon" src="/assets/images/sharepoint.png" alt="sharepoint link"></a>
-        </div>
+  <div class="details-header">
+    <h3 id="job-role-name">{{ jobRole.roleName }}</h3>
+    <div class="details-action">
+      <a href="/job-roles" class="btn btn-light" id="go-back-button"
+        ><img class="btn-icon" src="/assets/images/back.png" alt="To list"
+      /></a>
+      <a href="/job/{{ currentId }}" class="btn btn-light" id="previous-button">
+        <img
+          class="btn-icon"
+          src="/assets/images/arrow_left.png"
+          alt="Previous"
+        />
+      </a>
+      <a
+        href="{{jobRole.sharepointUrl}}"
+        target="_blank"
+        class="btn btn-light"
+        id="sharepoint-url"
+        ><img
+          class="btn-icon"
+          src="/assets/images/sharepoint.png"
+          alt="sharepoint link"
+      /></a>
     </div>
-    <div class="details-info">
-        <div class="position-details">
-            <ul>
-                <li class="detail-list-element" id="location"><i class="fa-solid fa-location-dot"></i>Location: {{
-                    jobRole.jobRoleLocation }}</li>
-                <li class="detail-list-element" id="capability"><i class="fa-solid fa-briefcase"></i>Capability: {{
-                    jobRole.capabilityName }}</li>
-                <li class="detail-list-element" id="band"><i class="fa-solid fa-signal"></i>Band: {{ jobRole.bandName }}
-                </li>
-            </ul>
-        </div>
-        <div class="notice-details">
-            <ul>
-                <li class="detail-list-element" id="closing-date">Closing date: {{ jobRole.closingDate | formatDate }}
-                </li>
-                <li class="detail-list-element" id="status">Status: {{ jobRole.statusName }}</li>
-                <li class="detail-list-element" id="number-of-positions">Open positions: {{
-                    jobRole.numberOfOpenPositions }}</li>
-            </ul>
-        </div>
+  </div>
+  <div class="details-info">
+    <div class="position-details">
+      <ul>
+        <li class="detail-list-element" id="location">
+          <i class="fa-solid fa-location-dot"></i>Location: {{
+          jobRole.jobRoleLocation }}
+        </li>
+        <li class="detail-list-element" id="capability">
+          <i class="fa-solid fa-briefcase"></i>Capability: {{
+          jobRole.capabilityName }}
+        </li>
+        <li class="detail-list-element" id="band">
+          <i class="fa-solid fa-signal"></i>Band: {{ jobRole.bandName }}
+        </li>
+      </ul>
     </div>
-    <div class="details-content">
-        <div class="details-description">
-            <form method="post" action="/apply/{{ currentId }}">
-                <div class="form-group">
-                    <input type="file" id="custom-file-input" name="customFileInput" accept="application/pdf" required>
-                    <label for="custom-file-input" id="file-input-label">Choose a file...</label>
-                    <input type="submit" value="Send">
-                </div>
-            </form>
-
-            <script>
-                document.getElementById('custom-file-input').addEventListener('change', function () {
-                    var fileName = this.files[0].name;
-                    document.getElementById('file-input-label').textContent = fileName; // Aktualizuje etykietę z nazwą pliku
-                });
-            </script>
-
-
-
-        </div>
+    <div class="notice-details">
+      <ul>
+        <li class="detail-list-element" id="closing-date">
+          Closing date: {{ jobRole.closingDate | formatDate }}
+        </li>
+        <li class="detail-list-element" id="status">
+          Status: {{ jobRole.statusName }}
+        </li>
+        <li class="detail-list-element" id="number-of-positions">
+          Open positions: {{ jobRole.numberOfOpenPositions }}
+        </li>
+      </ul>
     </div>
-    {% endif %}
-    {% endblock %}
+  </div>
+  <div class="details-content">
+    <div class="details-description">
+      {% set applied = false %} {% set status = 'status' %} {% for application
+      in applications %} {% if application.jobRoleId == currentId %} {% set
+      applied = true %} {% set status = application.statusApplicationName %} {%
+      endif %} {% endfor %} {% if applied == true %}
+      <div class="apply-form-error">Already applied</div>
+      <div class="application-status">
+        Application status: <span>{{ status }}</span>
+      </div>
+      {% else %}
+      <form method="post" action="/apply/{{ currentId }}">
+        <div class="form-group">
+          <input
+            type="file"
+            id="custom-file-input"
+            name="customFileInput"
+            accept="application/pdf"
+            required
+          />
+          <label for="custom-file-input" id="file-input-label"
+            >Choose a file...</label
+          >
+          <input type="submit" value="Send" />
+        </div>
+      </form>
+      {% endif %}
+
+      <script>
+        const uploadField = document.getElementById('custom-file-input');
+        uploadField.addEventListener('change', function () {
+          if (this.files[0].size > 5242880) {
+            alert('File is too big!');
+            this.value = '';
+            document.getElementById('file-input-label').textContent = 'Choose a file...';
+          } else {
+            var fileName = this.files[0].name;
+            document.getElementById('file-input-label').textContent = fileName;
+          }
+        });
+      </script>
+    </div>
+  </div>
+  {% endif %} {% endblock %}
+</div>
