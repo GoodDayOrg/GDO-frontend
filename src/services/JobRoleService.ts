@@ -35,20 +35,20 @@ export const getJobRoleById = async (
 };
 
 export const postApplyFileForm = async (
-  token: String,
+  token: string,
   id: string,
-  file: File,
+  file: Express.Multer.File,
 ): Promise<JobRoleDetailsResponse> => {
   try {
-    var maxSize = 5 * 1024 * 1024;
+    const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
       throw new Error('File is bigger than 5MB');
     }
+    const blob = new Blob([file.buffer], { type: file.mimetype });
     const formData = new FormData();
-    formData.append('file', file);
-    console.log(formData);
+    formData.append('file', blob, file.originalname);
     const response: AxiosResponse = await axiosInstance.post(
-      '/api/job-roles/' + id + '/applications',
+      `/api/job-roles/${id}/applications`,
       formData,
       {
         headers: {

@@ -95,11 +95,7 @@ export const postJobApplyForm = async (
   res: express.Response,
 ): Promise<void> => {
   try {
-    await postApplyFileForm(
-      req.session.token,
-      req.params.id,
-      req.body.customFileInput,
-    );
+    await postApplyFileForm(req.session.token, req.params.id, req.file);
     res.redirect(`/job/${req.params.id}`);
   } catch (e) {
     const backURL = req.header('Referer') || '/';

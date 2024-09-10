@@ -77,7 +77,7 @@ block content %}
         Application status: <span>{{ status }}</span>
       </div>
       {% else %}
-      <form method="post" action="/apply/{{ currentId }}">
+      <form method="post" action="/apply/{{ currentId }}" enctype="multipart/form-data">
         <div class="form-group">
             <p>Upload your CV. Max size: 5MB, format: .pdf</p>
           <input
