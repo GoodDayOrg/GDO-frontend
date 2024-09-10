@@ -7,6 +7,12 @@ import { afterEach, describe, it } from 'node:test';
 import express from 'express';
 import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
 
+const jobRoles = [
+  { jobRoleId: 1 },
+  { jobRoleId: 2 },
+  { jobRoleId: 3 },
+] as JobRoleResponse[];
+
 const jobRoleResponse: JobRoleResponse = {
   jobRoleId: 1,
   roleName: 'delivery_master',
@@ -104,17 +110,29 @@ describe('JobRoleContoller', function () {
 
       const req = {
         params: { id: 1 },
-        session: { token: 'token' },
+        session: { token: 'token', jobRoles, filters: {} },
       } as unknown as express.Request;
       const res = {
         render: sinon.spy(),
+        locals: {},
       } as MockResponse;
 
       await JobRoleController.getSingleJobRole(req, res);
 
-      const currentId = req.params.id;
-      const nextId = 0;
-      const prevId = 0;
+      const currentId = parseInt(req.params.id, 10);
+      const currentIndex = jobRoles.findIndex(
+        (jobRole) => jobRole.jobRoleId === currentId,
+      );
+      const nextId =
+        currentIndex < jobRoles.length - 1
+          ? jobRoles[currentIndex + 1].jobRoleId
+          : jobRoles[0].jobRoleId;
+      const prevId =
+        currentIndex > 0
+          ? jobRoles[currentIndex - 1].jobRoleId
+          : jobRoles[jobRoles.length - 1].jobRoleId;
+
+      console.log(res.render.getCall(0).args);
 
       expect(res.render.calledOnce).to.be.true;
       expect(
@@ -123,6 +141,8 @@ describe('JobRoleContoller', function () {
           currentId,
           nextId,
           prevId,
+          filters: {},
+          queryString: '',
         }),
       ).to.be.true;
     });
