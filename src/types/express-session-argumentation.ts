@@ -7,5 +7,6 @@ declare module 'express-session' {
     token: string;
     jobRoles: JobRoleResponse[];
     filters: JobRoleFilterParams;
+    jobRolesIds: number[];
   }
 }

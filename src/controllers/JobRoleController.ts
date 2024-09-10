@@ -29,6 +29,7 @@ export const getJobRoles = async (
         : await getAllJobRoles(req.session.token);
 
     req.session.jobRoles = jobRoles;
+    req.session.jobRolesIds = jobRoles.map((jobRole) => jobRole.jobRoleId);
     res.render('job-role-list', { jobRoles, filters });
   } catch (e) {
     res.locals.errormessage = e.message;
@@ -41,8 +42,13 @@ export const getMyApplications = async (
   res: express.Response,
 ): Promise<void> => {
   try {
+    const myApplications = await getMyAllApplications(req.session.token);
+    const jobRolesIds = myApplications.map(
+      (application) => application.jobRoleId,
+    );
+    req.session.jobRolesIds = jobRolesIds;
     res.render('my-job-applications', {
-      applications: await getMyAllApplications(req.session.token),
+      applications: myApplications,
     });
   } catch (e) {
     res.locals.errormessage = e.message;
@@ -56,27 +62,25 @@ export const getSingleJobRole = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const { jobRoles = [], token, filters } = req.session;
+    const { jobRolesIds = [], token, filters } = req.session;
     const currentId = parseInt(id, 10);
 
     let currentIndex = 0;
     let nextId = 0;
     let prevId = 0;
 
-    if (jobRoles.length > 0) {
-      currentIndex = jobRoles.findIndex(
-        (jobRole: JobRoleResponse) => jobRole.jobRoleId === currentId,
-      );
+    if (jobRolesIds.length > 0) {
+      currentIndex = jobRolesIds.indexOf(currentId);
 
       prevId =
         currentIndex > 0
-          ? jobRoles[currentIndex - 1].jobRoleId
-          : jobRoles[jobRoles.length - 1].jobRoleId;
+          ? jobRolesIds[currentIndex - 1]
+          : jobRolesIds[jobRolesIds.length - 1];
 
       nextId =
-        currentIndex < jobRoles.length - 1
-          ? jobRoles[currentIndex + 1].jobRoleId
-          : jobRoles[0].jobRoleId;
+        currentIndex < jobRolesIds.length - 1
+          ? jobRolesIds[currentIndex + 1]
+          : jobRolesIds[0];
     }
 
     const jobRole = await getJobRoleById(id, token);
