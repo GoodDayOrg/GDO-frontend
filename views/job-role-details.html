@@ -17,7 +17,7 @@
   <div class="details-header">
       <h3 id="job-role-name">{{ jobRole.roleName }}</h3>
       <div class="details-action">
-          <a href="/job-roles" class="btn btn-light" id="go-back-button"><img class="btn-icon"src="/assets/images/back.png" alt="To list"></a>
+          <a href="/job-roles?{{queryString}}" class="btn btn-light" id="go-back-button"><img class="btn-icon"src="/assets/images/back.png" alt="To list"></a>
           <a href="/job/{{ prevId }}" class="btn btn-light {% if currentId == nextId and nextId == prevId %}hide{% endif %}" id="previous-button">
             <img class="btn-icon" src="/assets/images/arrow_left.png" alt="Previous">
           </a>

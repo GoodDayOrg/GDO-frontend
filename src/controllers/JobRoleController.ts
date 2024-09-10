@@ -1,4 +1,5 @@
 import express from 'express';
+import qs from 'qs';
 import {
   getFilteredJobRoles,
   getJobRoleById,
@@ -8,37 +9,29 @@ import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
 import { JobRoleResponse } from '../models/JobRoleResponse';
 
-export const getJobRolesFiltered = async (
-  req: express.Request,
-  res: express.Response,
-): Promise<void> => {
-  const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
-  let jobRoles: JobRoleResponse[] = [];
-  try {
-    jobRoles = await getFilteredJobRoles(req.session.token, filters);
-    req.session.jobRoles = jobRoles;
-
-    res.render('job-role-list', { jobRoles, filters });
-  } catch (e) {
-    res.locals.errormessage = e.message;
-    res.render('job-role-list', { jobRoles, filters });
-  }
-};
-
 export const getJobRoles = async (
   req: express.Request,
   res: express.Response,
 ): Promise<void> => {
+  const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
+  req.session.filters = filters;
+  let jobRoles: JobRoleResponse[] = req.session.jobRoles || [];
+
   try {
-    const jobRoles = await getAllJobRoles(req.session.token);
+    if (Object.keys(filters).length === 0 && jobRoles.length > 0) {
+      return res.render('job-role-list', { jobRoles, filters });
+    }
+
+    jobRoles =
+      Object.keys(filters).length > 0
+        ? await getFilteredJobRoles(req.session.token, filters)
+        : await getAllJobRoles(req.session.token);
+
     req.session.jobRoles = jobRoles;
-    res.render('job-role-list', {
-      jobRoles,
-      filters: {},
-    });
+    res.render('job-role-list', { jobRoles, filters });
   } catch (e) {
     res.locals.errormessage = e.message;
-    res.render('job-role-list');
+    res.render('job-role-list', { jobRoles, filters });
   }
 };
 
@@ -48,7 +41,7 @@ export const getSingleJobRole = async (
 ): Promise<void> => {
   try {
     const { id } = req.params;
-    const { jobRoles = [], token } = req.session;
+    const { jobRoles = [], token, filters } = req.session;
     const currentId = parseInt(id, 10);
 
     let currentIndex = 0;
@@ -78,6 +71,8 @@ export const getSingleJobRole = async (
       currentId,
       nextId,
       prevId,
+      filters,
+      queryString: qs.stringify(filters),
     });
   } catch (e) {
     res.locals.errormessage = e.message;
