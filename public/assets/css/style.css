@@ -380,6 +380,12 @@ main .hero-section h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 80vw;
+}
+
+.form-group p {
+    font-size: 1.5rem;
+    color: var(--main-blue);
 }
 
 #file-input-label{
@@ -467,4 +473,28 @@ input[type="submit"]:active {
 
 #apply-btn:active{
     transform: scale(0.95);
+}
+
+.details-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.apply-form-error {
+    font-family: 'KainosSecondary';
+    font-size: 2.5rem;
+    margin: 30px 0;
+    font-weight: bold;
+    color: var(--main-blue);
+}
+
+.application-status {
+    font-family: 'KainosFont';
+}
+
+.application-status span {
+    font-weight: bold;
+    color: var(--main-green);
 }

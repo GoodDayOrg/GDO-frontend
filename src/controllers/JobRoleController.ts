@@ -24,6 +24,14 @@ export const getSingleJobRole = async (
   res: express.Response,
 ): Promise<void> => {
   try {
+    const applications = [
+      {
+        jobRoleId: 1,
+        roleName: 'Tester',
+        statusApplicationName: 'in progress',
+      },
+    ];
+
     const currentId = parseInt(req.params.id, 10);
     const nextId = currentId + 1;
     const prevId = currentId - 1;
@@ -37,6 +45,7 @@ export const getSingleJobRole = async (
       currentId,
       nextId,
       prevId,
+      applications,
     });
   } catch (e) {
     res.locals.errormessage = e.message;
@@ -55,9 +64,25 @@ export const getJobApplyForm = async (
       req.session.token,
       'Failed to get job apply form.',
     );
+
+    // const applications need to be change for method from US053
+    const applications = [
+      {
+        jobRoleId: '1',
+        roleName: 'Tester',
+        statusApplicationName: 'in progress',
+      },
+      {
+        jobRoleId: '2',
+        roleName: 'Tester',
+        statusApplicationName: 'rejected',
+      },
+    ];
+
     res.render('job-apply-form', {
       currentId,
       jobRole,
+      applications,
     });
   } catch (e) {
     res.locals.errormessage = e.message;
