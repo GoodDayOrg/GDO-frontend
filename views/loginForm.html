@@ -9,8 +9,8 @@
     <h1 class="text-center my-4">Login</h1>
 
     {% if errormessage %}
-        <div class="text-center text-danger">
-            <p>{{ errormessage }}</p>
+        <div class="text-center text-danger" id="login-error">
+            <p id="login-error-content">{{ errormessage }}</p>
         </div>
     {% endif %}
 
