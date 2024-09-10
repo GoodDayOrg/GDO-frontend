@@ -179,7 +179,7 @@ describe('JobRoleContoller', function () {
         session: {
           token: 'token',
           jobRoles: [],
-          filters: { jobRoleLocation: ['Belfast', 'Buenos Aires'] },
+          filters: {},
         },
         query: {
           jobRoleLocation: ['Belfast', 'Buenos Aires'],
@@ -194,11 +194,12 @@ describe('JobRoleContoller', function () {
       await JobRoleController.getJobRoles(req as express.Request, res);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render.getCall(0).args[0]).to.equal('job-role-list');
-      expect(res.render.getCall(0).args[1]).to.deep.equal({
-        jobRoles: jobRolesList,
-        filters: { jobRoleLocation: ['Belfast', 'Buenos Aires'] },
-      });
+      expect(
+        res.render.calledWith('job-role-list', {
+          jobRoles: jobRolesList,
+          filters: { jobRoleLocation: ['Belfast', 'Buenos Aires'] },
+        }),
+      ).to.be.true;
     });
 
     it('should render view with error message when error thrown', async () => {
