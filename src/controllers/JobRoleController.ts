@@ -12,15 +12,16 @@ export const getJobRolesFiltered = async (
   req: express.Request,
   res: express.Response,
 ): Promise<void> => {
+  const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
+  let jobRoles: JobRoleResponse[] = [];
   try {
-    const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
-    const jobRoles = await getFilteredJobRoles(req.session.token, filters);
+    jobRoles = await getFilteredJobRoles(req.session.token, filters);
     req.session.jobRoles = jobRoles;
 
     res.render('job-role-list', { jobRoles, filters });
   } catch (e) {
     res.locals.errormessage = e.message;
-    res.render('job-role-list');
+    res.render('job-role-list', { jobRoles, filters });
   }
 };
 
