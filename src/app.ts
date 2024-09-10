@@ -8,7 +8,11 @@ import {
   logOutUser,
   postLoginForm,
 } from './controllers/AuthController';
-import { getJobRoles, getSingleJobRole } from './controllers/JobRoleController';
+import {
+  getJobRoles,
+  getSingleJobRole,
+  getMyApplications,
+} from './controllers/JobRoleController';
 import { formatDate } from './utils/JobRoleUtil';
 import { allowRoles, redirectIfLogged } from './middlewares/AuthMiddleware';
 
@@ -43,6 +47,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
   res.render('index.html');
 });
 
+app.get('/my-job-applications', allowRoles(), getMyApplications);
 app.get('/job-roles', allowRoles(), getJobRoles);
 app.get('/job/:id', allowRoles(), getSingleJobRole);
 app.get('/login', redirectIfLogged(), getLoginForm);

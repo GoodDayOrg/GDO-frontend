@@ -1,9 +1,10 @@
-import express from 'express';
 import qs from 'qs';
+import express, { application } from 'express';
 import {
   getFilteredJobRoles,
   getJobRoleById,
   getAllJobRoles,
+  getMyAllApplications,
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
@@ -32,6 +33,20 @@ export const getJobRoles = async (
   } catch (e) {
     res.locals.errormessage = e.message;
     res.render('job-role-list', { jobRoles, filters });
+  }
+};
+
+export const getMyApplications = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    res.render('my-job-applications', {
+      applications: await getMyAllApplications(req.session.token),
+    });
+  } catch (e) {
+    res.locals.errormessage = e.message;
+    res.render('my-job-applications');
   }
 };
 
