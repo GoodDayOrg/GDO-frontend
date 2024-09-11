@@ -411,11 +411,12 @@ main .hero-section h2 {
 /* CARDS */
 .app-list-container .app-list {
     /* width: 70%; */
-    width: 100vw;
+    width: 80vw;
 }
 
 .app-list-container .app-list h3 {
     border-bottom: 1px solid var(--break-line);
+    width: 100%;
 }
 
 .app-list-container  .app-list .card-container {
@@ -428,7 +429,7 @@ main .hero-section h2 {
 }
 
 .app-list-container .app-list .card-container .card {
-    width: 90%;
+    width: 100%;
     height: 5rem;
     box-shadow: 3px 1px 7px var(--break-line);
     transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
