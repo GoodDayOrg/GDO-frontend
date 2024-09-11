@@ -19,6 +19,9 @@ const pa11yConfig = {
   urls: [
     {
       url: `${baseUrl}/login`,
+    },
+    {
+      url: `${baseUrl}/login`,
       actions: [
         'set field #email to admin@example.com',
         'set field #password to admin',
