@@ -12,6 +12,7 @@ import {
   getJobRoles,
   getSingleJobRole,
   getMyApplications,
+  postAssesForm,
 } from './controllers/JobRoleController';
 import { formatDate } from './utils/JobRoleUtil';
 import { allowRoles, redirectIfLogged } from './middlewares/AuthMiddleware';
@@ -50,6 +51,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 app.get('/my-job-applications', allowRoles(), getMyApplications);
 app.get('/job-roles', allowRoles(), getJobRoles);
 app.get('/job/:id', allowRoles(), getSingleJobRole);
+app.post('/job/:id', allowRoles(), postAssesForm);
 app.get('/login', redirectIfLogged(), getLoginForm);
 app.post('/login', redirectIfLogged(), postLoginForm);
 app.get('/logout', logOutUser);

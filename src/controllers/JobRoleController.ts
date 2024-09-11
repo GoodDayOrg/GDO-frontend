@@ -5,6 +5,9 @@ import {
   getJobRoleById,
   getAllJobRoles,
   getMyAllApplications,
+  getAssesRoleApplications,
+  postRoleAssesForm,
+  // postRoleHireForm,
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
@@ -84,9 +87,11 @@ export const getSingleJobRole = async (
     }
 
     const jobRole = await getJobRoleById(id, token);
+    const applications = await getAssesRoleApplications(id, token);
 
     res.render('job-role-details', {
       jobRole,
+      applications,
       currentId,
       nextId,
       prevId,
@@ -96,5 +101,24 @@ export const getSingleJobRole = async (
   } catch (e) {
     res.locals.errormessage = e.message;
     res.render('job-role-details');
+  }
+};
+
+export const postAssesForm = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    await postRoleAssesForm(
+      req.session.token,
+      req.params.id,
+      req.body.assesStatus,
+      req.body.email,
+    );
+    res.redirect(`/job/${req.params.id}`);
+  } catch (e) {
+    const backURL = req.header('Referer') || '/';
+    res.locals.errormessage = e.message;
+    res.redirect(backURL);
   }
 };
