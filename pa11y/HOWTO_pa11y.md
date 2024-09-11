@@ -10,7 +10,7 @@ export FE_PROD_URL="https://your-production-url.com"
   NODE_ENV=test node generatePa11yConfig.js
   ```
 - For production:
-	```
+  ```
   NODE_ENV=production node generatePa11yConfig.js
   ```
 
