@@ -102,15 +102,16 @@ export const postApplyFileForm = async (
 
 export const postBulkImportJobRoles = async (
   token: String,
-  file: File,
+  file: Express.Multer.File,
 ): Promise<void> => {
   try {
     const maxSize = 5 * 1024 * 1024;
     if (file.size > maxSize) {
       throw new Error('File is bigger than 5MB');
     }
+    const blob = new Blob([file.buffer], { type: file.mimetype || 'text/csv' });
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('file', blob, file.originalname);
     const response: AxiosResponse = await axiosInstance.post(
       '/api/job-roles/import',
       formData,

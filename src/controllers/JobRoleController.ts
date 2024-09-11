@@ -150,7 +150,7 @@ export const postBulkImportRoles = async (
   res: express.Response,
 ): Promise<void> => {
   try {
-    await postBulkImportJobRoles(req.session.token, req.body.customCSVInput);
+    await postBulkImportJobRoles(req.session.token, req.file);
     res.redirect('/job-roles');
   } catch (e) {
     res.locals.errormessage = e.message;

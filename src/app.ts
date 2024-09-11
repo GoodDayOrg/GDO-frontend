@@ -67,6 +67,7 @@ app.get(
 app.post(
   '/job-roles/bulk-import',
   allowRoles([UserRole.Admin]),
+  upload.single('customCSVInput'),
   postBulkImportRoles,
 );
 app.get('/job/:id', allowRoles(), getSingleJobRole);

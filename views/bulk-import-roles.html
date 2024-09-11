@@ -9,10 +9,10 @@
         <h3>Bulk import job roles</h3>
         {% if errormessage %}
         <h5>{{ errormessage }}</h5>
-        {% else %}
+        {% endif %}
         <div class="details-content">
             <div class="details-description">
-            <form method="post" action="/job-roles/bulk-import">
+            <form method="post" action="/job-roles/bulk-import" enctype="multipart/form-data">
                 <div class="form-group">
                     <p>Upload your CSV. Max size: 5MB, format: .csv</p>
                     <input
@@ -32,7 +32,20 @@
             </form>
             </div>
         </div>
-        {% endif %}
+
+        <script>
+            const uploadField = document.getElementById('custom-csv-input');
+            uploadField.addEventListener('change', function () {
+              if (this.files[0].size > 5242880) {
+                alert('File is too big!');
+                this.value = '';
+                document.getElementById('csv-input-label').textContent = 'Choose a file...';
+              } else {
+                var fileName = this.files[0].name;
+                document.getElementById('csv-input-label').textContent = fileName;
+              }
+            });
+          </script>
         </div>
     </div>
 </div>
