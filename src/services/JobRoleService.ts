@@ -69,7 +69,8 @@ export const getJobRoleById = async (
   }
 };
 
-export const getAssesAllApplications = async (
+export const getAssesRoleApplications = async (
+  id: string,
   token: String,
 ): Promise<MyApplicationsResponse[]> => {
   // dodac file do response (nowy model)
@@ -83,3 +84,15 @@ export const getAssesAllApplications = async (
     throw new Error('No applications to asses');
   }
 };
+
+// export const postRoleHireForm = async (assesRequest: AssesRequest): Promise<string> => {
+//   try {
+//     const response: AxiosResponse = await axiosInstance.post(
+//       '/api/auth/login',
+//       loginRequest,
+//     );
+//     return response.data;
+//   } catch (e) {
+//     throw new Error('Failed to sign in');
+//   }
+// };

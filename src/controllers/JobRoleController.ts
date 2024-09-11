@@ -5,7 +5,8 @@ import {
   getJobRoleById,
   getAllJobRoles,
   getMyAllApplications,
-  getAssesAllApplications,
+  getAssesRoleApplications,
+  // postRoleHireForm,
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
@@ -51,6 +52,20 @@ export const getMyApplications = async (
   }
 };
 
+// export const postHireForm = async (
+//   req: express.Request,
+//   res: express.Response,
+// ): Promise<void> => {
+//   try {
+//     res.render('my-job-applications', {
+//       applications: await postRoleHireForm(req.session.token),
+//     });
+//   } catch (e) {
+//     res.locals.errormessage = e.message;
+//     res.render('my-job-applications');
+//   }
+// };
+
 export const getSingleJobRole = async (
   req: express.Request,
   res: express.Response,
@@ -81,9 +96,11 @@ export const getSingleJobRole = async (
     }
 
     const jobRole = await getJobRoleById(id, token);
+    const applications = await getAssesRoleApplications(id, token);
 
     res.render('job-role-details', {
       jobRole,
+      applications,
       currentId,
       nextId,
       prevId,
@@ -93,19 +110,5 @@ export const getSingleJobRole = async (
   } catch (e) {
     res.locals.errormessage = e.message;
     res.render('job-role-details');
-  }
-};
-
-export const getAssesApplications = async (
-  req: express.Request,
-  res: express.Response,
-): Promise<void> => {
-  try {
-    res.render('asses-applications', {
-      applications: await getAssesAllApplications(req.session.token),
-    });
-  } catch (e) {
-    res.locals.errormessage = e.message;
-    res.render('asses-applications');
   }
 };
