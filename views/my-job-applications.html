@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block title %} Job roles list {% endblock %} {% block content %}
+
+<div class="hero-section">
+    <img src="/assets/images/energy_lines.webp" alt="" />
+    <h2>Find your new path</h2>
+</div>
+<div class="container app-list-container">
+    <div class="container app-list">
+        <h3>My job applications</h3>
+        {% if errormessage %}
+        <h5>{{ errormessage }}</h5>
+        {% else %}
+        <div class="card-container">
+            {% for application in applications %}
+            <div class="card mb-4 col-12">
+                <a class="card-app-link" href="/job/{{ application.jobRoleId }}">
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-between">
+                            <div class="card-app-role-name app-role-name">{{ application.roleName }}</div>
+                        </h5>
+                        <div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
+                            <div class="card-progress-info progress-info"><i class="fa-solid fa-bars-progress"></i> {{ application.statusApplicationName }}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %} {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

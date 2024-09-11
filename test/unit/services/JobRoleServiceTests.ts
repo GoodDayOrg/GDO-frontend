@@ -3,11 +3,15 @@ import { expect } from 'chai';
 import { JobRoleResponse } from '../../../src/models/JobRoleResponse';
 import {
   getAllJobRoles,
+  getFilteredJobRoles,
   getJobRoleById,
   postApplyFileForm,
+  getMyAllApplications,
 } from '../../../src/services/JobRoleService';
 import { axiosInstance } from '../../../src/config';
 import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
+import { JobRoleFilterParams } from '../../../src/models/JobRoleFilterParams';
+import { MyApplicationsResponse } from '../../../src/models/MyApplicationsResponse';
 
 const URL: string = '/api/job-roles';
 
@@ -18,6 +22,7 @@ const jobRoleResponse: JobRoleResponse = {
   capabilityName: 'delivery',
   bandName: 'Architect',
   closingDate: new Date('10/10/2024'),
+  statusName: 'open',
 };
 
 const jobRoleDetailsResponse: JobRoleDetailsResponse = {
@@ -34,6 +39,21 @@ const jobRoleDetailsResponse: JobRoleDetailsResponse = {
     'Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo.',
   sharepointUrl: 'https://cdc.gov/metus/sapien/ut/nunc/vestibulum.js',
   numberOfOpenPositions: 3,
+};
+
+const myApplicationsResponse: MyApplicationsResponse = {
+  jobRoleId: 1,
+  roleName: 'Tester',
+  statusApplicationName: 'hired',
+};
+
+const mockFile = {
+  fieldname: 'file',
+  originalname: 'test.pdf',
+  encoding: '7bit',
+  mimetype: 'application/pdf',
+  buffer: Buffer.from('dummy content'),
+  size: 1024,
 };
 
 let mock: MockAdapter;
@@ -84,6 +104,48 @@ describe('JobRoleService', function () {
     });
   });
 
+  describe('getFilteredJobRoles', function () {
+    it('should return filtered job roles from response', async () => {
+      const data = [jobRoleResponse];
+
+      mock.onGet(URL + '/filter').reply(200, data);
+
+      const filterParams: JobRoleFilterParams = {
+        roleName: 'engineer',
+        jobRoleLocation: ['Gdansk', 'Buenos Aires'],
+      };
+
+      const results = await getFilteredJobRoles('token', filterParams);
+      results[0].closingDate = new Date(results[0].closingDate);
+
+      expect(results[0]).to.deep.equal(jobRoleResponse);
+    });
+
+    it('should throw exception when 404 error returned from axios', async () => {
+      mock.onGet(URL + '/filter').reply(404);
+
+      try {
+        await getFilteredJobRoles('token');
+        expect(true).equal(false);
+      } catch (e) {
+        expect(e.message).to.equal('Currently no job-roles available');
+        return;
+      }
+    });
+
+    it('should throw exception when 500 error returned from axios', async () => {
+      mock.onGet(URL + '/filter').reply(500);
+
+      try {
+        await getFilteredJobRoles('token');
+        expect(true).equal(false);
+      } catch (e) {
+        expect(e.message).to.equal('Currently no job-roles available');
+        return;
+      }
+    });
+  });
+
   describe('getJobRoleById', function () {
     it('should return job found by id', async () => {
       const data = jobRoleDetailsResponse;
@@ -91,7 +153,7 @@ describe('JobRoleService', function () {
 
       mock.onGet(URL + '/' + id).reply(200, data);
 
-      const result = await getJobRoleById(id, 'token', errorMessage);
+      const result = await getJobRoleById(id, 'token');
       result.closingDate = new Date(result.closingDate);
 
       expect(result).to.deep.equal(data);
@@ -102,7 +164,7 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/' + id).reply(404);
 
       try {
-        await getJobRoleById(id, 'token', errorMessage);
+        await getJobRoleById(id, 'token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal(errorMessage);
@@ -115,7 +177,7 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/' + id).reply(404);
 
       try {
-        await getJobRoleById(id, 'token', errorMessage);
+        await getJobRoleById(id, 'token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal(errorMessage);
@@ -128,7 +190,7 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/' + id).reply(404);
 
       try {
-        await getJobRoleById(id, 'token', 'Failed to get job apply form.');
+        await getJobRoleById(id, 'token');
         expect(true).equal(false);
       } catch (e) {
         expect(e.message).to.equal('Failed to get job apply form.');
@@ -157,8 +219,8 @@ describe('JobRoleService', function () {
 
       const result = await postApplyFileForm(
         'token',
-        '1',
-        new File(['dummy content'], 'test.pdf', { type: 'application/pdf' }),
+        id,
+        mockFile as Express.Multer.File,
       );
       result.closingDate = new Date(result.closingDate);
 
@@ -171,15 +233,33 @@ describe('JobRoleService', function () {
     mock.onPost(URL + '/' + id).reply(500);
 
     try {
-      await postApplyFileForm(
-        id,
-        'token',
-        new File(['dummy content'], 'test.pdf', { type: 'application/pdf' }),
-      );
+      await postApplyFileForm('token', id, mockFile as Express.Multer.File);
       expect(true).equal(false);
     } catch (e) {
       expect(e.message).to.equal('Failed to post job apply form.');
       return;
     }
+  });
+
+  describe('getMyAllApplications', async () => {
+    it('should return myApplicationsResult object', async () => {
+      const data = [myApplicationsResponse];
+      mock.onGet(URL + '/my-job-applications').reply(200, data);
+
+      const result = await getMyAllApplications('token');
+      expect(result[0]).to.deep.equal(myApplicationsResponse);
+    });
+
+    it('should return error message when 401', async () => {
+      mock.onGet(URL + '/my-job-applications').reply(401);
+
+      try {
+        await getMyAllApplications('wrongToken');
+        expect(true).equal(false);
+      } catch (e) {
+        expect(e.message).to.equal('Currently You dont have any applications');
+        return;
+      }
+    });
   });
 });
