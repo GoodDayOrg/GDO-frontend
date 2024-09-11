@@ -26,7 +26,7 @@ jobs:
       - name: Generate Pa11y config
         env:
           NODE_ENV: production
-          PROD_URL: ${{ secrets.PROD_URL }}
+          PROD_URL: ${{ secrets.FE_PROD_URL }}
         run: node pa11y/generatePa11yConfig.js
 
       - name: Run Pa11y CI
