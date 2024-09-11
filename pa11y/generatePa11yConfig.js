@@ -21,7 +21,7 @@ const pa11yConfig = {
       url: `${baseUrl}/login`,
     },
     {
-      url: `${baseUrl}/login`,
+      url: `${baseUrl}/job-roles`,
       actions: [
         'set field #email to admin@example.com',
         'set field #password to admin',
@@ -30,7 +30,7 @@ const pa11yConfig = {
       ],
     },
     {
-      url: `${baseUrl}/login`,
+      url: `${baseUrl}/my-job-applications`,
       actions: [
         'set field #email to admin@example.com',
         'set field #password to admin',
