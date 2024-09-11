@@ -5,6 +5,7 @@ import {
   getJobRoleById,
   getAllJobRoles,
   getMyAllApplications,
+  getAssesAllApplications,
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
@@ -101,7 +102,7 @@ export const getAssesApplications = async (
 ): Promise<void> => {
   try {
     res.render('asses-applications', {
-      applications: await getMyAllApplications(req.session.token),
+      applications: await getAssesAllApplications(req.session.token),
     });
   } catch (e) {
     res.locals.errormessage = e.message;

@@ -68,3 +68,18 @@ export const getJobRoleById = async (
     throw new Error('Failed to get job role details.');
   }
 };
+
+export const getAssesAllApplications = async (
+  token: String,
+): Promise<MyApplicationsResponse[]> => {
+  // dodac file do response (nowy model)
+  try {
+    const response: AxiosResponse = await axiosInstance.get(
+      '/api/job-roles/my-job-applications', // zmienić API endpoint
+      getHeader(token),
+    );
+    return response.data;
+  } catch (e) {
+    throw new Error('No applications to asses');
+  }
+};

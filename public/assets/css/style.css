@@ -411,7 +411,7 @@ main .hero-section h2 {
 /* CARDS */
 .app-list-container .app-list {
     /* width: 70%; */
-    width: 80vw;
+    width: 65vw;
 }
 
 .app-list-container .app-list h3 {
@@ -498,4 +498,8 @@ main .hero-section h2 {
 
 .login-page .btn-primary:hover {
     box-shadow: 0 0 3px var(--main-green);
+}
+
+.card-subtitle{
+    width: 7vw;
 }
