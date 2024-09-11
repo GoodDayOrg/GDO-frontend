@@ -6,6 +6,7 @@ import {
   getAllJobRoles,
   getMyAllApplications,
   getAssesRoleApplications,
+  postRoleAssesForm,
   // postRoleHireForm,
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
@@ -52,20 +53,6 @@ export const getMyApplications = async (
   }
 };
 
-// export const postHireForm = async (
-//   req: express.Request,
-//   res: express.Response,
-// ): Promise<void> => {
-//   try {
-//     res.render('my-job-applications', {
-//       applications: await postRoleHireForm(req.session.token),
-//     });
-//   } catch (e) {
-//     res.locals.errormessage = e.message;
-//     res.render('my-job-applications');
-//   }
-// };
-
 export const getSingleJobRole = async (
   req: express.Request,
   res: express.Response,
@@ -110,5 +97,24 @@ export const getSingleJobRole = async (
   } catch (e) {
     res.locals.errormessage = e.message;
     res.render('job-role-details');
+  }
+};
+
+export const postAssesForm = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    await postRoleAssesForm(
+      req.session.token,
+      req.params.id,
+      req.body.assesStatus,
+      req.body.email,
+    );
+    res.redirect(`/job/${req.params.id}`);
+  } catch (e) {
+    const backURL = req.header('Referer') || '/';
+    res.locals.errormessage = e.message;
+    res.redirect(backURL);
   }
 };

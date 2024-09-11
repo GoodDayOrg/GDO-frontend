@@ -63,27 +63,33 @@
 <div class="asses-applications">
   <h5 id="role-asses-applications">Asses Applications</h5>
   <div class="asses-box">
+    {% if applications|length > 0 %}
     {% for application in applications %}
     <div class="card mb-4 col-8">
       <div class="card-body">
-        <a href="example.pdf" target="_blank" class="card-user-cv-link">
-          <div class="card-user-name">Name@exmaple.com</div>
+        <a href="https://cv.pracuj.pl/images/cv-templates/classic-a-default.jpg" target="_blank"
+          class="card-user-cv-link">
+          <div class="card-user-name">{{ application.userEmail }}</div>
         </a>
         <div class="card-subtitle mb-2 card-content text-muted d-flex flex-row gap-3">
           <div class="card-progress-info progress-info"><i class="fa-solid fa-bars-progress"></i> {{
-            application.statusApplicationName }}</div>
+            application.applicationStatus }}</div>
         </div>
-
         <div class="asses-buttons">
-          {% if application.statusApplicationName == 'in progress' %}
-          <button class="btn-hire">Hire</button>
-          <button class="btn-reject">Reject</button>
+          {% if application.applicationStatus == 'in progress' %}
+          <form action="/job/{{currentId}}" method="POST">
+            <input type="hidden" name="email" value="{{ application.userEmail }}">
+            <button type="submit" name="assesStatus" value="hire" class="btn-hire">Hire</button>
+            <button type="submit" name="assesStatus" value="reject" class="btn-reject">Reject</button>
+          </form>
           {% endif %}
         </div>
-
       </div>
     </div>
     {% endfor %}
+    {% else %}
+    There is no applications for this job
+    {% endif %}
   </div>
 </div>
 {% endif %}

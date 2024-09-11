@@ -6,6 +6,7 @@ import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { getHeader } from '../utils/AuthUtil';
 import { serializeParams } from '../utils/SerializeParams';
 import { JobRoleDetailsResponse } from '../models/JobRoleDetailsResponse';
+import { AssesApplicationsResponse } from '../models/AssesApplicationsResponse';
 
 export const getFilteredJobRoles = async (
   token: String,
@@ -72,11 +73,10 @@ export const getJobRoleById = async (
 export const getAssesRoleApplications = async (
   id: string,
   token: String,
-): Promise<MyApplicationsResponse[]> => {
-  // dodac file do response (nowy model)
+): Promise<AssesApplicationsResponse[]> => {
   try {
     const response: AxiosResponse = await axiosInstance.get(
-      '/api/job-roles/my-job-applications', // zmienić API endpoint
+      `/api/job-roles/applications/${id}`,
       getHeader(token),
     );
     return response.data;
@@ -85,14 +85,24 @@ export const getAssesRoleApplications = async (
   }
 };
 
-// export const postRoleHireForm = async (assesRequest: AssesRequest): Promise<string> => {
-//   try {
-//     const response: AxiosResponse = await axiosInstance.post(
-//       '/api/auth/login',
-//       loginRequest,
-//     );
-//     return response.data;
-//   } catch (e) {
-//     throw new Error('Failed to sign in');
-//   }
-// };
+export const postRoleAssesForm = async (
+  token: string,
+  id: string,
+  assesStatus: string,
+  email: string,
+): Promise<AssesApplicationsResponse> => {
+  try {
+    const response: AxiosResponse = await axiosInstance.post(
+      `/api/job-roles/applications/${id}`,
+      // `/api/job-roles/applications/${id}?status=${assesStatus}&userEmail=${email}`,
+      {
+        assetStatus: assesStatus,
+        email: email,
+      },
+      getHeader(token),
+    );
+    return response.data;
+  } catch (e) {
+    throw new Error('Failed to post asses application form.');
+  }
+};
