@@ -2,4 +2,4 @@ dist
 node_modules
 .DS_Store
 .env
-pa11y/*.json
+pa11yConfig.json
