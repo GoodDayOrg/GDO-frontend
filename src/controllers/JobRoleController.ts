@@ -1,3 +1,4 @@
+import qs from 'qs';
 import express, { application } from 'express';
 import {
   getFilteredJobRoles,
@@ -9,33 +10,32 @@ import {
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
-
-export const getJobRolesFiltered = async (
-  req: express.Request,
-  res: express.Response,
-): Promise<void> => {
-  try {
-    const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
-    const jobRoles = await getFilteredJobRoles(req.session.token, filters);
-
-    res.render('job-role-list', { jobRoles });
-  } catch (e) {
-    res.locals.errormessage = e.message;
-    res.render('job-role-list');
-  }
-};
+import { JobRoleResponse } from '../models/JobRoleResponse';
 
 export const getJobRoles = async (
   req: express.Request,
   res: express.Response,
 ): Promise<void> => {
+  const filters: JobRoleFilterParams = extractJobRoleFilterParams(req);
+  req.session.filters = filters;
+  let jobRoles: JobRoleResponse[] = req.session.jobRoles || [];
+
   try {
-    res.render('job-role-list', {
-      jobRoles: await getAllJobRoles(req.session.token),
-    });
+    if (Object.keys(filters).length === 0 && jobRoles.length > 0) {
+      return res.render('job-role-list', { jobRoles, filters });
+    }
+
+    jobRoles =
+      Object.keys(filters).length > 0
+        ? await getFilteredJobRoles(req.session.token, filters)
+        : await getAllJobRoles(req.session.token);
+
+    req.session.jobRoles = jobRoles;
+    req.session.jobRolesIds = jobRoles.map((jobRole) => jobRole.jobRoleId);
+    res.render('job-role-list', { jobRoles, filters });
   } catch (e) {
     res.locals.errormessage = e.message;
-    res.render('job-role-list');
+    res.render('job-role-list', { jobRoles, filters });
   }
 };
 
@@ -44,8 +44,13 @@ export const getMyApplications = async (
   res: express.Response,
 ): Promise<void> => {
   try {
+    const myApplications = await getMyAllApplications(req.session.token);
+    const jobRolesIds = myApplications.map(
+      (application) => application.jobRoleId,
+    );
+    req.session.jobRolesIds = jobRolesIds;
     res.render('my-job-applications', {
-      applications: await getMyAllApplications(req.session.token),
+      applications: myApplications,
     });
   } catch (e) {
     res.locals.errormessage = e.message;
@@ -58,28 +63,41 @@ export const getSingleJobRole = async (
   res: express.Response,
 ): Promise<void> => {
   try {
-    const applications = [
-      {
-        jobRoleId: 1,
-        roleName: 'Tester',
-        statusApplicationName: 'in progress',
-      },
-    ];
+    const { id } = req.params;
+    const { jobRolesIds = [], token, filters } = req.session;
+    const currentId = parseInt(id, 10);
 
-    const currentId = parseInt(req.params.id, 10);
-    const nextId = currentId + 1;
-    const prevId = currentId - 1;
+    let currentIndex = 0;
+    let nextId = 0;
+    let prevId = 0;
+
+    if (jobRolesIds.length > 0) {
+      currentIndex = jobRolesIds.indexOf(currentId);
+
+      prevId =
+        currentIndex > 0
+          ? jobRolesIds[currentIndex - 1]
+          : jobRolesIds[jobRolesIds.length - 1];
+
+      nextId =
+        currentIndex < jobRolesIds.length - 1
+          ? jobRolesIds[currentIndex + 1]
+          : jobRolesIds[0];
+    }
+
     const jobRole = await getJobRoleById(
-      req.params.id,
-      req.session.token,
+      id,
+      token,
       'Failed to get job role details.',
     );
+
     res.render('job-role-details', {
       jobRole,
       currentId,
       nextId,
       prevId,
-      applications,
+      filters,
+      queryString: qs.stringify(filters),
     });
   } catch (e) {
     res.locals.errormessage = e.message;

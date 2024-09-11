@@ -4,6 +4,7 @@ import { axiosInstance } from '../config';
 import { MyApplicationsResponse } from '../models/MyApplicationsResponse';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { getHeader } from '../utils/AuthUtil';
+import { serializeParams } from '../utils/SerializeParams';
 import { JobRoleDetailsResponse } from '../models/JobRoleDetailsResponse';
 
 export const getFilteredJobRoles = async (
@@ -15,9 +16,7 @@ export const getFilteredJobRoles = async (
       '/api/job-roles/filter',
       {
         params: filters,
-        paramsSerializer: {
-          indexes: null,
-        },
+        paramsSerializer: (params) => serializeParams(params),
         ...getHeader(token),
       },
     );

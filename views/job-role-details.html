@@ -15,18 +15,15 @@
 </div>
 <div class="container details-section">
   <div class="details-header">
-    <h3 id="job-role-name">{{ jobRole.roleName }}</h3>
-    <div class="details-action">
-      <a href="/apply/{{currentId}}" class="btn btn-light" id="apply-btn" >Apply</a> 
-      <a href="/job-roles" class="btn btn-light" id="go-back-button"><img class="btn-icon" src="/assets/images/back.png"
-          alt="To list"></a>
-      <a href="/job/{{ prevId }}" class="btn {% if currentId == 1 %}hide{% endif %} btn-light" id="previous-button">
-        <img class="btn-icon" src="/assets/images/arrow_left.png" alt="Previous">
-      </a>
-      <a href="/job/{{nextId}}" class="btn btn-light" id="next-button"><img class="btn-icon"
-          src="/assets/images/arrow_right.png" alt="Next"></a>
-      <a href="{{jobRole.sharepointUrl}}" target="_blank" class="btn btn-light" id="sharepoint-url"><img
-          class="btn-icon" src="/assets/images/sharepoint.png" alt="sharepoint link"></a>
+      <h3 id="job-role-name">{{ jobRole.roleName }}</h3>
+      <div class="details-action">
+          <a href="/apply/{{currentId}}" class="btn btn-light" id="apply-btn" >Apply</a> 
+          <a href="/job-roles?{{queryString}}" class="btn btn-light" id="go-back-button"><img class="btn-icon"src="/assets/images/back.png" alt="To list"></a>
+          <a href="/job/{{ prevId }}" class="btn btn-light {% if currentId == nextId and nextId == prevId %}hide{% endif %}" id="previous-button">
+            <img class="btn-icon" src="/assets/images/arrow_left.png" alt="Previous">
+          </a>
+          <a href="/job/{{nextId}}" class="btn btn-light {% if currentId == nextId and nextId == prevId %}hide{% endif %}" id="next-button"><img class="btn-icon"src="/assets/images/arrow_right.png" alt="Next"></a>
+          <a href="{{jobRole.sharepointUrl}}" target="_blank" class="btn btn-light" id="sharepoint-url"><img class="btn-icon"src="/assets/images/sharepoint.png" alt="sharepoint link"></a>
     </div>
   </div>
   <div class="details-info">

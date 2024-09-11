@@ -2,12 +2,18 @@ import express from 'express';
 import { jwtDecode } from 'jwt-decode';
 import { JwtToken, UserRole } from '../models/JwtToken';
 
-export const allowRoles = (allowedRoles?: UserRole[]) => {
+export const allowRoles = (
+  allowedRoles?: UserRole[],
+): ((
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => void | express.Response) => {
   return (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
-  ) => {
+  ): void | express.Response => {
     if (!req.session.token) {
       return res.redirect('/login');
     }
@@ -29,12 +35,16 @@ export const allowRoles = (allowedRoles?: UserRole[]) => {
   };
 };
 
-export const redirectIfLogged = () => {
+export const redirectIfLogged = (): ((
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction,
+) => void | express.Response) => {
   return (
     req: express.Request,
     res: express.Response,
     next: express.NextFunction,
-  ) => {
+  ): void | express.Response => {
     if (req.session.token) {
       return res.redirect('/');
     }

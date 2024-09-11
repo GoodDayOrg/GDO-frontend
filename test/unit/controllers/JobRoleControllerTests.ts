@@ -8,6 +8,8 @@ import express from 'express';
 import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
 import { MyApplicationsResponse } from '../../../src/models/MyApplicationsResponse';
 
+const jobRolesIds = [1, 2, 3];
+
 const jobRoleResponse: JobRoleResponse = {
   jobRoleId: 1,
   roleName: 'delivery_master',
@@ -15,6 +17,7 @@ const jobRoleResponse: JobRoleResponse = {
   capabilityName: 'delivery',
   bandName: 'Architect',
   closingDate: new Date('10/10/2024'),
+  statusName: 'open',
 };
 
 const jobRoleDetailsResponse: JobRoleDetailsResponse = {
@@ -74,8 +77,12 @@ describe('JobRoleContoller', function () {
       );
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render.calledWith('job-role-list', { jobRoles: jobRolesList }))
-        .to.be.true;
+      expect(
+        res.render.calledWith('job-role-list', {
+          jobRoles: jobRolesList,
+          filters: {},
+        }),
+      ).to.be.true;
     });
 
     it('should render view with error message when error thrown', async () => {
@@ -111,27 +118,36 @@ describe('JobRoleContoller', function () {
     it('should render view with details of job role', async () => {
       const jobRoleDetails = jobRoleDetailsResponse;
       sinon.stub(JobRoleService, 'getJobRoleById').resolves(jobRoleDetails);
+
       const req = {
         params: { id: 1 },
-        session: {
-          token: 'token',
-        },
+        session: { token: 'token', jobRolesIds, filters: {} },
       } as unknown as express.Request;
       const res = {
         render: sinon.spy(),
+        locals: {},
       } as MockResponse;
-      const applications = [
-        {
-          jobRoleId: 1,
-          roleName: 'Tester',
-          statusApplicationName: 'in progress',
-        },
-      ];
+
       await JobRoleController.getSingleJobRole(req, res);
 
-      const currentId = req.params.id;
-      const nextId = 2;
-      const prevId = 0;
+      const currentId = parseInt(req.params.id, 10);
+      let currentIndex = 0;
+      let nextId = 0;
+      let prevId = 0;
+
+      if (jobRolesIds.length > 0) {
+        currentIndex = jobRolesIds.indexOf(currentId);
+
+        prevId =
+          currentIndex > 0
+            ? jobRolesIds[currentIndex - 1]
+            : jobRolesIds[jobRolesIds.length - 1];
+
+        nextId =
+          currentIndex < jobRolesIds.length - 1
+            ? jobRolesIds[currentIndex + 1]
+            : jobRolesIds[0];
+      }
 
       expect(res.render.calledOnce).to.be.true;
       expect(
@@ -140,7 +156,8 @@ describe('JobRoleContoller', function () {
           currentId,
           nextId,
           prevId,
-          applications,
+          filters: {},
+          queryString: '',
         }),
       ).to.be.true;
     });
@@ -355,19 +372,28 @@ describe('JobRoleContoller', function () {
       const req = {
         session: {
           token: 'token',
+          jobRoles: [],
+          filters: {},
+        },
+        query: {
+          jobRoleLocation: ['Belfast', 'Buenos Aires'],
         },
       } as unknown as express.Request;
 
-      req.query = {
-        location: ['Belfast', 'Buenos Aires'],
-      };
-      const res = { render: sinon.spy() } as MockResponse;
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' },
+      } as MockResponse;
 
-      await JobRoleController.getJobRolesFiltered(req as express.Request, res);
+      await JobRoleController.getJobRoles(req as express.Request, res);
 
       expect(res.render.calledOnce).to.be.true;
-      expect(res.render.calledWith('job-role-list', { jobRoles: jobRolesList }))
-        .to.be.true;
+      expect(
+        res.render.calledWith('job-role-list', {
+          jobRoles: jobRolesList,
+          filters: { jobRoleLocation: ['Belfast', 'Buenos Aires'] },
+        }),
+      ).to.be.true;
     });
 
     it('should render view with error message when error thrown', async () => {
@@ -391,7 +417,7 @@ describe('JobRoleContoller', function () {
         locals: { errormessage: '' },
       } as MockResponse;
 
-      await JobRoleController.getJobRolesFiltered(req as express.Request, res);
+      await JobRoleController.getJobRoles(req as express.Request, res);
 
       expect(res.render.calledOnce).to.be.true;
       expect(res.render.calledWith('job-role-list')).to.be.true;

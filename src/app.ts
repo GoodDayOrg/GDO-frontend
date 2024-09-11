@@ -15,7 +15,6 @@ import {
   getJobApplyForm,
   postJobApplyForm,
   getMyApplications,
-  getJobRolesFiltered,
   getBulkImportRoles,
   postBulkImportRoles,
 } from './controllers/JobRoleController';
@@ -57,7 +56,6 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 app.get('/my-job-applications', allowRoles(), getMyApplications);
-app.get('/job-roles/filter', allowRoles(), getJobRolesFiltered);
 app.get('/job-roles', allowRoles(), getJobRoles);
 app.get(
   '/job-roles/bulk-import',
