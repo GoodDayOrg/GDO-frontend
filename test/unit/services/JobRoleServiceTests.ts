@@ -12,6 +12,7 @@ import { axiosInstance } from '../../../src/config';
 import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
 import { JobRoleFilterParams } from '../../../src/models/JobRoleFilterParams';
 import { MyApplicationsResponse } from '../../../src/models/MyApplicationsResponse';
+import { Readable } from 'stream';
 
 const URL: string = '/api/job-roles';
 
@@ -54,6 +55,32 @@ const mockFile = {
   mimetype: 'application/pdf',
   buffer: Buffer.from('dummy content'),
   size: 1024,
+};
+
+const mockMulterFile: Express.Multer.File = {
+  fieldname: 'file',
+  originalname: 'test.pdf',
+  encoding: '7bit',
+  mimetype: 'application/pdf',
+  buffer: Buffer.from('%PDF-1.4\n%...', 'utf-8'),
+  size: 2048,
+  stream: Readable.from(Buffer.from('%PDF-1.4\n%...')),
+  destination: '/uploads/',
+  filename: 'test.pdf',
+  path: '/uploads/test.pdf',
+};
+
+const mockMulterFileCSV: Express.Multer.File = {
+  fieldname: 'file',
+  originalname: 'test.csv',
+  encoding: '7bit',
+  mimetype: 'text/csv',
+  buffer: Buffer.from('%CSV-1.4\n%...', 'utf-8'),
+  size: 2048,
+  stream: Readable.from(Buffer.from('%CSV-1.4\n%...')),
+  destination: '/uploads/',
+  filename: 'test.csv',
+  path: '/uploads/test.csv',
 };
 
 let mock: MockAdapter;
@@ -213,53 +240,68 @@ describe('JobRoleService', function () {
   });
 
   describe('postApplyFileForm', function () {
-    it('should return job found by id', async () => {
+    describe('postApplyFileForm', function () {
+      it('should return job found by id when application job form is successful', async () => {
+        const id = '1';
+        mock
+          .onPost(URL + '/' + id + '/applications')
+          .reply(200, jobRoleDetailsResponse);
+
+        const result = await postApplyFileForm('token', '1', mockMulterFile);
+        result.closingDate = new Date(result.closingDate);
+
+        expect(result).to.deep.equal(jobRoleDetailsResponse);
+      });
+
+      it('should return error message when application job form failes', async () => {
+        const id = '1';
+        mock.onPost(URL + '/' + id + '/applications').reply(500);
+
+        try {
+          await postApplyFileForm(id, 'token', mockMulterFile);
+          expect(true).equal(false);
+        } catch (e) {
+          expect(e.message).to.equal('Failed to post job apply form.');
+          return;
+        }
+      });
+    });
+
+    it('should return error message when application job form failes', async () => {
       const id = '1';
-      mock.onPost(URL + '/' + id).reply(200, jobRoleDetailsResponse);
-
-      const result = await postApplyFileForm(
-        'token',
-        id,
-        mockFile as Express.Multer.File,
-      );
-      result.closingDate = new Date(result.closingDate);
-
-      expect(result).to.deep.equal(jobRoleDetailsResponse);
-    });
-  });
-
-  it('should return error message when application job form failes', async () => {
-    const id = '1';
-    mock.onPost(URL + '/' + id).reply(500);
-
-    try {
-      await postApplyFileForm('token', id, mockFile as Express.Multer.File);
-      expect(true).equal(false);
-    } catch (e) {
-      expect(e.message).to.equal('Failed to post job apply form.');
-      return;
-    }
-  });
-
-  describe('getMyAllApplications', async () => {
-    it('should return myApplicationsResult object', async () => {
-      const data = [myApplicationsResponse];
-      mock.onGet(URL + '/my-job-applications').reply(200, data);
-
-      const result = await getMyAllApplications('token');
-      expect(result[0]).to.deep.equal(myApplicationsResponse);
-    });
-
-    it('should return error message when 401', async () => {
-      mock.onGet(URL + '/my-job-applications').reply(401);
+      mock.onPost(URL + '/' + id).reply(500);
 
       try {
-        await getMyAllApplications('wrongToken');
+        await postApplyFileForm('token', id, mockFile as Express.Multer.File);
         expect(true).equal(false);
       } catch (e) {
-        expect(e.message).to.equal('Currently You dont have any applications');
+        expect(e.message).to.equal('Failed to post job apply form.');
         return;
       }
+    });
+
+    describe('getMyAllApplications', async () => {
+      it('should return myApplicationsResult object', async () => {
+        const data = [myApplicationsResponse];
+        mock.onGet(URL + '/my-job-applications').reply(200, data);
+
+        const result = await getMyAllApplications('token');
+        expect(result[0]).to.deep.equal(myApplicationsResponse);
+      });
+
+      it('should return error message when 401', async () => {
+        mock.onGet(URL + '/my-job-applications').reply(401);
+
+        try {
+          await getMyAllApplications('wrongToken');
+          expect(true).equal(false);
+        } catch (e) {
+          expect(e.message).to.equal(
+            'Currently You dont have any applications',
+          );
+          return;
+        }
+      });
     });
   });
 });

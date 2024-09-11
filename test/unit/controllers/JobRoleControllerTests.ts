@@ -300,6 +300,18 @@ describe('JobRoleContoller', function () {
 
   describe('getSingleJobRole', function () {
     it('should render view with form of job role application', async () => {
+      const applications = [
+        {
+          jobRoleId: '1',
+          roleName: 'Tester',
+          statusApplicationName: 'in progress',
+        },
+        {
+          jobRoleId: '2',
+          roleName: 'Tester',
+          statusApplicationName: 'rejected',
+        },
+      ];
       const jobRoleDetails = jobRoleDetailsResponse;
       sinon.stub(JobRoleService, 'getJobRoleById').resolves(jobRoleDetails);
 
@@ -322,6 +334,7 @@ describe('JobRoleContoller', function () {
         res.render.calledWith('job-apply-form', {
           currentId,
           jobRole: jobRoleDetails,
+          applications,
         }),
       ).to.be.true;
     });
