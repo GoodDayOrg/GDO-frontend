@@ -79,8 +79,8 @@
           {% if application.applicationStatus == 'in progress' %}
           <form action="/job/{{currentId}}" method="POST">
             <input type="hidden" name="email" value="{{ application.userEmail }}">
-            <button type="submit" name="assesStatus" value="hire" class="btn-hire">Hire</button>
-            <button type="submit" name="assesStatus" value="reject" class="btn-reject">Reject</button>
+            <button type="submit" name="assesStatus" value="hired" class="btn-hire">Hire</button>
+            <button type="submit" name="assesStatus" value="rejected" class="btn-reject">Reject</button>
           </form>
           {% endif %}
         </div>

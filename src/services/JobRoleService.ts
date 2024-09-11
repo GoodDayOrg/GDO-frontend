@@ -93,8 +93,7 @@ export const postRoleAssesForm = async (
 ): Promise<AssesApplicationsResponse> => {
   try {
     const response: AxiosResponse = await axiosInstance.post(
-      `/api/job-roles/applications/${id}`,
-      // `/api/job-roles/applications/${id}?status=${assesStatus}&userEmail=${email}`,
+      `/api/job-roles/applications/${id}?status=${assesStatus}&userEmail=${email}`,
       {
         assetStatus: assesStatus,
         email: email,
