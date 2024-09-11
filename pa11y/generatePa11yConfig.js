@@ -18,6 +18,9 @@ const pa11yConfig = {
   },
   urls: [
     {
+      url: `${baseUrl}/`,
+    },
+    {
       url: `${baseUrl}/login`,
     },
     {
@@ -27,6 +30,17 @@ const pa11yConfig = {
         'set field #password to admin',
         'click element #submit',
         'wait for path to be /job-roles',
+      ],
+    },
+    {
+      url: `${baseUrl}/job/1`,
+      actions: [
+        'set field #email to admin@example.com',
+        'set field #password to admin',
+        'click element #submit',
+        'wait for path to be /job-roles',
+        'click element a.card:nth-child(1)',
+        'wait for path to be /job/1',
       ],
     },
     {
