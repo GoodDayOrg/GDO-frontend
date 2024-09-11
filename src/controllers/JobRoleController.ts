@@ -94,3 +94,17 @@ export const getSingleJobRole = async (
     res.render('job-role-details');
   }
 };
+
+export const getAssesApplications = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    res.render('asses-applications', {
+      applications: await getMyAllApplications(req.session.token),
+    });
+  } catch (e) {
+    res.locals.errormessage = e.message;
+    res.render('asses-applications');
+  }
+};
