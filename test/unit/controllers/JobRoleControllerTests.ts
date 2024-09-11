@@ -8,11 +8,7 @@ import express from 'express';
 import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
 import { MyApplicationsResponse } from '../../../src/models/MyApplicationsResponse';
 
-const jobRoles = [
-  { jobRoleId: 1 },
-  { jobRoleId: 2 },
-  { jobRoleId: 3 },
-] as JobRoleResponse[];
+const jobRolesIds = [1, 2, 3];
 
 const jobRoleResponse: JobRoleResponse = {
   jobRoleId: 1,
@@ -119,7 +115,7 @@ describe('JobRoleContoller', function () {
 
       const req = {
         params: { id: 1 },
-        session: { token: 'token', jobRoles, filters: {} },
+        session: { token: 'token', jobRolesIds, filters: {} },
       } as unknown as express.Request;
       const res = {
         render: sinon.spy(),
@@ -129,17 +125,23 @@ describe('JobRoleContoller', function () {
       await JobRoleController.getSingleJobRole(req, res);
 
       const currentId = parseInt(req.params.id, 10);
-      const currentIndex = jobRoles.findIndex(
-        (jobRole) => jobRole.jobRoleId === currentId,
-      );
-      const nextId =
-        currentIndex < jobRoles.length - 1
-          ? jobRoles[currentIndex + 1].jobRoleId
-          : jobRoles[0].jobRoleId;
-      const prevId =
-        currentIndex > 0
-          ? jobRoles[currentIndex - 1].jobRoleId
-          : jobRoles[jobRoles.length - 1].jobRoleId;
+      let currentIndex = 0;
+      let nextId = 0;
+      let prevId = 0;
+
+      if (jobRolesIds.length > 0) {
+        currentIndex = jobRolesIds.indexOf(currentId);
+
+        prevId =
+          currentIndex > 0
+            ? jobRolesIds[currentIndex - 1]
+            : jobRolesIds[jobRolesIds.length - 1];
+
+        nextId =
+          currentIndex < jobRolesIds.length - 1
+            ? jobRolesIds[currentIndex + 1]
+            : jobRolesIds[0];
+      }
 
       expect(res.render.calledOnce).to.be.true;
       expect(

@@ -193,7 +193,7 @@ describe('JobRoleService', function () {
         await getJobRoleById(id, 'token');
         expect(true).equal(false);
       } catch (e) {
-        expect(e.message).to.equal('Failed to get job apply form.');
+        expect(e.message).to.equal('Failed to get job role details.');
         return;
       }
     });
