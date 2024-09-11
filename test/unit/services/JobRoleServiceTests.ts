@@ -224,19 +224,6 @@ describe('JobRoleService', function () {
         return;
       }
     });
-
-    // it('should return error message if job ', async () => {
-    //   const id = 'abc';
-    //   mock.onGet(URL + '/' + id).reply(404);
-
-    //   try {
-    //     await getJobRoleById(id, 'token', 'Failed to get job apply form.');
-    //     expect(true).equal(false);
-    //   } catch (e) {
-    //     expect(e.message).to.equal('Failed to get job apply form.');
-    //     return;
-    //   }
-    // });
   });
 
   describe('postApplyFileForm', function () {
