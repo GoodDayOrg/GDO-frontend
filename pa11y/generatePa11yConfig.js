@@ -1,8 +1,8 @@
 const fs = require('fs');
 
 // Read environment variables
-const testUrl = process.env.TEST_URL || 'http://localhost:3000';
-const prodUrl = process.env.PROD_URL;
+const testUrl = process.env.FE_TEST_URL || 'http://localhost:3000';
+const prodUrl = process.env.FE_PROD_URL;
 
 // Determine the environment
 const isProduction = process.env.NODE_ENV === 'production';
