@@ -13,9 +13,12 @@ import {
   getSingleJobRole,
   getMyApplications,
   getJobRolesFiltered,
+  getBulkImportRoles,
+  postBulkImportRoles,
 } from './controllers/JobRoleController';
 import { formatDate } from './utils/JobRoleUtil';
 import { allowRoles, redirectIfLogged } from './middlewares/AuthMiddleware';
+import { UserRole } from './models/JwtToken';
 
 const app = express();
 
@@ -51,6 +54,16 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 app.get('/my-job-applications', allowRoles(), getMyApplications);
 app.get('/job-roles/filter', allowRoles(), getJobRolesFiltered);
 app.get('/job-roles', allowRoles(), getJobRoles);
+app.get(
+  '/job-roles/bulk-import',
+  allowRoles([UserRole.Admin]),
+  getBulkImportRoles,
+);
+app.post(
+  '/job-roles/bulk-import',
+  allowRoles([UserRole.Admin]),
+  postBulkImportRoles,
+);
 app.get('/job/:id', allowRoles(), getSingleJobRole);
 app.get('/login', redirectIfLogged(), getLoginForm);
 app.post('/login', redirectIfLogged(), postLoginForm);

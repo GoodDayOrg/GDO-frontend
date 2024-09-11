@@ -69,3 +69,31 @@ export const getJobRoleById = async (
     throw new Error('Failed to get job role details.');
   }
 };
+
+export const postBulkImportJobRoles = async (
+  token: String,
+  file: File,
+): Promise<void> => {
+  try {
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      throw new Error('File is bigger than 5MB');
+    }
+    const formData = new FormData();
+    formData.append('file', file);
+    const response: AxiosResponse = await axiosInstance.post(
+      '/api/job-roles/import',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          ...getHeader(token).headers,
+        },
+      },
+    );
+
+    return response.data;
+  } catch (e) {
+    throw new Error('Failed to upload job roles.');
+  }
+};

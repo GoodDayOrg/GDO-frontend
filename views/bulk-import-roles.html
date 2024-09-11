@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block title %} Job roles list {% endblock %} {% block content %}
+
+<div class="hero-section">
+    <img src="/assets/images/energy_lines.webp" alt="" />
+    <h2>Find your new path</h2>
+</div>
+<div class="container app-list-container">
+    <div class="container app-list">
+        <h3>Bulk import job roles</h3>
+        {% if errormessage %}
+        <h5>{{ errormessage }}</h5>
+        {% else %}
+        <div class="details-content">
+            <div class="details-description">
+            <form method="post" action="/job-roles/bulk-import">
+                <div class="form-group">
+                    <p>Upload your CSV. Max size: 5MB, format: .csv</p>
+                    <input
+                    type="file"
+                    id="custom-csv-input"
+                    name="customCSVInput"
+                    accept=".csv"
+                    class="file-input-label"
+                    required
+                    />
+                    <label for="custom-csv-input" id="csv-input-label" 
+                    class="file-input-label"
+                    >Choose a file...</label
+                    >
+                    <input type="submit" value="Send" />
+                </div>
+            </form>
+            </div>
+        </div>
+        {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

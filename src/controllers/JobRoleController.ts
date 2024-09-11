@@ -4,6 +4,7 @@ import {
   getJobRoleById,
   getAllJobRoles,
   getMyAllApplications,
+  postBulkImportJobRoles,
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
@@ -69,5 +70,25 @@ export const getSingleJobRole = async (
   } catch (e) {
     res.locals.errormessage = e.message;
     res.render('job-role-details');
+  }
+};
+
+export const getBulkImportRoles = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  res.render('bulk-import-roles');
+};
+
+export const postBulkImportRoles = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    await postBulkImportJobRoles(req.session.token, req.body.customCSVInput);
+    res.redirect('/job-roles');
+  } catch (e) {
+    res.locals.errormessage = e.message;
+    res.render('bulk-import-roles');
   }
 };
