@@ -295,6 +295,57 @@ describe('JobRoleContoller', function () {
     });
   });
 
+  describe('postBulkImportRoles', function () {
+    it('should redirect to job list page after succesful csv import', async () => {
+      sinon.stub(JobRoleService, 'postBulkImportJobRoles').resolves();
+
+      const req = {
+        params: { id: 1 },
+        body: {
+          file: new File(['dummy content'], 'test.csv', {
+            type: 'text/csv',
+          }),
+        },
+        session: {
+          token: 'token',
+        },
+      } as unknown as express.Request;
+      const res = { redirect: sinon.spy() } as MockResponse;
+
+      await JobRoleController.postBulkImportRoles(req, res);
+      expect(res.redirect.calledOnce).to.be.true;
+      expect(res.redirect.calledWith('/job-roles')).to.be.true;
+    });
+
+    it('should render bulk import roles form page after unsuccesful importing process', async () => {
+      const errorMessage: string = 'Failed to upload job roles.';
+      sinon
+        .stub(JobRoleService, 'postBulkImportJobRoles')
+        .rejects(new Error(errorMessage));
+
+      const req = {
+        params: { id: 1 },
+        body: {
+          file: new File(['dummy content'], 'test.csv', {
+            type: 'text/csv',
+          }),
+        },
+        session: {
+          token: 'token',
+        },
+      } as unknown as express.Request;
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' },
+      } as MockResponse;
+
+      await JobRoleController.postBulkImportRoles(req, res);
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render.calledWith('bulk-import-roles')).to.be.true;
+      expect(res.locals.errormessage).to.equal(errorMessage);
+    });
+  });
+
   describe('getJobRolesFiltered', function () {
     it('should render view with job roles when filtered job roles returned', async () => {
       const jobRolesList = [jobRoleResponse];

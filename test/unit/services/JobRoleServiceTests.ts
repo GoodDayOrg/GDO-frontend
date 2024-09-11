@@ -7,6 +7,7 @@ import {
   getJobRoleById,
   postApplyFileForm,
   getMyAllApplications,
+  postBulkImportJobRoles,
 } from '../../../src/services/JobRoleService';
 import { axiosInstance } from '../../../src/config';
 import { JobRoleDetailsResponse } from '../../../src/models/JobRoleDetailsResponse';
@@ -58,6 +59,19 @@ const mockMulterFile: Express.Multer.File = {
   destination: '/uploads/',
   filename: 'test.pdf',
   path: '/uploads/test.pdf',
+};
+
+const mockMulterFileCSV: Express.Multer.File = {
+  fieldname: 'file',
+  originalname: 'test.csv',
+  encoding: '7bit',
+  mimetype: 'text/csv',
+  buffer: Buffer.from('%CSV-1.4\n%...', 'utf-8'),
+  size: 2048,
+  stream: Readable.from(Buffer.from('%CSV-1.4\n%...')),
+  destination: '/uploads/',
+  filename: 'test.csv',
+  path: '/uploads/test.csv',
 };
 
 let mock: MockAdapter;
@@ -201,45 +215,10 @@ describe('JobRoleService', function () {
         return;
       }
     });
-
-    // it('should return error message if job ', async () => {
-    //   const id = 'abc';
-    //   mock.onGet(URL + '/' + id).reply(404);
-
-    //   try {
-    //     await getJobRoleById(id, 'token', 'Failed to get job apply form.');
-    //     expect(true).equal(false);
-    //   } catch (e) {
-    //     expect(e.message).to.equal('Failed to get job apply form.');
-    //     return;
-    //   }
-    // });
-  });
-
-  describe('getMyAllApplications', async () => {
-    it('should return myApplicationsResult object', async () => {
-      const data = [myApplicationsResponse];
-      mock.onGet(URL + '/my-job-applications').reply(200, data);
-
-      const result = await getMyAllApplications('token');
-      expect(result[0]).to.deep.equal(myApplicationsResponse);
-    });
-
-    it('should return error message when 401', async () => {
-      mock.onGet(URL + '/my-job-applications').reply(401);
-
-      try {
-        await getMyAllApplications('wrongToken');
-        expect(true).equal(false);
-      } catch (e) {
-        expect(e.message).to.equal('Currently You dont have any applications');
-        return;
-      }
-    });
   });
 
   describe('postApplyFileForm', function () {
-    it('should return job found by id', async () => {
+    it('should return job found by id when application job form is successful', async () => {
       const id = '1';
       mock
         .onPost(URL + '/' + id + '/applications')
@@ -276,6 +255,41 @@ describe('JobRoleService', function () {
     //     return;
     //   }
     // });
+  });
+
+  describe('postBulkImportJobRoles', function () {
+    it('should return nothing when bulk import csv is successful', async () => {
+      mock.onPost(URL + '/import').reply(200);
+
+      try {
+        await postBulkImportJobRoles('token', mockMulterFileCSV);
+      } catch (e) {
+        expect.fail('The function should not throw an error');
+      }
+    });
+
+    it('should return error message when application job form failes', async () => {
+      mock.onPost(URL + '/import').reply(500);
+
+      try {
+        await postBulkImportJobRoles('token', mockMulterFileCSV);
+        expect(true).equal(false);
+      } catch (e) {
+        expect(e.message).to.equal('Failed to upload job roles.');
+        return;
+      }
+    });
+
+    it('should throw an error if file size exceeds 5MB', async () => {
+      mockMulterFileCSV.buffer = Buffer.alloc(6 * 1024 * 1024);
+      mockMulterFileCSV.size = 6 * 1024 * 1024;
+      try {
+        await postBulkImportJobRoles('token', mockMulterFileCSV);
+        expect.fail('The function should throw an error');
+      } catch (e) {
+        expect(e.message).to.equal('File is bigger than 5MB');
+      }
+    });
   });
 
   describe('getMyAllApplications', async () => {
