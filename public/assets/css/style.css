@@ -610,6 +610,13 @@ input[type="submit"]:active {
     justify-content: center;
 }
 
+.details-description-apply {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .apply-form-error {
     font-family: 'KainosSecondary';
     font-size: 2.5rem;
