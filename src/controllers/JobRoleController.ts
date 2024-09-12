@@ -109,18 +109,7 @@ export const getJobApplyForm = async (
     const jobRole = await getJobRoleById(req.params.id, req.session.token);
 
     // const applications need to be change for method from US053
-    const applications = [
-      {
-        jobRoleId: '1',
-        roleName: 'Tester',
-        statusApplicationName: 'in progress',
-      },
-      {
-        jobRoleId: '2',
-        roleName: 'Tester',
-        statusApplicationName: 'rejected',
-      },
-    ];
+    const applications = await getMyAllApplications(req.session.token);
 
     res.render('job-apply-form', {
       currentId,

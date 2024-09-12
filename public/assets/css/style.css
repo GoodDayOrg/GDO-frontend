@@ -608,7 +608,6 @@ input[type="submit"]:active {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
 }
 
 .apply-form-error {
