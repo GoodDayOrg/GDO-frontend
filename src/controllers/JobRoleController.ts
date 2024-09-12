@@ -1,5 +1,5 @@
+import express from 'express';
 import qs from 'qs';
-import express, { application } from 'express';
 import {
   getFilteredJobRoles,
   getJobRoleById,
@@ -21,10 +21,6 @@ export const getJobRoles = async (
   let jobRoles: JobRoleResponse[] = req.session.jobRoles || [];
 
   try {
-    if (Object.keys(filters).length === 0 && jobRoles.length > 0) {
-      return res.render('job-role-list', { jobRoles, filters });
-    }
-
     jobRoles =
       Object.keys(filters).length > 0
         ? await getFilteredJobRoles(req.session.token, filters)
@@ -114,22 +110,11 @@ export const getJobApplyForm = async (
     const jobRole = await getJobRoleById(
       req.params.id,
       req.session.token,
-      'Failed to get job apply form.',
+      'Failed to get job role application.',
     );
 
     // const applications need to be change for method from US053
-    const applications = [
-      {
-        jobRoleId: '1',
-        roleName: 'Tester',
-        statusApplicationName: 'in progress',
-      },
-      {
-        jobRoleId: '2',
-        roleName: 'Tester',
-        statusApplicationName: 'rejected',
-      },
-    ];
+    const applications = await getMyAllApplications(req.session.token);
 
     res.render('job-apply-form', {
       currentId,

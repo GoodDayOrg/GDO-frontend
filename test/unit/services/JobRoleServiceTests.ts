@@ -209,10 +209,10 @@ describe('JobRoleService', function () {
       mock.onGet(URL + '/' + id).reply(404);
 
       try {
-        await getJobRoleById(id, 'token', 'Failed to get job apply form.');
+        await getJobRoleById(id, 'token', errorMessage);
         expect(true).equal(false);
       } catch (e) {
-        expect(e.message).to.equal('Failed to get job apply form.');
+        expect(e.message).to.equal('Failed to get job role details.');
         return;
       }
     });
@@ -230,7 +230,6 @@ describe('JobRoleService', function () {
 
       expect(result).to.deep.equal(jobRoleDetailsResponse);
     });
-
     it('should return error message when application job form failes', async () => {
       const id = '1';
       mock.onPost(URL + '/' + id + '/applications').reply(500);

@@ -2,7 +2,7 @@ import express from 'express';
 import nunjucks from 'nunjucks';
 import bodyParser from 'body-parser';
 import session from 'express-session';
-import multer, { Multer } from 'multer';
+import multer from 'multer';
 
 import {
   getLoginForm,

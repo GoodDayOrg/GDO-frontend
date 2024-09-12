@@ -504,6 +504,7 @@ main .hero-section h2 {
     height: 70vh;
 }
 
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -608,6 +609,12 @@ input[type="submit"]:active {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.details-description-apply {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
@@ -627,7 +634,6 @@ input[type="submit"]:active {
     font-weight: bold;
     color: var(--main-green);
 }
-
 .login-page .btn-primary {
     background-color: var(--main-green);
     border: 0px solid transparent;

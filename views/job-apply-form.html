@@ -2,8 +2,8 @@
 block content %}
 
 <!-- {% if errormessage %}
-  <h3>{{ errormessage }}</h3>
-{% endif %} -->
+    <h3>{{ errormessage }}</h3>
+  {% endif %} -->
 {% include "not_found.html" %} {% if not errormessage %}
 <div class="container job-role-hero-section">
   <img src="/assets/images/job-details.jpg" alt="person" />
@@ -14,26 +14,13 @@ block content %}
   <div class="details-header">
     <h3 id="job-role-name">{{ jobRole.roleName }}</h3>
     <div class="details-action">
-      <a href="/job-roles" class="btn btn-light" id="go-back-button"
-        ><img class="btn-icon" src="/assets/images/back.png" alt="To list"
-      /></a>
+      <a href="/job-roles" class="btn btn-light" id="go-back-button"><img class="btn-icon" src="/assets/images/back.png"
+          alt="To list" /></a>
       <a href="/job/{{ currentId }}" class="btn btn-light" id="previous-button">
-        <img
-          class="btn-icon"
-          src="/assets/images/arrow_left.png"
-          alt="Previous"
-        />
+        <img class="btn-icon" src="/assets/images/arrow_left.png" alt="Previous" />
       </a>
-      <a
-        href="{{jobRole.sharepointUrl}}"
-        target="_blank"
-        class="btn btn-light"
-        id="sharepoint-url"
-        ><img
-          class="btn-icon"
-          src="/assets/images/sharepoint.png"
-          alt="sharepoint link"
-      /></a>
+      <a href="{{jobRole.sharepointUrl}}" target="_blank" class="btn btn-light" id="sharepoint-url"><img
+          class="btn-icon" src="/assets/images/sharepoint.png" alt="sharepoint link" /></a>
     </div>
   </div>
   <div class="details-info">
@@ -67,7 +54,7 @@ block content %}
     </div>
   </div>
   <div class="details-content">
-    <div class="details-description">
+    <div class="details-description-apply">
       {% set applied = false %} {% set status = 'status' %} {% for application
       in applications %} {% if application.jobRoleId == currentId %} {% set
       applied = true %} {% set status = application.statusApplicationName %} {%
