@@ -19,6 +19,7 @@
   "author": "Shaun Ganley <shaung@kainos.com>",
   "license": "ISC",
   "dependencies": {
+    "@types/multer": "^1.4.12",
     "axios": "^1.6.8",
     "body-parser": "^1.20.2",
     "dependencies": "^0.0.1",
@@ -26,6 +27,7 @@
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "jwt-decode": "^4.0.0",
+    "multer": "^1.4.5-lts.1",
     "nunjucks": "^3.2.4",
     "qs": "^6.13.0"
   },

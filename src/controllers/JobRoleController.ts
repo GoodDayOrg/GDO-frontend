@@ -1,10 +1,11 @@
+import express from 'express';
 import qs from 'qs';
-import express, { application } from 'express';
 import {
   getFilteredJobRoles,
   getJobRoleById,
   getAllJobRoles,
   getMyAllApplications,
+  postApplyFileForm,
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
 import { extractJobRoleFilterParams } from '../utils/JobRoleUtil';
@@ -96,5 +97,41 @@ export const getSingleJobRole = async (
   } catch (e) {
     res.locals.errormessage = e.message;
     res.render('job-role-details');
+  }
+};
+
+export const getJobApplyForm = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    const currentId = parseInt(req.params.id, 10);
+    const jobRole = await getJobRoleById(req.params.id, req.session.token);
+
+    // const applications need to be change for method from US053
+    const applications = await getMyAllApplications(req.session.token);
+
+    res.render('job-apply-form', {
+      currentId,
+      jobRole,
+      applications,
+    });
+  } catch (e) {
+    res.locals.errormessage = e.message;
+    res.render('job-apply-form');
+  }
+};
+
+export const postJobApplyForm = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    await postApplyFileForm(req.session.token, req.params.id, req.file);
+    res.redirect(`/job/${req.params.id}`);
+  } catch (e) {
+    const backURL = req.header('Referer') || '/';
+    res.locals.errormessage = e.message;
+    res.redirect(backURL);
   }
 };
