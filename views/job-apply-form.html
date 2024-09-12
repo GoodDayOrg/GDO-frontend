@@ -66,10 +66,18 @@ block content %}
       {% else %}
       <form method="post" action="/apply/{{ currentId }}" enctype="multipart/form-data">
         <div class="form-group">
-          <p>Upload your CV. Max size: 5MB, format: .pdf</p>
-          <input type="file" id="custom-file-input" name="customFileInput" accept="application/pdf"
-            class="file-input-label" required />
-          <label for="custom-file-input" id="file-input-label" class="file-input-label">Choose a file...</label>
+            <p>Upload your CV. Max size: 5MB, format: .pdf</p>
+          <input
+            type="file"
+            id="custom-file-input"
+            name="customFileInput"
+            accept="application/pdf"
+            class="file-input-label"
+            required
+          />
+          <label for="custom-file-input" id="file-input-label" class="file-input-label"
+            >Choose a file...</label
+          >
           <input type="submit" value="Send" />
         </div>
       </form>

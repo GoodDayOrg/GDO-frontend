@@ -7,6 +7,8 @@ import { getHeader } from '../utils/AuthUtil';
 import { serializeParams } from '../utils/SerializeParams';
 import { JobRoleDetailsResponse } from '../models/JobRoleDetailsResponse';
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
 export const getFilteredJobRoles = async (
   token: String,
   filters?: JobRoleFilterParams,
@@ -57,6 +59,7 @@ export const getMyAllApplications = async (
 export const getJobRoleById = async (
   id: string,
   token: string,
+  errorMessage: string,
 ): Promise<JobRoleDetailsResponse> => {
   try {
     const response: AxiosResponse = await axiosInstance.get(
@@ -65,7 +68,7 @@ export const getJobRoleById = async (
     );
     return response.data;
   } catch (e) {
-    throw new Error('Failed to get job role details.');
+    throw new Error(errorMessage);
   }
 };
 
@@ -75,8 +78,7 @@ export const postApplyFileForm = async (
   file: Express.Multer.File,
 ): Promise<JobRoleDetailsResponse> => {
   try {
-    const maxSize = 5 * 1024 * 1024;
-    if (file.size > maxSize) {
+    if (file.size > MAX_FILE_SIZE) {
       throw new Error('File is bigger than 5MB');
     }
     const blob = new Blob([file.buffer], { type: file.mimetype });
@@ -95,5 +97,31 @@ export const postApplyFileForm = async (
     return response.data;
   } catch (e) {
     throw new Error('Failed to post job apply form.');
+  }
+};
+
+export const postBulkImportJobRoles = async (
+  token: String,
+  file: Express.Multer.File,
+): Promise<void> => {
+  try {
+    if (file.size > MAX_FILE_SIZE) {
+      throw new Error('File is bigger than 5MB');
+    }
+    const blob = new Blob([file.buffer], { type: file.mimetype || 'text/csv' });
+    const formData = new FormData();
+    formData.append('file', blob, file.originalname);
+    await axiosInstance.post('/api/job-roles/import', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        ...getHeader(token).headers,
+      },
+    });
+  } catch (e) {
+    if (e.message === 'File is bigger than 5MB') {
+      throw e;
+    } else {
+      throw new Error('Failed to upload job roles.');
+    }
   }
 };

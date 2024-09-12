@@ -71,7 +71,10 @@ describe('JobRoleContoller', function () {
       } as unknown as express.Request;
       const res = { render: sinon.spy() } as MockResponse;
 
-      await JobRoleController.getJobRoles(req, res);
+      await JobRoleController.getJobRoles(
+        req as unknown as express.Request,
+        res,
+      );
 
       expect(res.render.calledOnce).to.be.true;
       expect(
@@ -100,7 +103,10 @@ describe('JobRoleContoller', function () {
         locals: { errormessage: '' },
       } as MockResponse;
 
-      await JobRoleController.getJobRoles(req, res);
+      await JobRoleController.getJobRoles(
+        req as unknown as express.Request,
+        res,
+      );
 
       expect(res.render.calledOnce).to.be.true;
       expect(res.render.calledWith('job-role-list')).to.be.true;
@@ -164,7 +170,9 @@ describe('JobRoleContoller', function () {
 
       const req = {
         params: { id: 1 },
-        session: { token: 'token' },
+        session: {
+          token: 'token',
+        },
       } as unknown as express.Request;
       const res = {
         render: sinon.spy(),
@@ -302,18 +310,19 @@ describe('JobRoleContoller', function () {
     it('should render view with form of job role application', async () => {
       const applications = [
         {
-          jobRoleId: '1',
+          jobRoleId: 1,
           roleName: 'Tester',
           statusApplicationName: 'in progress',
         },
         {
-          jobRoleId: '2',
+          jobRoleId: 2,
           roleName: 'Tester',
           statusApplicationName: 'rejected',
         },
       ];
       const jobRoleDetails = jobRoleDetailsResponse;
       sinon.stub(JobRoleService, 'getJobRoleById').resolves(jobRoleDetails);
+      sinon.stub(JobRoleService, 'getMyAllApplications').resolves(applications);
 
       const req = {
         params: { id: 1 },
@@ -421,5 +430,172 @@ describe('JobRoleContoller', function () {
         .true;
       expect(res.locals.errormessage).to.equal(errorMessage);
     });
+  });
+
+  describe('postBulkImportRoles', function () {
+    it('should redirect to job list page after succesful csv import', async () => {
+      sinon.stub(JobRoleService, 'postBulkImportJobRoles').resolves();
+
+      const req = {
+        params: { id: 1 },
+        body: {
+          file: new File(['dummy content'], 'test.csv', {
+            type: 'text/csv',
+          }),
+        },
+        session: {
+          token: 'token',
+        },
+      } as unknown as express.Request;
+      const res = { redirect: sinon.spy() } as MockResponse;
+
+      await JobRoleController.postBulkImportRoles(req, res);
+      expect(res.redirect.calledOnce).to.be.true;
+      expect(res.redirect.calledWith('/job-roles')).to.be.true;
+    });
+
+    it('should render bulk import roles form page after unsuccesful importing process', async () => {
+      const errorMessage: string = 'Failed to upload job roles.';
+      sinon
+        .stub(JobRoleService, 'postBulkImportJobRoles')
+        .rejects(new Error(errorMessage));
+
+      const req = {
+        params: { id: 1 },
+        body: {
+          file: new File(['dummy content'], 'test.csv', {
+            type: 'text/csv',
+          }),
+        },
+        session: {
+          token: 'token',
+        },
+      } as unknown as express.Request;
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' },
+      } as MockResponse;
+
+      await JobRoleController.postBulkImportRoles(req, res);
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render.calledWith('bulk-import-roles')).to.be.true;
+      expect(res.locals.errormessage).to.equal(errorMessage);
+    });
+  });
+
+  describe('getJobRolesFiltered', function () {
+    it('should render view with job roles when filtered job roles returned', async () => {
+      const jobRolesList = [jobRoleResponse];
+
+      sinon.stub(JobRoleService, 'getFilteredJobRoles').resolves(jobRolesList);
+
+      const req = {
+        session: {
+          token: 'token',
+          jobRoles: [],
+          filters: {},
+        },
+        query: {
+          jobRoleLocation: ['Belfast', 'Buenos Aires'],
+        },
+      } as unknown as express.Request;
+
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' },
+      } as MockResponse;
+
+      await JobRoleController.getJobRoles(req as express.Request, res);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(
+        res.render.calledWith('job-role-list', {
+          jobRoles: jobRolesList,
+          filters: { jobRoleLocation: ['Belfast', 'Buenos Aires'] },
+        }),
+      ).to.be.true;
+    });
+
+    it('should render view with error message when error thrown', async () => {
+      const errorMessage: string = 'Error message';
+      sinon
+        .stub(JobRoleService, 'getFilteredJobRoles')
+        .rejects(new Error(errorMessage));
+
+      const req = {
+        session: {
+          token: 'token',
+        },
+      } as unknown as express.Request;
+
+      req.query = {
+        roleName: 'Test',
+        location: ['Belfast', 'Buenos Aires'],
+      };
+      const res = {
+        render: sinon.spy(),
+        locals: { errormessage: '' },
+      } as MockResponse;
+
+      await JobRoleController.getJobRoles(req as express.Request, res);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(res.render.calledWith('job-role-list')).to.be.true;
+      expect(res.locals.errormessage).to.equal(errorMessage);
+    });
+  });
+
+  describe('getMyAllApplications', function () {
+    it('should render view with job application list', async () => {
+      const applicationsList = [myApplicationsResponse];
+
+      sinon
+        .stub(JobRoleService, 'getMyAllApplications')
+        .resolves(applicationsList);
+
+      const req = {
+        query: {},
+
+        session: {
+          token: 'token',
+        },
+      } as unknown as express.Request;
+      const res = { render: sinon.spy() } as MockResponse;
+
+      await JobRoleController.getMyApplications(req, res);
+
+      expect(res.render.calledOnce).to.be.true;
+      expect(
+        res.render.calledWith('my-job-applications', {
+          applications: applicationsList,
+        }),
+      ).to.be.true;
+    });
+
+    it('should render view with error message'),
+      async () => {
+        const errorMessage: string = 'Error message';
+        sinon
+          .stub(JobRoleService, 'getMyAllApplications')
+          .rejects(new Error(errorMessage));
+
+        const req = {
+          session: {
+            token: 'token',
+          },
+
+          query: {},
+        } as unknown as express.Request;
+        const res = {
+          render: sinon.spy(),
+          locals: { errormessage: '' },
+        } as MockResponse;
+
+        await JobRoleController.getJobRoles(req, res);
+
+        expect(res.render.calledOnce).to.be.true;
+        expect(res.render.calledWith('my-job-applications')).to.be.true;
+        expect(res.locals.errormessage).to.equal(errorMessage);
+      };
   });
 });

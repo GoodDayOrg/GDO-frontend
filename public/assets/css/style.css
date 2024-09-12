@@ -220,9 +220,13 @@ main .hero-section h2 {
     width: 20%;
 }
 
-.job-list-container .side-bar h5 {
+.job-list-container .job-list .container-nav {
     border-bottom: 1px solid var(--break-line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+
 .checkbox-group label {
     display: block;
     margin-bottom: 10px;
@@ -234,16 +238,6 @@ main .hero-section h2 {
     margin-right: 10px;
 }
 
-.job-list-container .side-bar .filter-container .filter-list-container {
-    display: flex;
-    flex-direction: column;
-    box-shadow: inset 0 1px 5px var(--break-line);
-    max-height: 260px;
-    overflow-y: auto;
-    padding: 10px;
-    background-color: #fbfbfb;
-    list-style-type: none;
-}
 .side-bar {
     background-color: #f9f9f9;
     padding: 20px;
@@ -266,6 +260,17 @@ main .hero-section h2 {
     color: #000000;
     margin-bottom: 10px;
     font-weight: bold;
+}
+
+.job-list-container .side-bar .filter-container .filter-list-container {
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0 1px 5px var(--break-line);
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #fbfbfb;
+    list-style-type: none;
 }
 
 .filter-container {
@@ -314,9 +319,6 @@ main .hero-section h2 {
     width: 85%;
 }
 
-.job-list-container .job-list h3 {
-    border-bottom: 1px solid var(--break-line);
-}
 
 .job-list-container .job-list .card-container {
     display: flex;
@@ -503,7 +505,6 @@ main .hero-section h2 {
 }
 
 
-
 .form-group {
     display: flex;
     flex-direction: column;
@@ -643,4 +644,124 @@ input[type="submit"]:active {
 
 .login-page .btn-primary:hover {
     box-shadow: 0 0 3px var(--main-green);
+}
+
+ 
+.form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+}
+ 
+.form-group p {
+    font-size: 1.5rem;
+    color: var(--main-blue);
+}
+ 
+.file-input-label{
+    color: var(--main-blue);
+    display: inline-block;
+    background: #f1f1f2;
+    transition: 0.3s;
+    border-radius: 10px;
+    padding: 15px;
+    outline: none;
+    white-space: nowrap;
+    -webkit-user-select: none;
+    cursor: pointer;
+    text-shadow: 1px 1px #fff;
+    font-weight: 100;
+    font-size: 15pt;
+    min-width: 35%;
+    text-align: center;
+    border: 1px solid #d8d8d8;
+    margin-bottom: 30px;
+    max-width: 90%;
+}
+ 
+.file-input-label:hover {
+    transform: scale(1.05);
+    box-shadow: 3px 3px 10px var(--main-blue);
+    border: 1px solid var(--main-green);}
+ 
+.file-input-label:active {
+    transform: scale(0.95);
+}
+ 
+ 
+input[type="file"] {
+    opacity: 0;
+    visibility: hidden;
+    width: 100%;
+    cursor: pointer;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+ 
+ 
+input[type="submit"] {
+    z-index: 5;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--main-green);
+    color: white;
+    border-radius: 5px;
+    outline: none;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+ 
+input[type="submit"]:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--main-green);
+}
+ 
+input[type="submit"]:active {
+    transform: scale(0.95);
+}
+ 
+#apply-btn{
+    width:auto;
+    padding: 0px 10px;
+    color: #f1f1f2;
+    background-color: var(--main-green);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+ 
+}
+ 
+#apply-btn:hover{
+    transform: scale(1.05);
+    box-shadow: 0 0 10px var(--main-green);
+}
+ 
+#apply-btn:active{
+    transform: scale(0.95);
+}
+ 
+.details-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+ 
+.apply-form-error {
+    font-family: 'KainosSecondary';
+    font-size: 2.5rem;
+    margin: 30px 0;
+    font-weight: bold;
+    color: var(--main-blue);
+}
+ 
+.application-status {
+    font-family: 'KainosFont';
+}
+ 
+.application-status span {
+    font-weight: bold;
+    color: var(--main-green);
 }

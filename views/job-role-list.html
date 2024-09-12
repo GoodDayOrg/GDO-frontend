@@ -10,7 +10,15 @@ block content %}
 <div class="container job-list-container">
 	{% include "job-role-filter.html" %}
 	<div class="container job-list">
-		<h3>Job Role List</h3>
+		<div class="container-nav">
+			<h3>Job Role List</h3>
+			{% if userRole=='Admin' %}
+				<div>
+					<a href="/job-roles/bulk-import" class="btn btn-outline-primary">Bulk import roles</a>
+				</div>
+			{% endif %}
+		</div>
+
 		{% if errormessage %}
 		<h5>{{ errormessage }}</h5>
 		{% else %}

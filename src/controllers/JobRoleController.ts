@@ -5,6 +5,7 @@ import {
   getJobRoleById,
   getAllJobRoles,
   getMyAllApplications,
+  postBulkImportJobRoles,
   postApplyFileForm,
 } from '../services/JobRoleService';
 import { JobRoleFilterParams } from '../models/JobRoleFilterParams';
@@ -20,10 +21,6 @@ export const getJobRoles = async (
   let jobRoles: JobRoleResponse[] = req.session.jobRoles || [];
 
   try {
-    if (Object.keys(filters).length === 0 && jobRoles.length > 0) {
-      return res.render('job-role-list', { jobRoles, filters });
-    }
-
     jobRoles =
       Object.keys(filters).length > 0
         ? await getFilteredJobRoles(req.session.token, filters)
@@ -84,7 +81,11 @@ export const getSingleJobRole = async (
           : jobRolesIds[0];
     }
 
-    const jobRole = await getJobRoleById(id, token);
+    const jobRole = await getJobRoleById(
+      id,
+      token,
+      'Failed to get job role details.',
+    );
 
     res.render('job-role-details', {
       jobRole,
@@ -106,7 +107,11 @@ export const getJobApplyForm = async (
 ): Promise<void> => {
   try {
     const currentId = parseInt(req.params.id, 10);
-    const jobRole = await getJobRoleById(req.params.id, req.session.token);
+    const jobRole = await getJobRoleById(
+      req.params.id,
+      req.session.token,
+      'Failed to get job role application.',
+    );
 
     // const applications need to be change for method from US053
     const applications = await getMyAllApplications(req.session.token);
@@ -133,5 +138,25 @@ export const postJobApplyForm = async (
     const backURL = req.header('Referer') || '/';
     res.locals.errormessage = e.message;
     res.redirect(backURL);
+  }
+};
+
+export const getBulkImportRoles = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  res.render('bulk-import-roles');
+};
+
+export const postBulkImportRoles = async (
+  req: express.Request,
+  res: express.Response,
+): Promise<void> => {
+  try {
+    await postBulkImportJobRoles(req.session.token, req.file);
+    res.redirect('/job-roles');
+  } catch (e) {
+    res.locals.errormessage = e.message;
+    res.render('bulk-import-roles');
   }
 };
