@@ -15,6 +15,10 @@ const pa11yConfig = {
   defaults: {
     timeout: 5000,
     standard: 'WCAG2AA',
+    chromeLaunchConfig: {
+      ignoreHTTPSErrors: true,
+      args: ['--disable-dev-shm-usage', '--no-sandbox'],
+    },
   },
   urls: [
     {
