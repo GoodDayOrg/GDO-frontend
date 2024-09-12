@@ -7,6 +7,8 @@ import { getHeader } from '../utils/AuthUtil';
 import { serializeParams } from '../utils/SerializeParams';
 import { JobRoleDetailsResponse } from '../models/JobRoleDetailsResponse';
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
 export const getFilteredJobRoles = async (
   token: String,
   filters?: JobRoleFilterParams,
@@ -76,8 +78,7 @@ export const postApplyFileForm = async (
   file: Express.Multer.File,
 ): Promise<JobRoleDetailsResponse> => {
   try {
-    const maxSize = 5 * 1024 * 1024;
-    if (file.size > maxSize) {
+    if (file.size > MAX_FILE_SIZE) {
       throw new Error('File is bigger than 5MB');
     }
     const blob = new Blob([file.buffer], { type: file.mimetype });
@@ -104,8 +105,7 @@ export const postBulkImportJobRoles = async (
   file: Express.Multer.File,
 ): Promise<void> => {
   try {
-    const maxSize = 5 * 1024 * 1024;
-    if (file.size > maxSize) {
+    if (file.size > MAX_FILE_SIZE) {
       throw new Error('File is bigger than 5MB');
     }
     const blob = new Blob([file.buffer], { type: file.mimetype || 'text/csv' });
