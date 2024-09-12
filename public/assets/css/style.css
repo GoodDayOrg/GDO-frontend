@@ -609,6 +609,7 @@ input[type="submit"]:active {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items:  normal;
 }
 
 .details-description-apply {
@@ -741,13 +742,7 @@ input[type="submit"]:active {
 #apply-btn:active{
     transform: scale(0.95);
 }
- 
-.details-description {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+
  
 .apply-form-error {
     font-family: 'KainosSecondary';
